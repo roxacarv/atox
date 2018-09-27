@@ -27,9 +27,6 @@
         </activity>
 
         <!-- LOGIN SCREEN (COM AS ALTERAÇÕES DE RODRIGO) -->
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/app_name" />
 
         <!-- ONBOARD SCREEN WITH THE FRAGMENTS -->
         <activity android:name=".OnboardingActivity" />
