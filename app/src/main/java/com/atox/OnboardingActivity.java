@@ -1,13 +1,56 @@
 package com.atox;
 
+import android.Manifest;
+import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class OnboardingActivity extends AppCompatActivity {
+import com.hololo.tutorial.library.PermissionStep;
+import com.hololo.tutorial.library.Step;
+import com.hololo.tutorial.library.TutorialActivity;
+
+public class OnboardingActivity extends TutorialActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_onboarding);
+
+        addFragment(new Step.Builder().setTitle("ORGÂNICOS POR PERTO")
+                .setContent("Veja no mapa os mais próximos restaurantes, mercados e feirinhas com produtos orgânicos!")
+                .setBackgroundColor(Color.parseColor("#61987B")) // int background color
+                .setDrawable(R.drawable.onboarding_1) // int top drawable
+                //.setSummary("This is summary 1")
+
+
+                .build());
+
+        addFragment(new Step.Builder().setTitle("DICAS E RECEITAS")
+                .setContent("Receba dicas de como começar sua \n" +
+                        "horta em casa e também um montão \n" +
+                        "de receitas de comidas saudáveis!")
+                .setBackgroundColor(Color.parseColor("#61987B")) // int background color
+                .setDrawable(R.drawable.onboarding_2) // int top drawable
+                //.setSummary("This is summary 2")
+                .build());
+
+        addFragment(new Step.Builder().setTitle("DIRETO DA FONTE")
+                .setContent("Tenha acesso ao contato dos produtores \n" +
+                        "cadastrados nas cooperativas mais \n" +
+                        "próximas!")
+                .setBackgroundColor(Color.parseColor("#61987B")) // int background color
+                .setDrawable(R.drawable.onboarding_3) // int top drawable
+                //.setSummary("This is summary 3")
+                .build());
+
+
+
+    }
+
+    @Override
+    public void finishTutorial() {
+        // Your implementation
+        Intent intent=new Intent(OnboardingActivity.this,LoginScreenActivity.class);
+        startActivity(intent);
     }
 }
