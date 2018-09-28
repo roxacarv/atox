@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -25,11 +26,7 @@ public class LoginScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_screen);
         mEmailView = (EditText) findViewById(R.id.editTextEmail);
         mPasswordView = (EditText) findViewById(R.id.editTextPassword);
-        try {
-            attemptLogin();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
+
     }
 
     public void goToRegisterScreen(View view){
@@ -37,6 +34,13 @@ public class LoginScreenActivity extends AppCompatActivity {
         Intent registerScreen = new Intent(LoginScreenActivity.this, RegisterScreenActivity.class);
         startActivity(registerScreen);
 
+    }
+    public void logar(View view){
+        try {
+            attemptLogin();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
     }
     private void attemptLogin() throws NoSuchAlgorithmException {
 
