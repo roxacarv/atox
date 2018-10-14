@@ -80,7 +80,7 @@ public class LoginScreenActivity extends AppCompatActivity {
             alert("Login ou senha inválida");
         } else {
             // chamar classe para validar o login(criptografado) no DB
-            String realPassword = Encryption.encryptPassword(password);
+            String realPassword = com.atox.Encryption.encryptPassword(password);
         }
     }
 
