@@ -1,4 +1,4 @@
-package com.atox.debug;
+package com.atox.utils;
 
 //bussiness model for the user example
 
