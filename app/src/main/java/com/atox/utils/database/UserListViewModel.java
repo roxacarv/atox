@@ -1,4 +1,4 @@
-package com.atox.debug;
+package com.atox.utils.database;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;

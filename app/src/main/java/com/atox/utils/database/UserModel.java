@@ -1,4 +1,4 @@
-package com.atox.debug;
+package com.atox.utils.database;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;

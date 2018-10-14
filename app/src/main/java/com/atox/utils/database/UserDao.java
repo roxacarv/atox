@@ -1,10 +1,9 @@
-package com.atox.debug;
+package com.atox.utils.database;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Query;
 
-import com.atox.debug.UserModel;
 import com.atox.utils.BaseDao;
 
 import java.util.List;
