@@ -19,21 +19,21 @@ public interface BaseDao<T> {
     /**
      * Basic operations for inserting, updating and deleting data from the SQLite database
      * @param data receives a generic Java Object-type value to be used in one of the four operations
-     *             insert() Insert something (a Java Object-type) in the database;
-     *             insertAll() Insert multiples objects/data to the database at once;
-     *             update() Changes an object/data inside the database;
-     *             delete() Remove an object/data from the database;
+     *             inserir() Insert something (a Java Object-type) in the database;
+     *             inserirTudo() Insert multiples objects/data to the database at once;
+     *             atualizar() Changes an object/data inside the database;
+     *             deletar() Remove an object/data from the database;
      */
     @Insert
-    void insert(T data);
+    void inserir(T data);
 
     @Insert
-    void insertAll(T... data);
+    void inserirTudo(T... data);
 
     @Update
-    void update(T data);
+    void atualizar(T data);
 
     @Delete
-    void delete(T data);
+    void deletar(T data);
 
 }

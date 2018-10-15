@@ -15,14 +15,14 @@ import java.util.List;
 public class UserListViewModel extends AndroidViewModel {
 
     private final LiveData<List<UserModel>> userModelList;
-    private AppDatabase appDatabase;
+    private BancoDeDados bancoDeDados;
 
     public UserListViewModel(Application application)
     {
         super(application);
-        appDatabase = AppDatabase.getAppDatabase(this.getApplication());
+        bancoDeDados = BancoDeDados.getBancoDeDados(this.getApplication());
 
-        userModelList = appDatabase.userModel().getAll();
+        userModelList = bancoDeDados.userModel().getAll();
     }
 
     public LiveData<List<UserModel>> getUserList() {
@@ -31,19 +31,19 @@ public class UserListViewModel extends AndroidViewModel {
 
     public void deleteItem(UserModel userModel)
     {
-        new deleteAsyncTask(appDatabase).execute(userModel);
+        new deleteAsyncTask(bancoDeDados).execute(userModel);
     }
 
     private static class deleteAsyncTask extends AsyncTask<UserModel, Void, Void> {
-        private AppDatabase db;
-        deleteAsyncTask(AppDatabase appDatabase)
+        private BancoDeDados db;
+        deleteAsyncTask(BancoDeDados bancoDeDados)
         {
-            db = appDatabase;
+            db = bancoDeDados;
         }
         @Override
         protected Void doInBackground(final UserModel... params)
         {
-            db.userModel().delete(params[0]);
+            db.userModel().deletar(params[0]);
             return null;
         }
     }

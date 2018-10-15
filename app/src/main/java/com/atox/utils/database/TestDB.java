@@ -4,21 +4,21 @@ package com.atox.utils.database;
 
 public class TestDB {
 
-    private static UserModel addUser(final AppDatabase db, UserModel user) {
-        db.userModel().insertAll(user);
+    private static UserModel addUser(final BancoDeDados db, UserModel user) {
+        db.userModel().inserirTudo(user);
         return user;
     }
 
-    public static UserModel getUser(final AppDatabase db, String firstName, String lastName)
+    public static UserModel getUser(final BancoDeDados db, String firstName, String lastName)
     {
         return db.userModel().findByName(firstName, lastName);
     }
 
-    public static void populateWithTestData(AppDatabase db) {
+    public static void populateWithTestData(BancoDeDados db) {
         UserModel user = new UserModel();
-        user.setFirstName("Rodrigo");
-        user.setLastName("Xavier");
-        user.setAge(27);
+        user.setPrimeiroNome("Rodrigo");
+        user.setUltimoNome("Xavier");
+        user.setIdade(27);
         addUser(db, user);
     }
 

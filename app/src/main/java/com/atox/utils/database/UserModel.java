@@ -15,13 +15,13 @@ public class UserModel {
     private int uid;
 
     @ColumnInfo(name = "first_name")
-    private String firstName;
+    private String primeiroNome;
 
     @ColumnInfo(name = "last_name")
-    private String lastName;
+    private String ultimoNome;
 
-    @ColumnInfo(name = "age")
-    private int age;
+    @ColumnInfo(name = "idade")
+    private int idade;
 
     public int getUid() {
         return uid;
@@ -31,28 +31,28 @@ public class UserModel {
         this.uid = uid;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getPrimeiroNome() {
+        return primeiroNome;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setPrimeiroNome(String primeiroNome) {
+        this.primeiroNome = primeiroNome;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getUltimoNome() {
+        return ultimoNome;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setUltimoNome(String ultimoNome) {
+        this.ultimoNome = ultimoNome;
     }
 
-    public int getAge() {
-        return age;
+    public int getIdade() {
+        return idade;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setIdade(int idade) {
+        this.idade = idade;
     }
 
 }
