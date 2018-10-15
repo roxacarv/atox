@@ -1,4 +1,4 @@
-package com.atox;
+package com.atox.utils;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

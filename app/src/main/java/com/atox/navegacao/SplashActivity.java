@@ -1,9 +1,11 @@
-package com.atox;
+package com.atox.navegacao;
 
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.atox.R;
 
 public class SplashActivity extends AppCompatActivity {
 

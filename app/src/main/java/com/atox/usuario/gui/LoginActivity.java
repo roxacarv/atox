@@ -1,4 +1,4 @@
-package com.atox;
+package com.atox.usuario.gui;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,12 +7,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.atox.R;
+import com.atox.utils.Encryption;
 import com.atox.utils.ValidaCadastro;
 
 import java.security.NoSuchAlgorithmException;
 
 
-public class LoginScreenActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private EditText mEmailView;
     private EditText mPasswordView;
@@ -28,7 +30,7 @@ public class LoginScreenActivity extends AppCompatActivity {
 
     public void goToRegisterScreen(View view){
 
-        Intent registerScreen = new Intent(LoginScreenActivity.this, RegisterScreenActivity.class);
+        Intent registerScreen = new Intent(LoginActivity.this, RegistroActivity.class);
         startActivity(registerScreen);
 
     }
@@ -77,7 +79,7 @@ public class LoginScreenActivity extends AppCompatActivity {
             alert("Login ou senha inválida");
         } else {
             // chamar classe para validar o login(criptografado) no DB
-            String realPassword = com.atox.Encryption.encryptPassword(password);
+            String realPassword = Encryption.encryptPassword(password);
             alert("login bem sucedido");
         }
     }

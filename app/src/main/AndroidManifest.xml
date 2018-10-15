@@ -17,7 +17,7 @@
 
         <!-- SPLASH SCREEN -->
         <activity
-            android:name=".SplashActivity"
+            android:name=".navegacao.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,15 +29,15 @@
         <!-- LOGIN SCREEN (COM AS ALTERAÇÕES DE RODRIGO) -->
 
         <!-- ONBOARD SCREEN WITH THE FRAGMENTS -->
-        <activity android:name=".OnboardingActivity" />
+        <activity android:name=".navegacao.OnboardingActivity" />
 
         <!-- THE CUSTOM LOGIN SCREEN -->
         <activity
-            android:name=".LoginScreenActivity"
+            android:name=".usuario.gui.LoginActivity"
             android:theme="@style/FullScreenTheme"></activity>
 
         <!--REGISTER SCREEN-->
-        <activity android:name=".RegisterScreenActivity"
+        <activity android:name=".usuario.gui.RegistroActivity"
             android:theme="@style/FullScreenWithStatusBar"></activity>
     </application>
 

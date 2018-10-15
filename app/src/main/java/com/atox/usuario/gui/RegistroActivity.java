@@ -1,9 +1,11 @@
-package com.atox;
+package com.atox.usuario.gui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class RegisterScreenActivity extends AppCompatActivity {
+import com.atox.R;
+
+public class RegistroActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

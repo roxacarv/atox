@@ -1,9 +1,12 @@
-package com.atox.utils.database;
+package com.atox.usuario.dao;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
+
+import com.atox.infra.BancoDeDados;
+import com.atox.usuario.dominio.Usuario;
 
 import java.util.List;
 
@@ -14,7 +17,7 @@ import java.util.List;
 
 public class UserListViewModel extends AndroidViewModel {
 
-    private final LiveData<List<UserModel>> userModelList;
+    private final LiveData<List<Usuario>> userModelList;
     private BancoDeDados bancoDeDados;
 
     public UserListViewModel(Application application)
@@ -25,23 +28,23 @@ public class UserListViewModel extends AndroidViewModel {
         userModelList = bancoDeDados.userModel().getAll();
     }
 
-    public LiveData<List<UserModel>> getUserList() {
+    public LiveData<List<Usuario>> getUserList() {
         return userModelList;
     }
 
-    public void deleteItem(UserModel userModel)
+    public void deleteItem(Usuario usuario)
     {
-        new deleteAsyncTask(bancoDeDados).execute(userModel);
+        new deleteAsyncTask(bancoDeDados).execute(usuario);
     }
 
-    private static class deleteAsyncTask extends AsyncTask<UserModel, Void, Void> {
+    private static class deleteAsyncTask extends AsyncTask<Usuario, Void, Void> {
         private BancoDeDados db;
         deleteAsyncTask(BancoDeDados bancoDeDados)
         {
             db = bancoDeDados;
         }
         @Override
-        protected Void doInBackground(final UserModel... params)
+        protected Void doInBackground(final Usuario... params)
         {
             db.userModel().deletar(params[0]);
             return null;

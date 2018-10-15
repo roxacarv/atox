@@ -1,4 +1,4 @@
-package com.atox.utils.database;
+package com.atox.usuario.dominio;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
@@ -9,7 +9,7 @@ import android.arch.persistence.room.PrimaryKey;
 //SHOULD BE REMOVED IN PRODUCTION
 
 @Entity(tableName = "user")
-public class UserModel {
+public class Usuario {
 
     @PrimaryKey(autoGenerate = true)
     private int uid;

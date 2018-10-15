@@ -1,12 +1,11 @@
-package com.atox;
+package com.atox.navegacao;
 
-import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.hololo.tutorial.library.PermissionStep;
+import com.atox.R;
+import com.atox.usuario.gui.LoginActivity;
 import com.hololo.tutorial.library.Step;
 import com.hololo.tutorial.library.TutorialActivity;
 
@@ -50,7 +49,7 @@ public class OnboardingActivity extends TutorialActivity {
     @Override
     public void finishTutorial() {
         // Your implementation
-        Intent intent=new Intent(OnboardingActivity.this,LoginScreenActivity.class);
+        Intent intent=new Intent(OnboardingActivity.this,LoginActivity.class);
         startActivity(intent);
     }
 }
