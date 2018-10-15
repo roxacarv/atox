@@ -8,16 +8,16 @@ import android.arch.persistence.room.PrimaryKey;
 //THIS IS NOT THE FINAL USER OF THE APPLICATION JUST AN EXAMPLE
 //SHOULD BE REMOVED IN PRODUCTION
 
-@Entity(tableName = "user")
+@Entity(tableName = "usuario")
 public class Usuario {
 
     @PrimaryKey(autoGenerate = true)
     private int uid;
 
-    @ColumnInfo(name = "first_name")
+    @ColumnInfo(name = "primeiro_nome")
     private String primeiroNome;
 
-    @ColumnInfo(name = "last_name")
+    @ColumnInfo(name = "ultimo_nome")
     private String ultimoNome;
 
     @ColumnInfo(name = "idade")

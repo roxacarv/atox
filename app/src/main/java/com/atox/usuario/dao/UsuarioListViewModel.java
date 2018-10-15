@@ -15,12 +15,12 @@ import java.util.List;
 //should be removed before commiting final versions
 //VIEWMODEL SHOULD BE CREATED FOR EACH TABLE TO MAINTAIN THE CODE CLEAN
 
-public class UserListViewModel extends AndroidViewModel {
+public class UsuarioListViewModel extends AndroidViewModel {
 
     private final LiveData<List<Usuario>> userModelList;
     private BancoDeDados bancoDeDados;
 
-    public UserListViewModel(Application application)
+    public UsuarioListViewModel(Application application)
     {
         super(application);
         bancoDeDados = BancoDeDados.getBancoDeDados(this.getApplication());

@@ -5,7 +5,7 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-import com.atox.usuario.dao.UserDao;
+import com.atox.usuario.dao.UsuarioDao;
 import com.atox.usuario.dominio.Usuario;
 
 @Database(entities = {Usuario.class}, version = 1)
@@ -27,6 +27,6 @@ public abstract class BancoDeDados extends RoomDatabase {
         INSTANCE = null;
     }
 
-    public abstract UserDao userModel();
+    public abstract UsuarioDao userModel();
 
 }

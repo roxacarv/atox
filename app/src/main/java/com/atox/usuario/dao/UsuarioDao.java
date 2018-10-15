@@ -10,14 +10,14 @@ import com.atox.usuario.dominio.Usuario;
 import java.util.List;
 
 @Dao
-public interface UserDao extends BaseDao<Usuario> {
+public interface UsuarioDao extends BaseDao<Usuario> {
 
-    @Query("SELECT * FROM Usuario")
+    @Query("SELECT * FROM usuario")
     LiveData<List<Usuario>> getAll();
 
-    @Query("SELECT * FROM Usuario where primeiroNome LIKE  :firstName AND ultimoNome LIKE :lastName")
-    Usuario findByName(String firstName, String lastName);
+    @Query("SELECT * FROM usuario where primeiro_nome LIKE  :primeiroNome AND ultimo_nome LIKE :ultimoNome")
+    Usuario findByName(String primeiroNome, String ultimoNome);
 
-    @Query("SELECT COUNT(*) from Usuario")
+    @Query("SELECT COUNT(*) from usuario")
     int countUsers();
 }
