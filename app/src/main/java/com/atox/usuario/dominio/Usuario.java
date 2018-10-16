@@ -7,7 +7,7 @@ package com.atox.usuario.dominio;
 
 import java.util.List;
 
-public class Usuario {
+public class Usuario extends Pessoa {
 
     private String email;
 
