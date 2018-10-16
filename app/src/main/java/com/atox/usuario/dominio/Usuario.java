@@ -1,58 +1,51 @@
 package com.atox.usuario.dominio;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
 
 //example in how tag attributes inside an object to be read by the Room framework
 //THIS IS NOT THE FINAL USER OF THE APPLICATION JUST AN EXAMPLE
 //SHOULD BE REMOVED IN PRODUCTION
 
-@Entity(tableName = "usuario")
 public class Usuario {
 
-    @PrimaryKey(autoGenerate = true)
-    private int uid;
+    private String email;
 
-    @ColumnInfo(name = "primeiro_nome")
-    private String primeiroNome;
+    private String senha;
 
-    @ColumnInfo(name = "ultimo_nome")
-    private String ultimoNome;
+    private String login;
 
-    @ColumnInfo(name = "idade")
-    private int idade;
+    private Lugar[] lugares;
 
-    public int getUid() {
-        return uid;
+
+    public String getEmail() {
+        return email;
     }
 
-    public void setUid(int uid) {
-        this.uid = uid;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getPrimeiroNome() {
-        return primeiroNome;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setPrimeiroNome(String primeiroNome) {
-        this.primeiroNome = primeiroNome;
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
-    public String getUltimoNome() {
-        return ultimoNome;
+    public String getLogin() {
+        return login;
     }
 
-    public void setUltimoNome(String ultimoNome) {
-        this.ultimoNome = ultimoNome;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
-    public int getIdade() {
-        return idade;
+    public Lugar[] getLugares() {
+        return lugares;
     }
 
-    public void setIdade(int idade) {
-        this.idade = idade;
+    public void setLugares(Lugar[] lugares) {
+        this.lugares = lugares;
     }
 
 }

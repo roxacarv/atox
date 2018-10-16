@@ -15,39 +15,8 @@ import java.util.List;
 //should be removed before commiting final versions
 //VIEWMODEL SHOULD BE CREATED FOR EACH TABLE TO MAINTAIN THE CODE CLEAN
 
-public class UsuarioListViewModel extends AndroidViewModel {
+public class UsuarioListViewModel /*extends AndroidViewModel */{
 
-    private final LiveData<List<Usuario>> userModelList;
-    private BancoDeDados bancoDeDados;
 
-    public UsuarioListViewModel(Application application)
-    {
-        super(application);
-        bancoDeDados = BancoDeDados.getBancoDeDados(this.getApplication());
 
-        userModelList = bancoDeDados.userModel().getAll();
-    }
-
-    public LiveData<List<Usuario>> getUserList() {
-        return userModelList;
-    }
-
-    public void deleteItem(Usuario usuario)
-    {
-        new deleteAsyncTask(bancoDeDados).execute(usuario);
-    }
-
-    private static class deleteAsyncTask extends AsyncTask<Usuario, Void, Void> {
-        private BancoDeDados db;
-        deleteAsyncTask(BancoDeDados bancoDeDados)
-        {
-            db = bancoDeDados;
-        }
-        @Override
-        protected Void doInBackground(final Usuario... params)
-        {
-            db.userModel().deletar(params[0]);
-            return null;
-        }
-    }
 }
