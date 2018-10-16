@@ -12,12 +12,5 @@ import java.util.List;
 @Dao
 public interface UsuarioDao extends BaseDao<Usuario> {
 
-    @Query("SELECT * FROM usuario")
-    LiveData<List<Usuario>> getAll();
 
-    @Query("SELECT * FROM usuario where primeiro_nome LIKE  :primeiroNome AND ultimo_nome LIKE :ultimoNome")
-    Usuario findByName(String primeiroNome, String ultimoNome);
-
-    @Query("SELECT COUNT(*) from usuario")
-    int countUsers();
 }
