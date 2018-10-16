@@ -15,12 +15,8 @@ import java.util.List;
 //should be removed before commiting final versions
 //VIEWMODEL SHOULD BE CREATED FOR EACH TABLE TO MAINTAIN THE CODE CLEAN
 
-<<<<<<< HEAD
-public class UsuarioListViewModel /*extends AndroidViewModel */{
-
-=======
 public class UsuarioListViewModel {
->>>>>>> 1374c4884a2bf40135caea6a25160f18775b4e2a
+
 
 
 }
