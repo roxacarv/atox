@@ -5,6 +5,8 @@ package com.atox.usuario.dominio;
 //THIS IS NOT THE FINAL USER OF THE APPLICATION JUST AN EXAMPLE
 //SHOULD BE REMOVED IN PRODUCTION
 
+import java.util.List;
+
 public class Usuario {
 
     private String email;
@@ -13,7 +15,7 @@ public class Usuario {
 
     private String login;
 
-    private Lugar[] lugares;
+    private List<Lugar> lugares;
 
 
     public String getEmail() {
@@ -40,11 +42,11 @@ public class Usuario {
         this.login = login;
     }
 
-    public Lugar[] getLugares() {
+    public List<Lugar> getLugares() {
         return lugares;
     }
 
-    public void setLugares(Lugar[] lugares) {
+    public void setLugares(List<Lugar> lugares) {
         this.lugares = lugares;
     }
 
