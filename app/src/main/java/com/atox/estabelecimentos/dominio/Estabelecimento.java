@@ -2,6 +2,8 @@ package com.atox.estabelecimentos.dominio;
 
 import com.atox.usuario.dominio.Endereco;
 
+import java.util.List;
+
 public class Estabelecimento {
 
     private String nome;
@@ -10,7 +12,11 @@ public class Estabelecimento {
 
     private Endereco endereco;
 
-    //TODO: criar os atributos metodoPagamento e horarioFuncionamento que são do tipo Enum
+    private List<MetodosPagamento> metodosPagamento;
+
+    private Horarios horarioAbertura;
+
+    private Horarios horarioFechamento;
 
 
     public String getNome() {
@@ -35,6 +41,30 @@ public class Estabelecimento {
 
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
+    }
+
+    public List<MetodosPagamento> getMetodosPagamento() {
+        return metodosPagamento;
+    }
+
+    public void setMetodosPagamento(List<MetodosPagamento> metodosPagamento) {
+        this.metodosPagamento = metodosPagamento;
+    }
+
+    public Horarios getHorarioAbertura() {
+        return horarioAbertura;
+    }
+
+    public void setHorarioAbertura(Horarios horarioAbertura) {
+        this.horarioAbertura = horarioAbertura;
+    }
+
+    public Horarios getHorarioFechamento() {
+        return horarioFechamento;
+    }
+
+    public void setHorarioFechamento(Horarios horarioFechamento) {
+        this.horarioFechamento = horarioFechamento;
     }
 
 }
