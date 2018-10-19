@@ -5,16 +5,29 @@ package com.atox.usuario.dominio;
 //THIS IS NOT THE FINAL USER OF THE APPLICATION JUST AN EXAMPLE
 //SHOULD BE REMOVED IN PRODUCTION
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+
 import java.util.List;
 
+@Entity(tableName = "usuario")
 public class Usuario extends Pessoa {
 
+    @PrimaryKey(autoGenerate = true)
+    private long uid;
+
+    @ColumnInfo(name = "email")
     private String email;
 
+    @ColumnInfo(name = "senha")
     private String senha;
 
+    @ColumnInfo(name = "login")
     private String login;
 
+    @Ignore
     private List<Lugar> lugares;
 
 
@@ -50,4 +63,11 @@ public class Usuario extends Pessoa {
         this.lugares = lugares;
     }
 
+    public long getUid() {
+        return uid;
+    }
+
+    public void setUid(long uid) {
+        this.uid = uid;
+    }
 }

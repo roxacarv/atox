@@ -5,6 +5,8 @@ import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Update;
 
+import java.util.List;
+
 /**
  * Creates a base interface to be used by DAO operations on the Database using the Room Framework.
  * This method should be inherited by another class to be used properly. The Query operation should
@@ -25,10 +27,10 @@ public interface BaseDao<T> {
      *             deletar() Remove an object/data from the database;
      */
     @Insert
-    void inserir(T data);
+    long inserir(T data);
 
     @Insert
-    void inserirTudo(T... data);
+    List<Long> inserirTudo(T... data);
 
     @Update
     void atualizar(T data);

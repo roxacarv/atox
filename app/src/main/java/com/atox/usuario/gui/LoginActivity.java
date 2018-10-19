@@ -1,23 +1,33 @@
 package com.atox.usuario.gui;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.atox.R;
+import com.atox.usuario.dao.UsuarioListViewModel;
+import com.atox.usuario.dominio.Endereco;
+import com.atox.usuario.dominio.Usuario;
 import com.atox.utils.Encryption;
 import com.atox.utils.ValidaCadastro;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.concurrent.ExecutionException;
 
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static final String TAG = LoginActivity.class.getName();
     private EditText mEmailView;
     private EditText mPasswordView;
+    private UsuarioListViewModel usuarioModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,14 +44,14 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(registerScreen);
 
     }
-    public void logar(View view){
+    public void logar(View view) throws ExecutionException, InterruptedException {
         try {
             attemptLogin();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
     }
-    private void attemptLogin() throws NoSuchAlgorithmException {
+    private void attemptLogin() throws NoSuchAlgorithmException, ExecutionException, InterruptedException {
 
         // Reset errors.
         mEmailView.setError(null);
@@ -53,6 +63,28 @@ public class LoginActivity extends AppCompatActivity {
 
         boolean cancel = false;
         View focusView = null;
+
+        usuarioModel = ViewModelProviders.of(this).get(UsuarioListViewModel.class);
+        Usuario novo_usuario = new Usuario();
+        novo_usuario.setEmail("xavier@gmail.com");
+        novo_usuario.setLogin("roxac");
+        novo_usuario.setCpf("00000000000");
+        novo_usuario.setSenha("12345");
+        Endereco novo_endereco = new Endereco();
+        novo_endereco.setBairro("Santana");
+        novo_endereco.setCidade("Recife");
+        long idDeRetorno = usuarioModel.inserirUsuario(novo_usuario);
+        Log.i(TAG, "id de retorno: " + idDeRetorno);
+        novo_endereco.setUsuarioId(idDeRetorno);
+        usuarioModel.inserirEndereco(novo_endereco);
+
+        usuarioModel.buscarUsuarioPorCpf("00000000000").observe(LoginActivity.this, new Observer<Usuario>() {
+            @Override
+            public void onChanged(@Nullable Usuario usuario) {
+                getData(usuario);
+                Log.i(TAG, "usuario: " + usuario.getEmail() + " id do objeto: " + usuario.getUid());
+            }
+        });
 
         // Check for a valid password, if the user entered one.
         if (validaCadastro.isCampoVazio(password) || validaCadastro.isSenhaValida(password) ) {
@@ -83,6 +115,12 @@ public class LoginActivity extends AppCompatActivity {
             alert("login bem sucedido");
         }
     }
+
+    public void getData(Usuario usuario) {
+        Log.i(TAG, "Nome: " + usuario.getEmail());
+    }
+
+
     private void alert(String s){
         Toast.makeText(this,s,Toast.LENGTH_LONG).show();
     }

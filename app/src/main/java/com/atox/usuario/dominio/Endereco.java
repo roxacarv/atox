@@ -1,23 +1,55 @@
 package com.atox.usuario.dominio;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Index;
+import android.arch.persistence.room.PrimaryKey;
+
+import static android.arch.persistence.room.ForeignKey.CASCADE;
+
+@Entity(tableName = "endereco", indices = @Index("usuario_id"),
+        foreignKeys = @ForeignKey(entity = Usuario.class,
+                                  parentColumns = "uid",
+                                  childColumns = "usuario_id",
+                                  onDelete = CASCADE))
 public class Endereco {
 
+    @PrimaryKey(autoGenerate = true)
+    private long eid;
+
+    @ColumnInfo(name = "usuario_id")
+    private long usuarioId;
+
+    @ColumnInfo(name = "cep")
     private String cep;
 
+    @ColumnInfo(name = "logradouro")
     private String logradouro;
 
+    @ColumnInfo(name = "numero")
     private String  numero;
 
+    @ColumnInfo(name = "complemento")
     private String complemento;
 
+    @ColumnInfo(name = "bairro")
     private String bairro;
 
+    @ColumnInfo(name = "cidade")
     private String cidade;
 
+    @ColumnInfo(name = "estado")
     private String estado;
 
+    @ColumnInfo(name = "pais")
     private String pais;
 
+    public Endereco() { }
+
+    public Endereco(int usuarioId) {
+        this.usuarioId = usuarioId;
+    }
 
     public String getCep() {
         return cep;
@@ -83,4 +115,19 @@ public class Endereco {
         this.pais = pais;
     }
 
+    public long getEid() {
+        return eid;
+    }
+
+    public void setEid(long eid) {
+        this.eid = eid;
+    }
+
+    public long getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(long usuarioId) {
+        this.usuarioId = usuarioId;
+    }
 }

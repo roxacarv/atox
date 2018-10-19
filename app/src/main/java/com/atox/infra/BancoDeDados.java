@@ -3,12 +3,20 @@ package com.atox.infra;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
+import com.atox.usuario.dao.EnderecoDao;
 import com.atox.usuario.dao.UsuarioDao;
+import com.atox.usuario.dominio.Endereco;
 import com.atox.usuario.dominio.Usuario;
+import com.atox.utils.DateTypeConverter;
 
-@Database(entities = {Usuario.class}, version = 1)
+@Database(entities = { Usuario.class,
+                       Endereco.class
+                     },
+                       version = 1)
+@TypeConverters({DateTypeConverter.class})
 public abstract class BancoDeDados extends RoomDatabase {
 
     private static final String NOME_BANCO_DE_DADOS = "banco-de-dados-atox";
@@ -27,6 +35,7 @@ public abstract class BancoDeDados extends RoomDatabase {
         INSTANCE = null;
     }
 
-    public abstract UsuarioDao userModel();
+    public abstract UsuarioDao usuarioDao();
+    public abstract EnderecoDao enderecoDao();
 
 }
