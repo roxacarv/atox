@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".usuario.gui.RegistroActivity">
+    tools:context=".usuario.gui.RegistroActivity"
+    android:background="@drawable/bg_loginscreen">
 
 
     <ScrollView
@@ -33,7 +34,8 @@
                 android:layout_width="46dp"
                 android:layout_height="wrap_content"
                 android:background="@mipmap/ic_back"
-                android:layout_marginLeft="7dp"/>
+                android:layout_marginLeft="7dp"
+                android:onClick="backToLoginScreen"/>
 
             <TextView
                 android:id="@+id/textView3"
@@ -182,6 +184,7 @@
                 android:layout_marginBottom="30dp"
                 android:layout_gravity="center"
                 android:text="CONTINUAR"
+                android:onClick="goToEnderecoScreen"
                 android:background="@drawable/bg_rounded"
                 android:fontFamily="@font/google_sans_bold"
                 android:textColor="@color/white"
