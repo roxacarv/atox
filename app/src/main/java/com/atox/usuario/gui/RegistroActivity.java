@@ -114,11 +114,12 @@ public class RegistroActivity extends AppCompatActivity {
     }
 
     public void goToEnderecoScreen(View view){
-        try {
-            validarRegistro();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
+
+        //try {
+          //  validarRegistro();
+        //} catch (NoSuchAlgorithmException e) {
+          //  e.printStackTrace();
+        //}
 
         Intent registerScreen = new Intent(RegistroActivity.this, EnderecoActivity.class);
         startActivity(registerScreen);
