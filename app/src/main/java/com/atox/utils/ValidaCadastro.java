@@ -3,6 +3,8 @@ package com.atox.utils;
 import android.text.TextUtils;
 import android.util.Patterns;
 
+import com.atox.infra.FormataData;
+
 public class ValidaCadastro {
     private final int TAMANHO_SENHA = 6;
     private final int TAMANHO_CPF = 14;
@@ -22,6 +24,12 @@ public class ValidaCadastro {
 
     public boolean isCpfValida(String texto) {
         return !isCampoVazio(texto) && texto.length() == TAMANHO_CPF;
+    }
+
+    public boolean isDataNascimento (String data){
+
+        return (FormataData.dataExiste(data) && FormataData.dataMenorOuIgualQueAtual(data) && data.length() == TAMANHO_DATA);
+
     }
 
 }

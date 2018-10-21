@@ -26,22 +26,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/buttonBack"
                 android:layout_width="46dp"
                 android:layout_height="wrap_content"
-                android:background="@mipmap/ic_back"
-                android:layout_marginLeft="7dp"/>
+                android:layout_marginLeft="7dp"
+                android:background="@mipmap/ic_back" />
 
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/google_sans_bold"
-                android:paddingTop="20dp"
                 android:paddingLeft="20dp"
+                android:paddingTop="20dp"
                 android:text="Registre-se no ATOX!"
                 android:textColor="@color/colorPrimary"
                 android:textSize="20sp" />
@@ -51,141 +51,141 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/google_sans_regular"
-                android:paddingTop="0dp"
-                android:paddingBottom="10dp"
                 android:paddingLeft="20dp"
+                android:paddingTop="0dp"
                 android:paddingRight="20dp"
+                android:paddingBottom="10dp"
                 android:text="Preencha seus dados e venha fazer da nossa plataforma"
                 android:textColor="@color/colorPrimary"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/textView9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/google_sans_bold"
                 android:paddingLeft="20dp"
                 android:paddingTop="30dp"
                 android:text="DADOS PESSOAIS"
-                android:fontFamily="@font/google_sans_bold"
-                android:textSize="16sp"
                 android:textColor="@color/colorPrimary"
-                />
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/editTextNome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:hint="Seu nome"
                 android:drawableLeft="@mipmap/ic_gray_person"
+                android:ems="10"
                 android:fontFamily="@font/google_sans_regular"
-                android:textSize="14sp"
-                android:textColorLink="@color/colorPrimary"
-                android:textColorHighlight="@color/colorPrimary"
+                android:hint="Seu nome"
+                android:inputType="textPersonName"
                 android:outlineAmbientShadowColor="@color/colorPrimary"
-                android:outlineSpotShadowColor="@color/colorPrimary"/>
+                android:outlineSpotShadowColor="@color/colorPrimary"
+                android:textColorHighlight="@color/colorPrimary"
+                android:textColorLink="@color/colorPrimary"
+                android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/editTextTelefone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="phone"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:hint="Seu telefone"
-                android:textColorHighlight="@color/colorPrimary"
                 android:drawableLeft="@mipmap/ic_gray_phone"
+                android:ems="10"
                 android:fontFamily="@font/google_sans_regular"
-                android:textSize="14sp"/>
+                android:hint="Seu telefone"
+                android:inputType="phone"
+                android:textColorHighlight="@color/colorPrimary"
+                android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/editTextDataNascimento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="date"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:textColorHighlight="@color/colorPrimary"
-                android:hint="Sua Data Nascimento"
                 android:drawableLeft="@mipmap/ic_gray_birthday"
+                android:ems="10"
                 android:fontFamily="@font/google_sans_regular"
-                android:textSize="14sp"/>
+                android:hint="Sua Data Nascimento"
+                android:inputType="date"
+                android:textColorHighlight="@color/colorPrimary"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/textView10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/google_sans_bold"
                 android:paddingLeft="20dp"
                 android:paddingTop="30dp"
                 android:text="DADOS DA CONTA"
-                android:fontFamily="@font/google_sans_bold"
-                android:textSize="16sp"
-                android:textColor="@color/colorPrimary"/>
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/editText6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textEmailAddress"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:hint="Seu email"
-                android:textColorHighlight="@color/colorPrimary"
                 android:drawableLeft="@mipmap/ic_email"
                 android:drawableTint="@color/lightGray"
+                android:ems="10"
                 android:fontFamily="@font/google_sans_regular"
-                android:textSize="14sp"/>
+                android:hint="Seu email"
+                android:inputType="textEmailAddress"
+                android:textColorHighlight="@color/colorPrimary"
+                android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/editTextSenha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPassword"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:hint="Sua senha"
                 android:drawableLeft="@mipmap/ic_password"
                 android:drawableTint="@color/lightGray"
-                android:textColorHighlight="@color/colorPrimary"
+                android:ems="10"
                 android:fontFamily="@font/google_sans_regular"
-                android:textSize="14sp"/>
+                android:hint="Sua senha"
+                android:inputType="textPassword"
+                android:textColorHighlight="@color/colorPrimary"
+                android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/editTextConfirmeSenha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPassword"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:hint="Confirme sua senha"
                 android:drawableLeft="@mipmap/ic_password"
                 android:drawableTint="@color/lightGray"
-                android:textColorHighlight="@color/colorPrimary"
+                android:ems="10"
                 android:fontFamily="@font/google_sans_regular"
-                android:textSize="14sp"/>
+                android:hint="Confirme sua senha"
+                android:inputType="textPassword"
+                android:textColorHighlight="@color/colorPrimary"
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/button"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_marginTop="30dp"
+                android:layout_gravity="center"
                 android:layout_marginLeft="60dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginRight="60dp"
                 android:layout_marginBottom="30dp"
-                android:layout_gravity="center"
-                android:text="CONTINUAR"
                 android:background="@drawable/bg_rounded"
                 android:fontFamily="@font/google_sans_bold"
+                android:onClick="registrar"
+                android:text="CONTINUAR"
                 android:textColor="@color/white"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
         </LinearLayout>
     </ScrollView>
