@@ -38,7 +38,7 @@
 
         <!--REGISTER SCREEN-->
         <activity android:name=".usuario.gui.RegistroActivity"
-            android:theme="@style/FullScreenWithStatusBar"></activity>
+            android:theme="@style/FullScreenTheme"></activity>
     </application>
 
 </manifest>
