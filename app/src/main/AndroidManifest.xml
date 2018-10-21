@@ -28,16 +28,22 @@
 
         <!-- LOGIN SCREEN (COM AS ALTERAÇÕES DE RODRIGO) -->
 
+
         <!-- ONBOARD SCREEN WITH THE FRAGMENTS -->
         <activity android:name=".navegacao.OnboardingActivity" />
 
         <!-- THE CUSTOM LOGIN SCREEN -->
         <activity
             android:name=".usuario.gui.LoginActivity"
-            android:theme="@style/FullScreenTheme"></activity>
+            android:theme="@style/FullScreenTheme" />
 
-        <!--REGISTER SCREEN-->
-        <activity android:name=".usuario.gui.RegistroActivity"
+        <!-- REGISTER SCREEN -->
+        <activity
+            android:name=".usuario.gui.RegistroActivity"
+            android:theme="@style/FullScreenTheme" />
+
+        <!--ENDERECO SCREEN-->
+        <activity android:name=".usuario.gui.EnderecoActivity"
             android:theme="@style/FullScreenTheme"></activity>
     </application>
 

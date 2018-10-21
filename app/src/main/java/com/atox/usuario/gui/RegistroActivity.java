@@ -1,10 +1,12 @@
 package com.atox.usuario.gui;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.view.View;
 
 import com.atox.R;
 import com.atox.infra.Mascara;
@@ -20,7 +22,6 @@ public class RegistroActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_screen);
         mNome = findViewById(R.id.editTextNome);
         mTelefone = findViewById(R.id.editTextTelefone);
         mData = findViewById(R.id.editTextDataNascimento);
@@ -28,6 +29,7 @@ public class RegistroActivity extends AppCompatActivity {
         mEmail = findViewById(R.id.editTextEmail);
         mSenha = findViewById(R.id.editTextSenha);
         mSenhaConfirm = findViewById(R.id.editTextConfirmeSenha);
+        setContentView(R.layout.activity_registro);
     }
     public void registrar(View view) throws ExecutionException, InterruptedException {
         try {
@@ -110,6 +112,22 @@ public class RegistroActivity extends AppCompatActivity {
     }
     private void alert(String s){
         Toast.makeText(this,s,Toast.LENGTH_LONG).show();
+    }
+
+
+
+    public void backToLoginScreen(View view){
+
+        Intent registerScreen = new Intent(RegistroActivity.this, LoginActivity.class);
+        startActivity(registerScreen);
+
+    }
+
+    public void goToEnderecoScreen(View view){
+
+        Intent registerScreen = new Intent(RegistroActivity.this, EnderecoActivity.class);
+        startActivity(registerScreen);
+
     }
 
 }
