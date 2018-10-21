@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.view.View;
 
 import com.atox.R;
 import com.atox.infra.Mascara;
@@ -14,7 +13,6 @@ import com.atox.utils.Encryption;
 import com.atox.utils.ValidaCadastro;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.concurrent.ExecutionException;
 
 public class RegistroActivity extends AppCompatActivity {
     private EditText mNome, mTelefone, mData, mEmail, mSenha, mSenhaConfirm;
@@ -22,6 +20,7 @@ public class RegistroActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_registro);
         mNome = findViewById(R.id.editTextNome);
         mTelefone = findViewById(R.id.editTextTelefone);
         mData = findViewById(R.id.editTextDataNascimento);
@@ -29,16 +28,7 @@ public class RegistroActivity extends AppCompatActivity {
         mEmail = findViewById(R.id.editTextEmail);
         mSenha = findViewById(R.id.editTextSenha);
         mSenhaConfirm = findViewById(R.id.editTextConfirmeSenha);
-        setContentView(R.layout.activity_registro);
     }
-    public void registrar(View view) throws ExecutionException, InterruptedException {
-        try {
-            validarRegistro();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     private void validarRegistro() throws NoSuchAlgorithmException {
         mEmail.setError(null);
@@ -124,6 +114,11 @@ public class RegistroActivity extends AppCompatActivity {
     }
 
     public void goToEnderecoScreen(View view){
+        try {
+            validarRegistro();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
 
         Intent registerScreen = new Intent(RegistroActivity.this, EnderecoActivity.class);
         startActivity(registerScreen);
