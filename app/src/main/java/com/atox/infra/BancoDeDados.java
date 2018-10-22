@@ -6,14 +6,15 @@ import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
-import com.atox.usuario.dao.EnderecoDao;
+import com.atox.usuario.dao.SessaoDao;
 import com.atox.usuario.dao.UsuarioDao;
 import com.atox.usuario.dominio.Endereco;
+import com.atox.usuario.dominio.Sessao;
 import com.atox.usuario.dominio.Usuario;
 import com.atox.utils.DateTypeConverter;
 
 @Database(entities = { Usuario.class,
-                       Endereco.class
+                       Sessao.class
                      },
                        version = 1)
 @TypeConverters({DateTypeConverter.class})
@@ -36,6 +37,6 @@ public abstract class BancoDeDados extends RoomDatabase {
     }
 
     public abstract UsuarioDao usuarioDao();
-    public abstract EnderecoDao enderecoDao();
+    public abstract SessaoDao sessaoDao();
 
 }

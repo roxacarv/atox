@@ -1,6 +1,7 @@
 package com.atox.usuario.dominio;
 
 import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Ignore;
 
 import java.util.Date;
@@ -16,7 +17,7 @@ public class Pessoa {
     @ColumnInfo(name = "cpf")
     private String cpf;
 
-    @Ignore
+    @Embedded
     private Endereco endereco;
 
     @ColumnInfo(name = "telefone")

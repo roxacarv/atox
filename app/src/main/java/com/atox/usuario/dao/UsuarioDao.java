@@ -20,14 +20,8 @@ public interface UsuarioDao extends BaseDao<Usuario> {
     @Query("SELECT * FROM usuario where uid LIKE :uid")
     LiveData<Usuario> buscarPorId(long uid);
 
-    @Query("SELECT * FROM endereco where usuario_id LIKE :uid")
-    LiveData<List<Endereco>> buscarTodosEnderecosPorIdDeUsuario(long uid);
-
-    @Query("SELECT * FROM endereco where usuario_id LIKE :uid")
-    LiveData<Endereco> buscarEnderecoPorIdDeUsuario(long uid);
-
-    @Query("SELECT * FROM endereco where eid LIKE :eid")
-    LiveData<Endereco> buscarEnderecoPorId(long eid);
+    @Query("SELECT * FROM usuario where uid LIKE :uid")
+    Usuario buscarPorIdDeSessao(long uid);
 
     @Query("SELECT * FROM usuario where nome LIKE :nome")
     LiveData<List<Usuario>> buscarPorNome(String nome);

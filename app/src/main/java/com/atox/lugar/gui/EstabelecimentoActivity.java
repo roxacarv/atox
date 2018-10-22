@@ -1,4 +1,4 @@
-package com.atox.estabelecimentos.gui;
+package com.atox.lugar.gui;
 
 public class EstabelecimentoActivity {
 }

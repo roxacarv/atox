@@ -1,6 +1,6 @@
-package com.atox.estabelecimentos.dominio;
+package com.atox.lugar.dominio;
 
-public enum MetodosPagamento {
+public enum MetodoPagamento {
 
     A_VISTA("À vista"),
     CREDITO("Crédito"),
@@ -9,7 +9,7 @@ public enum MetodosPagamento {
 
     private String descricao;
 
-    private MetodosPagamento(String descricao){
+    private MetodoPagamento(String descricao){
         this.descricao = descricao;
     }
 }

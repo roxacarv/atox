@@ -1,10 +1,8 @@
-package com.atox.estabelecimentos.dominio;
+package com.atox.lugar.dominio;
 
 import com.atox.usuario.dominio.Endereco;
 
-import java.util.List;
-
-public class Estabelecimento {
+public class Lugar {
 
     private String nome;
 
@@ -12,12 +10,11 @@ public class Estabelecimento {
 
     private Endereco endereco;
 
-    private List<MetodosPagamento> metodosPagamento;
+    private MetodoPagamento metodoPagamento;
 
-    private Horarios horarioAbertura;
+    private Horario horarioAbertura;
 
-    private Horarios horarioFechamento;
-
+    private Horario horarioFechamento;
 
     public String getNome() {
         return nome;
@@ -43,28 +40,27 @@ public class Estabelecimento {
         this.endereco = endereco;
     }
 
-    public List<MetodosPagamento> getMetodosPagamento() {
-        return metodosPagamento;
-    }
-
-    public void setMetodosPagamento(List<MetodosPagamento> metodosPagamento) {
-        this.metodosPagamento = metodosPagamento;
-    }
-
-    public Horarios getHorarioAbertura() {
+    public Horario getHorarioAbertura() {
         return horarioAbertura;
     }
 
-    public void setHorarioAbertura(Horarios horarioAbertura) {
+    public void setHorarioAbertura(Horario horarioAbertura) {
         this.horarioAbertura = horarioAbertura;
     }
 
-    public Horarios getHorarioFechamento() {
+    public Horario getHorarioFechamento() {
         return horarioFechamento;
     }
 
-    public void setHorarioFechamento(Horarios horarioFechamento) {
+    public void setHorarioFechamento(Horario horarioFechamento) {
         this.horarioFechamento = horarioFechamento;
     }
 
+    public MetodoPagamento getMetodoPagamento() {
+        return metodoPagamento;
+    }
+
+    public void setMetodoPagamento(MetodoPagamento metodoPagamento) {
+        this.metodoPagamento = metodoPagamento;
+    }
 }

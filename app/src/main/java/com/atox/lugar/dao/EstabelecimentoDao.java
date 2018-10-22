@@ -1,4 +1,4 @@
-package com.atox.estabelecimentos.dao;
+package com.atox.lugar.dao;
 
 public interface EstabelecimentoDao {
 }

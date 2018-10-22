@@ -12,7 +12,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.atox.R;
-import com.atox.usuario.dao.UsuarioListViewModel;
+import com.atox.usuario.dominio.Sessao;
+import com.atox.usuario.negocio.UsuarioNegocio;
 import com.atox.usuario.dominio.Endereco;
 import com.atox.usuario.dominio.Usuario;
 import com.atox.utils.Encryption;
@@ -27,7 +28,8 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getName();
     private EditText mEmailView;
     private EditText mPasswordView;
-    private UsuarioListViewModel usuarioModel;
+    private UsuarioNegocio usuarioNegocio;
+    private Sessao sessao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         boolean cancel = false;
         View focusView = null;
 
-        usuarioModel = ViewModelProviders.of(this).get(UsuarioListViewModel.class);
+        usuarioNegocio = ViewModelProviders.of(this).get(UsuarioNegocio.class);
         Usuario novo_usuario = new Usuario();
         novo_usuario.setEmail("xavier@gmail.com");
         novo_usuario.setLogin("roxac");
@@ -73,16 +75,16 @@ public class LoginActivity extends AppCompatActivity {
         Endereco novo_endereco = new Endereco();
         novo_endereco.setBairro("Santana");
         novo_endereco.setCidade("Recife");
-        long idDeRetorno = usuarioModel.inserirUsuario(novo_usuario);
-        Log.i(TAG, "id de retorno: " + idDeRetorno);
-        novo_endereco.setUsuarioId(idDeRetorno);
-        usuarioModel.inserirEndereco(novo_endereco);
+        novo_usuario.setEndereco(novo_endereco);
+        long idDeRetorno = usuarioNegocio.inserirUsuario(novo_usuario);
 
-        usuarioModel.buscarUsuarioPorCpf("00000000000").observe(LoginActivity.this, new Observer<Usuario>() {
+        usuarioNegocio.buscarUsuarioPorCpf("00000000000").observe(LoginActivity.this, new Observer<Usuario>() {
             @Override
             public void onChanged(@Nullable Usuario usuario) {
                 getData(usuario);
-                Log.i(TAG, "usuario: " + usuario.getEmail() + " id do objeto: " + usuario.getUid());
+                sessao = Sessao.getSessao();
+                sessao.setUsuario(usuario);
+                Log.i(TAG, "usuario: " + usuario.getEmail() + " id do objeto: " + usuario.getUid() + "endereco: " + usuario.getEndereco().getBairro());
             }
         });
 

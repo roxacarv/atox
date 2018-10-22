@@ -1,4 +1,4 @@
-package com.atox.estabelecimentos.dominio;
+package com.atox.lugar.dominio;
 
 import java.util.List;
 
