@@ -74,11 +74,11 @@
                 />
 
             <EditText
-                android:id="@+id/editTextNome"
+                android:id="@+id/editTextRegistroNome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="textCapWords"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:hint="Seu nome"
@@ -91,7 +91,7 @@
                 android:outlineSpotShadowColor="@color/colorPrimary"/>
 
             <EditText
-                android:id="@+id/editTextTelefone"
+                android:id="@+id/editTextRegistroTelefone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -130,7 +130,7 @@
                 android:textColor="@color/colorPrimary"/>
 
             <EditText
-                android:id="@+id/editText6"
+                android:id="@+id/editTextRegistroEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -145,7 +145,7 @@
                 android:textSize="14sp"/>
 
             <EditText
-                android:id="@+id/editTextSenha"
+                android:id="@+id/editTextRegistroSenha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"

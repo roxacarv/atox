@@ -3,6 +3,7 @@ package com.atox.usuario.gui;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -21,12 +22,12 @@ public class RegistroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
-        mNome = findViewById(R.id.editTextNome);
-        mTelefone = findViewById(R.id.editTextTelefone);
+        mNome = findViewById(R.id.editTextRegistroNome);
+        mTelefone = findViewById(R.id.editTextRegistroTelefone);
         mData = findViewById(R.id.editTextDataNascimento);
         mData.addTextChangedListener(Mascara.insert("##/##/####", mData));
-        mEmail = findViewById(R.id.editTextEmail);
-        mSenha = findViewById(R.id.editTextSenha);
+        mEmail = findViewById(R.id.editTextRegistroEmail);
+        mSenha = findViewById(R.id.editTextRegistroSenha);
         mSenhaConfirm = findViewById(R.id.editTextConfirmeSenha);
     }
 
@@ -92,14 +93,19 @@ public class RegistroActivity extends AppCompatActivity {
         }
 
 
+
+
         if(valido){
             alert("Registro bem sucedido");
             String RealSenha = Encryption.encryptPassword(senha);
         } else {
             alert("Preencha os campos corretamente");
+            return;
         }
 
     }
+
+
     private void alert(String s){
         Toast.makeText(this,s,Toast.LENGTH_LONG).show();
     }
@@ -115,11 +121,11 @@ public class RegistroActivity extends AppCompatActivity {
 
     public void goToEnderecoScreen(View view){
 
-        //try {
-          //  validarRegistro();
-        //} catch (NoSuchAlgorithmException e) {
-          //  e.printStackTrace();
-        //}
+        try {
+            validarRegistro();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
 
         Intent registerScreen = new Intent(RegistroActivity.this, EnderecoActivity.class);
         startActivity(registerScreen);
