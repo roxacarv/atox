@@ -17,6 +17,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class RegistroActivity extends AppCompatActivity {
     private EditText mNome, mTelefone, mData, mEmail, mSenha, mSenhaConfirm;
+    private boolean valido = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,7 @@ public class RegistroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registro);
         mNome = findViewById(R.id.editTextRegistroNome);
         mTelefone = findViewById(R.id.editTextRegistroTelefone);
+        mTelefone.addTextChangedListener(Mascara.insert("(##)#####-####",mTelefone));
         mData = findViewById(R.id.editTextDataNascimento);
         mData.addTextChangedListener(Mascara.insert("##/##/####", mData));
         mEmail = findViewById(R.id.editTextRegistroEmail);
@@ -31,7 +33,7 @@ public class RegistroActivity extends AppCompatActivity {
         mSenhaConfirm = findViewById(R.id.editTextConfirmeSenha);
     }
 
-    private void validarRegistro() throws NoSuchAlgorithmException {
+    public boolean validarRegistro() throws NoSuchAlgorithmException {
         mEmail.setError(null);
         mTelefone.setError(null);
         mSenha.setError(null);
@@ -48,7 +50,7 @@ public class RegistroActivity extends AppCompatActivity {
         View focusView = null;
 
         ValidaCadastro validaCadastro = new ValidaCadastro();
-        boolean valido = true;
+
 
         if(validaCadastro.isCampoVazio(nome)){
             mNome.requestFocus();
@@ -62,37 +64,38 @@ public class RegistroActivity extends AppCompatActivity {
             valido = false;
         }
 
-        if(!validaCadastro.isDataNascimento(dataNasc)){
+        else if(!validaCadastro.isDataNascimento(dataNasc)){
             mData.requestFocus();
             mData.setError(getString(R.string.error_invalid_date));
             valido = false;
         }
 
-        if(!validaCadastro.isEmail(email)){
+        else if(!validaCadastro.isEmail(email)){
             mEmail.requestFocus();
             mEmail.setError(getString(R.string.error_invalid_email));
             valido = false;
         }
 
-        if(!validaCadastro.isSenhaValida(senha)){
+        else if(!validaCadastro.isSenhaValida(senha)){
             mSenha.requestFocus();
             mSenha.setError(getString(R.string.error_invalid_password));
             valido = false;
         }
 
-        if(!validaCadastro.isSenhaValida(confirmSenha)){
+        else if(!validaCadastro.isSenhaValida(confirmSenha)){
             mSenhaConfirm.requestFocus();
             mSenhaConfirm.setError(getString(R.string.error_invalid_password));
             valido = false;
         }
 
-        if(!(senha.equals(confirmSenha))){
+        else if(!(senha.equals(confirmSenha))){
             mSenhaConfirm.requestFocus();
             mSenhaConfirm.setError(getString(R.string.error_invalid_password));
             valido = false;
         }
-
-
+        else{
+            valido = true;
+        }
 
 
         if(valido){
@@ -100,9 +103,9 @@ public class RegistroActivity extends AppCompatActivity {
             String RealSenha = Encryption.encryptPassword(senha);
         } else {
             alert("Preencha os campos corretamente");
-            return;
-        }
 
+        }
+        return valido;
     }
 
 
@@ -123,13 +126,13 @@ public class RegistroActivity extends AppCompatActivity {
 
         try {
             validarRegistro();
+            if(validarRegistro()){
+                Intent registerScreen = new Intent(RegistroActivity.this, EnderecoActivity.class);
+                startActivity(registerScreen);
+            }
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-
-        Intent registerScreen = new Intent(RegistroActivity.this, EnderecoActivity.class);
-        startActivity(registerScreen);
-
     }
 
 }
