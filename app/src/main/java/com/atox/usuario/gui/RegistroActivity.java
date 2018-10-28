@@ -125,7 +125,6 @@ public class RegistroActivity extends AppCompatActivity {
     public void goToEnderecoScreen(View view){
 
         try {
-            validarRegistro();
             if(validarRegistro()){
                 Intent registerScreen = new Intent(RegistroActivity.this, EnderecoActivity.class);
                 startActivity(registerScreen);

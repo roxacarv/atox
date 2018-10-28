@@ -6,7 +6,6 @@ import android.util.Patterns;
 import com.atox.infra.FormataData;
 
 public class ValidaCadastro {
-    private final int TAMANHO_SENHA = 6;
     private final int TAMANHO_CPF = 14;
     private final int TAMANHO_DATA = 10;
 
@@ -19,6 +18,7 @@ public class ValidaCadastro {
     }
 
     public boolean isSenhaValida(String texto) {
+        int TAMANHO_SENHA = 6;
         return !isCampoVazio(texto) && texto.length() >= TAMANHO_SENHA;
     }
 
