@@ -17,7 +17,7 @@ public class Pessoa {
     @ColumnInfo(name = "cpf")
     private String cpf;
 
-    @Embedded
+    @Ignore
     private Endereco endereco;
 
     @ColumnInfo(name = "telefone")

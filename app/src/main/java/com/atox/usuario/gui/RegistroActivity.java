@@ -18,6 +18,7 @@ import java.security.NoSuchAlgorithmException;
 public class RegistroActivity extends AppCompatActivity {
     private EditText mNome, mTelefone, mData, mEmail, mSenha, mSenhaConfirm;
     private boolean valido = true;
+    private Intent registerScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class RegistroActivity extends AppCompatActivity {
         String senha            = mSenha.getText().toString();
         String confirmSenha     = mSenhaConfirm.getText().toString();
         String nome             = mNome.getText().toString();
-        String dataNasc         = mData.getText().toString();
+        String dataNascimento         = mData.getText().toString();
         String email            = mEmail.getText().toString();
         View focusView = null;
 
@@ -64,7 +65,7 @@ public class RegistroActivity extends AppCompatActivity {
             valido = false;
         }
 
-        else if(!validaCadastro.isDataNascimento(dataNasc)){
+        else if(!validaCadastro.isDataNascimento(dataNascimento)){
             mData.requestFocus();
             mData.setError(getString(R.string.error_invalid_date));
             valido = false;
@@ -100,7 +101,13 @@ public class RegistroActivity extends AppCompatActivity {
 
         if(valido){
             alert("Registro bem sucedido");
-            String RealSenha = Encryption.encryptPassword(senha);
+            String realSenha = Encryption.encryptPassword(senha);
+
+            registerScreen.putExtra("TELEFONE", telefone);
+            registerScreen.putExtra("SENHA", realSenha);
+            registerScreen.putExtra("NOME", nome);
+            registerScreen.putExtra("DATA_NASCIMENTO", dataNascimento);
+            registerScreen.putExtra("EMAIL", email);
         } else {
             alert("Preencha os campos corretamente");
 
@@ -117,7 +124,7 @@ public class RegistroActivity extends AppCompatActivity {
 
     public void backToLoginScreen(View view){
 
-        Intent registerScreen = new Intent(RegistroActivity.this, LoginActivity.class);
+        registerScreen = new Intent(RegistroActivity.this, LoginActivity.class);
         startActivity(registerScreen);
 
     }
@@ -126,7 +133,7 @@ public class RegistroActivity extends AppCompatActivity {
 
         try {
             if(validarRegistro()){
-                Intent registerScreen = new Intent(RegistroActivity.this, EnderecoActivity.class);
+                registerScreen = new Intent(RegistroActivity.this, EnderecoActivity.class);
                 startActivity(registerScreen);
             }
         } catch (NoSuchAlgorithmException e) {

@@ -8,7 +8,15 @@ import android.arch.persistence.room.PrimaryKey;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
+@Entity(tableName = "endereco", foreignKeys = @ForeignKey(entity = Usuario.class,
+                                                          parentColumns = "eid",
+                                                          childColumns = "usuarioId",
+                                                          onDelete = CASCADE))
+
 public class Endereco {
+
+    @PrimaryKey(autoGenerate = true)
+    private long eid;
 
     @ColumnInfo(name = "usuario_id")
     private long usuarioId;
