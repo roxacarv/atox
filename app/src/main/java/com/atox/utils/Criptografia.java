@@ -4,7 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class Encryption {
+public class Criptografia {
     public static String encryptPassword(String inputPassword) throws NoSuchAlgorithmException {
 
         //Criptografa a senha e a coloca num array de bytes

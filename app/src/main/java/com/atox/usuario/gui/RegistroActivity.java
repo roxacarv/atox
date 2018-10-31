@@ -3,14 +3,13 @@ package com.atox.usuario.gui;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.atox.R;
 import com.atox.infra.Mascara;
-import com.atox.utils.Encryption;
+import com.atox.utils.Criptografia;
 import com.atox.utils.ValidaCadastro;
 
 import java.security.NoSuchAlgorithmException;
@@ -101,7 +100,7 @@ public class RegistroActivity extends AppCompatActivity {
 
         if(valido){
             alert("Registro bem sucedido");
-            String realSenha = Encryption.encryptPassword(senha);
+            String realSenha = Criptografia.encryptPassword(senha);
 
             registerScreen.putExtra("TELEFONE", telefone);
             registerScreen.putExtra("SENHA", realSenha);

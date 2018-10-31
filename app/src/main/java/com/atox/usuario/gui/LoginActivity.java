@@ -16,7 +16,7 @@ import com.atox.usuario.dominio.Sessao;
 import com.atox.usuario.negocio.UsuarioNegocio;
 import com.atox.usuario.dominio.Endereco;
 import com.atox.usuario.dominio.Usuario;
-import com.atox.utils.Encryption;
+import com.atox.utils.Criptografia;
 import com.atox.utils.ValidaCadastro;
 
 import java.security.NoSuchAlgorithmException;
@@ -66,28 +66,6 @@ public class LoginActivity extends AppCompatActivity {
         boolean cancel = false;
         View focusView = null;
 
-        usuarioNegocio = ViewModelProviders.of(this).get(UsuarioNegocio.class);
-        Usuario novo_usuario = new Usuario();
-        novo_usuario.setEmail("xavier@gmail.com");
-        novo_usuario.setLogin("roxac");
-        novo_usuario.setCpf("00000000000");
-        novo_usuario.setSenha("12345");
-        Endereco novo_endereco = new Endereco();
-        novo_endereco.setBairro("Santana");
-        novo_endereco.setCidade("Recife");
-        novo_usuario.setEndereco(novo_endereco);
-        long idDeRetorno = usuarioNegocio.inserirUsuario(novo_usuario);
-
-        usuarioNegocio.buscarUsuarioPorCpf("00000000000").observe(LoginActivity.this, new Observer<Usuario>() {
-            @Override
-            public void onChanged(@Nullable Usuario usuario) {
-                getData(usuario);
-                sessao = Sessao.getSessao();
-                sessao.setUsuario(usuario);
-                Log.i(TAG, "usuario: " + usuario.getEmail() + " id do objeto: " + usuario.getUid() + "endereco: " + usuario.getEndereco().getBairro());
-            }
-        });
-
         // Check for a valid password, if the user entered one.
         if (validaCadastro.isCampoVazio(password) || validaCadastro.isSenhaValida(password) ) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
@@ -113,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
             alert("Login ou senha inválida");
         } else {
             // chamar classe para validar o login(criptografado) no DB
-            String realPassword = Encryption.encryptPassword(password);
+            String realPassword = Criptografia.encryptPassword(password);
             alert("login bem sucedido");
         }
     }

@@ -13,24 +13,28 @@ public interface EnderecoDao extends BaseDao<Endereco> {
     @Query("SELECT * FROM endereco")
     LiveData<List<Endereco>> buscarTudo();
 
-    @Query("SELECT * FROM endereco WHERE endereco_id LIKE :endereco_id")
-    LiveData<Endereco> buscarPeloId(long endereco_id);
+    @Query("SELECT * FROM endereco WHERE usuario_id LIKE :uid")
+    LiveData<Endereco> buscarPorIdDeUsuario(long uid);
+
+    @Query("SELECT * FROM endereco WHERE eid LIKE :eid")
+    LiveData<Endereco> buscarPorId(long eid);
 
     @Query("SELECT * FROM endereco WHERE cidade LIKE :cidade")
-    LiveData<Endereco> buscarPelaCidade(String cidade);
+    LiveData<List<Endereco>> buscarPorCidade(String cidade);
 
     @Query("SELECT * FROM  endereco WHERE bairro LIKE :bairro")
-    LiveData<Endereco> buscarPeloBairro(String bairro);
+    LiveData<List<Endereco>> buscarPorBairro(String bairro);
 
     @Query("SELECT * FROM endereco WHERE logradouro LIKE :logradouro")
-    LiveData<Endereco> buscarPeloLogradouro(String logradouro);
+    LiveData<List<Endereco>> buscarPorLogradouro(String logradouro);
 
     @Query("SELECT * FROM endereco WHERE cep LIKE :cep")
-    LiveData<Endereco> buscarPeloCep(String cep);
+    LiveData<List<Endereco>> buscarPorCep(String cep);
 
     @Query("SELECT * FROM endereco WHERE estado LIKE :estado")
-    LiveData<Endereco> buscarPeloEstado(String estado);
+    LiveData<List<Endereco>> buscarPorEstado(String estado);
 
     @Query("SELECT * FROM endereco WHERE pais LIKE :pais")
-    LiveData<Endereco> buscarPeloPaís(String pais);
+    LiveData<List<Endereco>> buscarPorPaís(String pais);
 }
+

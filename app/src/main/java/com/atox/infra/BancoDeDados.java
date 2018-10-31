@@ -12,14 +12,14 @@ import com.atox.usuario.dao.UsuarioDao;
 import com.atox.usuario.dominio.Endereco;
 import com.atox.usuario.dominio.Sessao;
 import com.atox.usuario.dominio.Usuario;
-import com.atox.utils.DateTypeConverter;
+import com.atox.utils.ConversorDeTipo;
 
 @Database(entities = { Usuario.class,
-        Sessao.class,
-        Endereco.class
-},
-        version = 1)
-@TypeConverters({DateTypeConverter.class})
+                       Sessao.class,
+                       Endereco.class
+                     },
+          version = 1)
+@TypeConverters({ConversorDeTipo.class})
 public abstract class BancoDeDados extends RoomDatabase {
 
     private static final String NOME_BANCO_DE_DADOS = "banco-de-dados-atox";

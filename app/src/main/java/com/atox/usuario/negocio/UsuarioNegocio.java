@@ -42,6 +42,19 @@ public class UsuarioNegocio extends AndroidViewModel {
         return future.get();
     }
 
+    public Long inserirEndereco(final Endereco endereco) throws ExecutionException, InterruptedException {
+        Callable<Long> call = new Callable<Long>() {
+            @Override
+            public Long call() throws Exception {
+                return bancoDeDados.enderecoDao().inserir(endereco);
+            }
+        };
+
+        ExecutorService executor = new ScheduledThreadPoolExecutor(1);
+        Future<Long> future = executor.submit(call);
+        return future.get();
+    }
+
     public void atualizar(final Usuario usuario) {
         new Thread(new Runnable() {
             @Override
@@ -93,6 +106,26 @@ public class UsuarioNegocio extends AndroidViewModel {
     public LiveData<Usuario> buscarUsuarioPorCpf(String cpf) {
         LiveData<Usuario> usuario = bancoDeDados.usuarioDao().buscarPorCpf(cpf);
         return usuario;
+    }
+
+    public LiveData<Endereco> buscarPorIdDeEndereco(long eid) {
+        LiveData<Endereco> endereco = bancoDeDados.enderecoDao().buscarPorId(eid);
+        return endereco;
+    }
+
+    public LiveData<Endereco> buscarPorEnderecoPorIdDeUsuario(long uid) {
+        LiveData<Endereco> endereco = bancoDeDados.enderecoDao().buscarPorIdDeUsuario(uid);
+        return endereco;
+    }
+
+    public LiveData<List<Endereco>> buscarEnderecoPorCidade(String cidade) {
+        LiveData<List<Endereco>> endereco = bancoDeDados.enderecoDao().buscarPorCidade(cidade);
+        return endereco;
+    }
+
+    public LiveData<List<Endereco>> buscarEnderecoPorBairro(String bairro) {
+        LiveData<List<Endereco>> endereco = bancoDeDados.enderecoDao().buscarPorBairro(bairro);
+        return endereco;
     }
 
     public void deletarItem(Usuario usuario)
