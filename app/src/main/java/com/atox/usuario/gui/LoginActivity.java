@@ -18,6 +18,8 @@ import com.atox.usuario.dominio.Endereco;
 import com.atox.usuario.dominio.Usuario;
 import com.atox.utils.Criptografia;
 import com.atox.utils.ValidaCadastro;
+import com.google.android.gms.location.places.Place;
+import com.shishank.autocompletelocationview.interfaces.OnQueryCompleteListener;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.ExecutionException;

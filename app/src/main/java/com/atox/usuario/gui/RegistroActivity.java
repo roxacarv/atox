@@ -15,7 +15,12 @@ import com.atox.utils.ValidaCadastro;
 import java.security.NoSuchAlgorithmException;
 
 public class RegistroActivity extends AppCompatActivity {
-    private EditText mNome, mTelefone, mData, mEmail, mSenha, mSenhaConfirm;
+    private EditText mNome;
+    private EditText mTelefone;
+    private EditText mData;
+    private EditText mEmail;
+    private EditText mSenha;
+    private EditText mSenhaConfirm;
     private boolean valido = true;
     private Intent registerScreen;
 
@@ -31,6 +36,8 @@ public class RegistroActivity extends AppCompatActivity {
         mEmail = findViewById(R.id.editTextRegistroEmail);
         mSenha = findViewById(R.id.editTextRegistroSenha);
         mSenhaConfirm = findViewById(R.id.editTextConfirmeSenha);
+
+        registerScreen = new Intent(RegistroActivity.this, EnderecoActivity.class);
     }
 
     public boolean validarRegistro() throws NoSuchAlgorithmException {
@@ -123,8 +130,8 @@ public class RegistroActivity extends AppCompatActivity {
 
     public void backToLoginScreen(View view){
 
-        registerScreen = new Intent(RegistroActivity.this, LoginActivity.class);
-        startActivity(registerScreen);
+        Intent loginScreen = new Intent(RegistroActivity.this, LoginActivity.class);
+        startActivity(loginScreen);
 
     }
 
@@ -132,7 +139,6 @@ public class RegistroActivity extends AppCompatActivity {
 
         try {
             if(validarRegistro()){
-                registerScreen = new Intent(RegistroActivity.this, EnderecoActivity.class);
                 startActivity(registerScreen);
             }
         } catch (NoSuchAlgorithmException e) {

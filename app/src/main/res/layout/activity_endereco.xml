@@ -67,24 +67,29 @@ próximos de você!"
             android:textSize="14sp"
             android:textAlignment="center"/>
 
-        <EditText
-            android:id="@+id/editTextEmail"
+        <com.shishank.autocompletelocationview.LocationAutoCompleteView
+            android:id="@+id/editTextAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:layout_marginLeft="32dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="32dp"
             android:layout_marginRight="32dp"
-            android:ems="10"
-            android:inputType="textEmailAddress"
-            android:drawableLeft="@mipmap/ic_pinpoint"
+            android:layout_marginLeft="32dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:paddingLeft="15dp"
+            android:background="@drawable/bg_lightgreen"
+            android:focusableInTouchMode="true"
             android:hint="Onde você mora?"
-            android:textSize="14sp"
-            android:fontFamily="@font/google_sans_regular"
-            android:drawableTint="@color/colorPrimary"
-            android:textColorHint="@color/colorPrimary"/>
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="17sp" >
+
+        </com.shishank.autocompletelocationview.LocationAutoCompleteView>
+
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/buttonRegistrar"
             android:layout_width="match_parent"
             android:layout_height="65dp"
             android:layout_marginTop="80dp"
@@ -94,6 +99,7 @@ próximos de você!"
             android:background="@drawable/bg_rounded"
             android:fontFamily="@font/google_sans_bold"
             android:text="REGISTRAR"
+            android:onClick="showTestToast"
             android:textSize="18sp"
             android:textColor="@color/white" />
 

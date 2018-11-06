@@ -101,6 +101,8 @@
             android:textSize="18sp"
             android:textColor="@color/white" />
 
+
+
         <TextView
             android:id="@+id/textViewRegistro"
             android:layout_width="match_parent"
