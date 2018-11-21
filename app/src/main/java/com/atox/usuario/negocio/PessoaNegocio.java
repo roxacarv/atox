@@ -4,10 +4,10 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.atox.infra.BancoDeDados;
 import com.atox.usuario.dominio.Endereco;
+import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.Sessao;
 import com.atox.usuario.dominio.Usuario;
 
@@ -19,21 +19,21 @@ import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 
-public class UsuarioNegocio extends AndroidViewModel {
+public class PessoaNegocio extends AndroidViewModel {
 
     private BancoDeDados bancoDeDados;
 
-    public UsuarioNegocio(Application application)
+    public PessoaNegocio(Application application)
     {
         super(application);
         bancoDeDados = BancoDeDados.getBancoDeDados(this.getApplication());
     }
 
-    public Long inserirUsuario(final Usuario usuario) throws ExecutionException, InterruptedException {
+    public Long inserirPessoa(final Pessoa pessoa) throws ExecutionException, InterruptedException {
         Callable<Long> call = new Callable<Long>() {
             @Override
             public Long call() throws Exception {
-                return bancoDeDados.usuarioDao().inserir(usuario);
+                return bancoDeDados.pessoaDao().inserir(pessoa);
             }
         };
 
@@ -55,64 +55,50 @@ public class UsuarioNegocio extends AndroidViewModel {
         return future.get();
     }
 
-    public void atualizar(final Usuario usuario) {
+    public void atualizar(final Pessoa pessoa) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                bancoDeDados.usuarioDao().atualizar(usuario);
+                bancoDeDados.pessoaDao().atualizar(pessoa);
             }
         }).start();
     }
 
-    public Long salvarSessao(final Sessao sessao) throws ExecutionException, InterruptedException {
-        Callable<Long> call = new Callable<Long>() {
-            @Override
-            public Long call() throws Exception {
-                return bancoDeDados.sessaoDao().inserir(sessao);
-            }
-        };
-        ExecutorService executor = new ScheduledThreadPoolExecutor(1);
-        Future<Long> future = executor.submit(call);
-        return future.get();
+    public LiveData<Endereco> buscarPorIdDeEndereco(long eid) {
+        LiveData<Endereco> endereco = bancoDeDados.enderecoDao().buscarPorId(eid);
+        return endereco;
     }
 
-    public void restaurarSessao() {
-        Sessao sessao = Sessao.getSessao();
-        Long idDeRetorno = bancoDeDados.sessaoDao().ultimoIdLogado();
-        Usuario usuario = null;
-
-        if(idDeRetorno != null)
-            usuario = bancoDeDados.usuarioDao().buscarPorIdDeSessao(idDeRetorno);
-
-        sessao.setUsuarioId(usuario.getUid());
-        sessao.setUsuario(usuario);
+    public LiveData<Endereco> buscarPorEnderecoPorIdDeUsuario(long uid) {
+        LiveData<Endereco> endereco = bancoDeDados.enderecoDao().buscarPorIdDeUsuario(uid);
+        return endereco;
     }
 
-    public LiveData<List<Usuario>> getUsuarios() {
-        LiveData<List<Usuario>> usuarios = bancoDeDados.usuarioDao().getTodos();
-        return usuarios;
+    public LiveData<List<Endereco>> buscarEnderecoPorCidade(String cidade) {
+        LiveData<List<Endereco>> endereco = bancoDeDados.enderecoDao().buscarPorCidade(cidade);
+        return endereco;
     }
 
-    public LiveData<Usuario> buscarUsuarioPorId(long id) {
-        LiveData<Usuario> usuario = bancoDeDados.usuarioDao().buscarPorId(id);
-        return usuario;
+    public LiveData<List<Endereco>> buscarEnderecoPorBairro(String bairro) {
+        LiveData<List<Endereco>> endereco = bancoDeDados.enderecoDao().buscarPorBairro(bairro);
+        return endereco;
     }
 
-    public void deletarItem(Usuario usuario)
+    public void deletarItem(Pessoa pessoa)
     {
-        new deleteAsyncTask(bancoDeDados).execute(usuario);
+        new deleteAsyncTask(bancoDeDados).execute(pessoa);
     }
 
-    private static class deleteAsyncTask extends AsyncTask<Usuario, Void, Void> {
+    private static class deleteAsyncTask extends AsyncTask<Pessoa, Void, Void> {
         private BancoDeDados bd;
         deleteAsyncTask(BancoDeDados bancoDeDados)
         {
             bd = bancoDeDados;
         }
         @Override
-        protected Void doInBackground(final Usuario... params)
+        protected Void doInBackground(final Pessoa... params)
         {
-            bd.usuarioDao().deletar(params[0]);
+            bd.pessoaDao().deletar(params[0]);
             return null;
         }
     }

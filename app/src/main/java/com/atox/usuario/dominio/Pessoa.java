@@ -2,11 +2,26 @@ package com.atox.usuario.dominio;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Embedded;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 
 import java.util.Date;
 
+import static android.arch.persistence.room.ForeignKey.CASCADE;
+
+@Entity(tableName = "pessoa", foreignKeys = @ForeignKey(entity = Usuario.class,
+                                                        parentColumns = "uid",
+                                                        childColumns = "usuario_id",
+                                                        onDelete = CASCADE))
 public class Pessoa {
+
+    @PrimaryKey(autoGenerate = true)
+    private long pid;
+
+    @ColumnInfo(name = "usuario_id")
+    private long usuarioId;
 
     @ColumnInfo(name = "nome")
     private String nome;
@@ -19,6 +34,9 @@ public class Pessoa {
 
     @Ignore
     private Endereco endereco;
+
+    @Ignore
+    private Usuario usuario;
 
     @ColumnInfo(name = "telefone")
     private String telefone;
@@ -64,4 +82,27 @@ public class Pessoa {
         this.telefone = telefone;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public long getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(long usuarioId) {
+        this.usuarioId = usuarioId;
+    }
+
+    public long getPid() {
+        return pid;
+    }
+
+    public void setPid(long pid) {
+        this.pid = pid;
+    }
 }

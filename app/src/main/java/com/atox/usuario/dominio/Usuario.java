@@ -15,7 +15,7 @@ import com.atox.lugar.dominio.Lugar;
 import java.util.List;
 
 @Entity(tableName = "usuario")
-public class Usuario extends Pessoa {
+public class Usuario {
 
     @PrimaryKey(autoGenerate = true)
     private long uid;
@@ -25,9 +25,6 @@ public class Usuario extends Pessoa {
 
     @ColumnInfo(name = "senha")
     private String senha;
-
-    @ColumnInfo(name = "login")
-    private String login;
 
     @Ignore
     private List<Lugar> lugares;
@@ -47,14 +44,6 @@ public class Usuario extends Pessoa {
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
     }
 
     public List<Lugar> getLugares() {

@@ -16,8 +16,10 @@ import android.widget.Toast;
 
 import com.atox.R;
 import com.atox.usuario.dominio.Endereco;
+import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.Sessao;
 import com.atox.usuario.dominio.Usuario;
+import com.atox.usuario.negocio.PessoaNegocio;
 import com.atox.usuario.negocio.UsuarioNegocio;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -38,6 +40,7 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
 
     private static final String TAG = EnderecoActivity.class.getName();
     private UsuarioNegocio usuarioNegocio;
+    private PessoaNegocio pessoaNegocio;
     private Sessao sessao;
     private Bundle dadosPessoais;
     private Button buttonRegistrar;
@@ -63,10 +66,8 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
         Log.i(TAG, "Rua: " + testLocation.getThoroughfare());
         Log.i(TAG, "CEP: " + testLocation.getPostalCode());
 
-
-
-
     }
+
     public void backToRegistroScreen(View view){
 
         Intent registerScreen = new Intent(EnderecoActivity.this, RegistroActivity.class);
@@ -74,54 +75,55 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
 
     }
 
-    private void registraNoBancoDeDados() throws ExecutionException, InterruptedException {
+    private Pessoa registraNoBancoDeDados() throws ExecutionException, InterruptedException {
         usuarioNegocio = ViewModelProviders.of(this).get(UsuarioNegocio.class);
+        pessoaNegocio = ViewModelProviders.of(this).get(PessoaNegocio.class);
         Usuario usuario = criarUsuario();
         Long idDeUsuario = usuarioNegocio.inserirUsuario(usuario);
-        Endereco endereco = criarEndereco(idDeUsuario);
+        Pessoa pessoa = criarPessoa(usuario, idDeUsuario);
+        Long idDePessoa = pessoaNegocio.inserirPessoa(pessoa);
+        Endereco endereco = criarEndereco(idDePessoa);
         Long idDeEndereco = usuarioNegocio.inserirEndereco(endereco);
+        pessoa.setEndereco(endereco);
+        return pessoa;
     }
 
-    private Usuario criarUsuario() {
-        Usuario usuario = new Usuario();
-        usuario.setTelefone(dadosPessoais.getString("TELEFONE"));
-        usuario.setSenha(dadosPessoais.getString("SENHA"));
-        usuario.setNome(dadosPessoais.getString("NOME"));
+    private Pessoa criarPessoa(Usuario usuario, Long idDoUsuario) {
+        Pessoa pessoa = new Pessoa();
+        pessoa.setTelefone(dadosPessoais.getString("TELEFONE"));
+        pessoa.setNome(dadosPessoais.getString("NOME"));
+        pessoa.setUsuarioId(idDoUsuario);
+        pessoa.setUsuario(usuario);
         DateFormat dataFormatada = new SimpleDateFormat("dd/MM/yyyy");
         Date data;
         try {
             data = dataFormatada.parse(dadosPessoais.getString("DATA_NASCIMENTO"));
-            usuario.setDataNascimento(data);
+            pessoa.setDataNascimento(data);
         } catch (ParseException pe) {
             System.out.println("ERRO_NA_DATA_NASCIMENTO: " + pe);
         }
+        return pessoa;
+    }
+
+    private Usuario criarUsuario() {
+        Usuario usuario = new Usuario();
+        usuario.setSenha(dadosPessoais.getString("SENHA"));
         usuario.setEmail(dadosPessoais.getString("EMAIL"));
         return usuario;
     }
 
     private Endereco criarEndereco(Long idDeUsuario) {
+        Address testLocation = getAddress(editTextAddress.getText().toString());
         Endereco endereco = new Endereco();
         endereco.setUsuarioId(idDeUsuario);
+        endereco.setCidade(testLocation.getSubAdminArea());
+        endereco.setBairro(testLocation.getSubLocality());
+        endereco.setCep(testLocation.getPostalCode());
+        endereco.setEstado(testLocation.getAdminArea());
+        endereco.setPais(testLocation.getCountryName());
+        endereco.setLogradouro(testLocation.getThoroughfare());
         return endereco;
     }
-
-    @Override
-    public void onTextClear() {
-
-    }
-
-    @Override
-    public void onPlaceSelected(Place place) {
-
-
-    }
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
-    }
-
-
 
     public Address getAddress(String completeAddress)
     {
@@ -137,10 +139,21 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
         }
 
         return null;
+    }
 
-
+    @Override
+    public void onTextClear() {
 
     }
 
+    @Override
+    public void onPlaceSelected(Place place) {
 
+    }
+
+    public void finalizaRegistro() throws ExecutionException, InterruptedException {
+        registraNoBancoDeDados();
+        Intent loginScreen = new Intent(EnderecoActivity.this, LoginActivity.class);
+        startActivity(loginScreen);
+    }
 }

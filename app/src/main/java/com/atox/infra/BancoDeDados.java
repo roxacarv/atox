@@ -7,16 +7,19 @@ import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
 import com.atox.usuario.dao.EnderecoDao;
+import com.atox.usuario.dao.PessoaDao;
 import com.atox.usuario.dao.SessaoDao;
 import com.atox.usuario.dao.UsuarioDao;
 import com.atox.usuario.dominio.Endereco;
+import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.Sessao;
 import com.atox.usuario.dominio.Usuario;
 import com.atox.utils.ConversorDeTipo;
 
 @Database(entities = { Usuario.class,
                        Sessao.class,
-                       Endereco.class
+                       Endereco.class,
+                       Pessoa.class
                      },
           version = 1)
 @TypeConverters({ConversorDeTipo.class})
@@ -41,5 +44,6 @@ public abstract class BancoDeDados extends RoomDatabase {
     public abstract UsuarioDao usuarioDao();
     public abstract SessaoDao sessaoDao();
     public abstract EnderecoDao enderecoDao();
+    public abstract PessoaDao pessoaDao();
 
 }

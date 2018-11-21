@@ -3,13 +3,12 @@ package com.atox.usuario.dominio;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
-@Entity(tableName = "endereco", foreignKeys = @ForeignKey(entity = Usuario.class,
-                                                          parentColumns = "uid",
+@Entity(tableName = "endereco", foreignKeys = @ForeignKey(entity = Pessoa.class,
+                                                          parentColumns = "pid",
                                                           childColumns = "usuario_id",
                                                           onDelete = CASCADE))
 
