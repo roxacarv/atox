@@ -13,6 +13,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="success_register">Cadastro realizado com sucesso!</string>
     <string name="error_invalid_date">Data inválida</string>
     <string name="error_invalid_name">Campo \'Nome\' inválido</string>
     <string name="error_invalid_tel">Telefone inválido</string>

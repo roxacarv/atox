@@ -91,7 +91,7 @@ próximos de você!"
         <Button
             android:id="@+id/buttonRegistrar"
             android:layout_width="match_parent"
-            android:layout_height="65dp"
+            android:layout_height="55dp"
             android:layout_marginTop="80dp"
             android:layout_marginBottom="50dp"
             android:layout_marginLeft="32dp"
@@ -99,7 +99,7 @@ próximos de você!"
             android:background="@drawable/bg_rounded"
             android:fontFamily="@font/google_sans_bold"
             android:text="REGISTRAR"
-            android:onClick="showTestToast"
+            android:onClick="finalizarRegistro"
             android:textSize="18sp"
             android:textColor="@color/white" />
 

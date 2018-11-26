@@ -14,12 +14,9 @@ import android.widget.Toast;
 import com.atox.R;
 import com.atox.usuario.dominio.Sessao;
 import com.atox.usuario.negocio.UsuarioNegocio;
-import com.atox.usuario.dominio.Endereco;
 import com.atox.usuario.dominio.Usuario;
 import com.atox.utils.Criptografia;
 import com.atox.utils.ValidaCadastro;
-import com.google.android.gms.location.places.Place;
-import com.shishank.autocompletelocationview.interfaces.OnQueryCompleteListener;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.ExecutionException;
@@ -50,12 +47,15 @@ public class LoginActivity extends AppCompatActivity {
     }
     public void logar(View view) throws ExecutionException, InterruptedException {
         try {
-            attemptLogin();
+            validarCamposLogin();
+
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
     }
-    private void attemptLogin() throws NoSuchAlgorithmException, ExecutionException, InterruptedException {
+
+
+    private void validarCamposLogin() throws NoSuchAlgorithmException, ExecutionException, InterruptedException {
 
         // Reset errors.
         mEmailView.setError(null);
@@ -96,7 +96,17 @@ public class LoginActivity extends AppCompatActivity {
             String realPassword = Criptografia.encryptPassword(password);
             alert("login bem sucedido");
         }
+
+        usuarioNegocio = ViewModelProviders.of(this).get(UsuarioNegocio.class);
+        usuarioNegocio.buscarUsuarioPorId(1).observe(this, new Observer<Usuario>() {
+            @Override
+            public void onChanged(@Nullable Usuario usuario) {
+
+            }
+        });
+
     }
+
 
     public void getData(Usuario usuario) {
         Log.i(TAG, "Nome: " + usuario.getEmail());

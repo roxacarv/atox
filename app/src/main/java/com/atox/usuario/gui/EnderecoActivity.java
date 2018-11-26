@@ -151,8 +151,11 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
 
     }
 
-    public void finalizaRegistro() throws ExecutionException, InterruptedException {
+
+
+    public void finalizarRegistro(View view) throws ExecutionException, InterruptedException {
         registraNoBancoDeDados();
+        Toast.makeText(this,R.string.success_register,Toast.LENGTH_LONG).show();
         Intent loginScreen = new Intent(EnderecoActivity.this, LoginActivity.class);
         startActivity(loginScreen);
     }

@@ -98,6 +98,12 @@ public class UsuarioNegocio extends AndroidViewModel {
         return usuario;
     }
 
+    public Usuario buscarUsuarioPorEmail(String email) {
+        Usuario usuario = bancoDeDados.usuarioDao().buscarPorEmail(email);
+        return usuario;
+    }
+
+
     public void deletarItem(Usuario usuario)
     {
         new deleteAsyncTask(bancoDeDados).execute(usuario);
