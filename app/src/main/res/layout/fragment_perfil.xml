@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".navegacao.PerfilFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <ScrollView
+        android:id="@+id/scrollViewProdutores"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="0dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:id="@+id/textViewProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="200dp"
+                    android:text="PERFIL"
+                    android:textColor="@color/lightBlack"
+                    android:fontFamily="@font/google_sans_bold"
+                    android:textSize="24sp"
+                    android:gravity="center"/>
+
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/ic_btn_editar"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="100dp"
+                    android:layout_height="180dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:paddingBottom="30dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_perfil_padrao" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView11"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Ericka Pricila da Silva"
+                        android:fontFamily="@font/google_sans_bold"
+                        android:textColor="@color/lightBlack"
+                        android:textSize="24sp"
+                        android:paddingRight="120dp"/>
+
+                    <TextView
+                        android:id="@+id/textViewPerfilDataNascimento"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="02 de julho de 1995"
+                        android:fontFamily="@font/google_sans_regular"
+                        android:textColor="@color/lightBlack"
+                        android:textSize="18sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/textViewPerfilEndereco"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Jordão Baixo, Recife - PE"
+                        android:fontFamily="@font/google_sans_regular"
+                        android:textColor="@color/lightBlack"
+                        android:textSize="18sp"/>
+                    <TextView
+                        android:id="@+id/textViewPerfilEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="psilva.ericka@gmail.com"
+                        android:fontFamily="@font/google_sans_regular"
+                        android:textColor="@color/lightBlack"
+                        android:textSize="18sp"
+                        />
+                    <TextView
+                        android:id="@+id/textView15"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="(81) 9 9788 8932"
+                        android:fontFamily="@font/google_sans_regular"
+                        android:textColor="@color/lightBlack"
+                        android:textSize="18sp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/buttonSupermarket"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/btn_horta" />
+
+                <Button
+                    android:id="@+id/buttonCafe"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/btn_skull" />
+
+                <Button
+                    android:id="@+id/buttonRestaurant"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/btn_salve_planeta" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="108dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:fontFamily="@font/google_sans_regular"
+                    android:text="MONTE SUA HORTA"
+                    android:textAlignment="center"
+
+                    android:textColor="@color/lightBlack" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="97dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="18dp"
+                    android:textAlignment="center"
+                    android:fontFamily="@font/google_sans_regular"
+                    android:text="CUIDADO COM SUA COMIDA"
+                    android:textColor="@color/lightBlack" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="88dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="18dp"
+                    android:fontFamily="@font/google_sans_regular"
+                    android:text="CUIDE DO PLANETA"
+                    android:textAlignment="center"
+                    android:textColor="@color/lightBlack" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="match_parent"
+                android:layout_height="104dp"
+                android:src="@drawable/bg_messagem_perfil" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="SUAS RECEITAS"
+                android:textSize="20sp"
+                android:fontFamily="@font/google_sans_bold"
+                android:textColor="@color/lightBlack"/>
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:textSize="16sp"
+                android:fontFamily="@font/google_sans_regular"
+                android:text="Quanto mais você favoritas locais, mais você receberá receitas que combinam com você!" />
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>

@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.atox.R;
+import com.atox.navegacao.MenuActivity;
 import com.atox.usuario.dominio.Sessao;
 import com.atox.usuario.negocio.UsuarioNegocio;
 import com.atox.usuario.dominio.Usuario;
@@ -46,12 +47,18 @@ public class LoginActivity extends AppCompatActivity {
 
     }
     public void logar(View view) throws ExecutionException, InterruptedException {
-        try {
+
+        // apenas colocando um bypass para testar a entrada no app! pode remover dps!
+        Intent homeScrenn = new Intent(LoginActivity.this, MenuActivity.class);
+        startActivity(homeScrenn);
+
+        /*try {
             validarCamposLogin();
+
 
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
 

@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.atox">
 
+    <!--Internet Permission-->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
@@ -16,7 +19,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBh5DX_Oyt1GnmzcW1JIrYhnEkfkYr3tng" />
@@ -48,9 +50,16 @@
             android:name=".usuario.gui.RegistroActivity"
             android:theme="@style/FullScreenTheme" />
 
-        <!--ENDERECO SCREEN-->
-        <activity android:name=".usuario.gui.EnderecoActivity"
-            android:theme="@style/FullScreenTheme"></activity>
+        <!-- ENDERECO SCREEN -->
+        <activity
+            android:name=".usuario.gui.EnderecoActivity"
+            android:theme="@style/FullScreenTheme" />
+
+        <!-- BOTTOM MENU SCREEN -->
+        <activity
+            android:name=".navegacao.MenuActivity"
+            android:theme="@style/FullScreenWithStatusBar"
+            android:label="@string/title_activity_menu"></activity>
     </application>
 
 </manifest>
