@@ -1,9 +1,9 @@
-package com.atox.utils;
+package com.atox.infra.negocio;
 
 import android.text.TextUtils;
 import android.util.Patterns;
 
-import com.atox.infra.FormataData;
+import com.atox.infra.persistencia.FormataData;
 
 public class ValidaCadastro {
     private final int TAMANHO_CPF = 14;

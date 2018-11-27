@@ -8,9 +8,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.atox.R;
-import com.atox.infra.Mascara;
-import com.atox.utils.Criptografia;
-import com.atox.utils.ValidaCadastro;
+import com.atox.infra.persistencia.Mascara;
+import com.atox.infra.negocio.Criptografia;
+import com.atox.infra.negocio.ValidaCadastro;
 
 import java.security.NoSuchAlgorithmException;
 

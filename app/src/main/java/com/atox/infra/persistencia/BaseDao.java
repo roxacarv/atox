@@ -1,4 +1,4 @@
-package com.atox.infra;
+package com.atox.infra.persistencia;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;

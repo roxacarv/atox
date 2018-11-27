@@ -1,4 +1,4 @@
-package com.atox.infra;
+package com.atox.infra.persistencia;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
@@ -14,7 +14,6 @@ import com.atox.usuario.dominio.Endereco;
 import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.Sessao;
 import com.atox.usuario.dominio.Usuario;
-import com.atox.utils.ConversorDeTipo;
 
 @Database(entities = { Usuario.class,
                        Sessao.class,

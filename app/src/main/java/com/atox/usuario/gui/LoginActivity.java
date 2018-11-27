@@ -16,8 +16,8 @@ import com.atox.navegacao.MenuActivity;
 import com.atox.usuario.dominio.Sessao;
 import com.atox.usuario.negocio.UsuarioNegocio;
 import com.atox.usuario.dominio.Usuario;
-import com.atox.utils.Criptografia;
-import com.atox.utils.ValidaCadastro;
+import com.atox.infra.negocio.Criptografia;
+import com.atox.infra.negocio.ValidaCadastro;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.ExecutionException;

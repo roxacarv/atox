@@ -1,4 +1,4 @@
-package com.atox.utils;
+package com.atox.infra.persistencia;
 
 import android.arch.persistence.room.TypeConverter;
 
