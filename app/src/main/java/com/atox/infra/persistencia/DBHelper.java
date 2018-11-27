@@ -6,10 +6,10 @@ import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
-import com.atox.usuario.dao.EnderecoDao;
-import com.atox.usuario.dao.PessoaDao;
-import com.atox.usuario.dao.SessaoDao;
-import com.atox.usuario.dao.UsuarioDao;
+import com.atox.usuario.persistencia.EnderecoDao;
+import com.atox.usuario.persistencia.PessoaDao;
+import com.atox.usuario.persistencia.SessaoDao;
+import com.atox.usuario.persistencia.UsuarioDao;
 import com.atox.usuario.dominio.Endereco;
 import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.Sessao;
@@ -22,16 +22,16 @@ import com.atox.usuario.dominio.Usuario;
                      },
           version = 1)
 @TypeConverters({ConversorDeTipo.class})
-public abstract class BancoDeDados extends RoomDatabase {
+public abstract class DBHelper extends RoomDatabase {
 
     private static final String NOME_BANCO_DE_DADOS = "banco-de-dados-atox";
 
-    private static BancoDeDados INSTANCE;
+    private static DBHelper INSTANCE;
 
-    public static BancoDeDados getBancoDeDados(Context context) {
+    public static DBHelper getBancoDeDados(Context context) {
         if (INSTANCE == null) {
             Context appContext = context.getApplicationContext();
-            INSTANCE = Room.databaseBuilder(appContext, BancoDeDados.class, NOME_BANCO_DE_DADOS).build();
+            INSTANCE = Room.databaseBuilder(appContext, DBHelper.class, NOME_BANCO_DE_DADOS).build();
         }
         return INSTANCE;
     }

@@ -5,7 +5,7 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
-import com.atox.infra.persistencia.BancoDeDados;
+import com.atox.infra.persistencia.DBHelper;
 import com.atox.usuario.dominio.Endereco;
 import com.atox.usuario.dominio.Sessao;
 import com.atox.usuario.dominio.Usuario;
@@ -20,12 +20,12 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 public class UsuarioNegocio extends AndroidViewModel {
 
-    private BancoDeDados bancoDeDados;
+    private DBHelper bancoDeDados;
 
     public UsuarioNegocio(Application application)
     {
         super(application);
-        bancoDeDados = BancoDeDados.getBancoDeDados(this.getApplication());
+        bancoDeDados = DBHelper.getBancoDeDados(this.getApplication());
     }
 
     public Long inserirUsuario(final Usuario usuario) throws ExecutionException, InterruptedException {
@@ -109,8 +109,8 @@ public class UsuarioNegocio extends AndroidViewModel {
     }
 
     private static class deleteAsyncTask extends AsyncTask<Usuario, Void, Void> {
-        private BancoDeDados bd;
-        deleteAsyncTask(BancoDeDados bancoDeDados)
+        private DBHelper bd;
+        deleteAsyncTask(DBHelper bancoDeDados)
         {
             bd = bancoDeDados;
         }

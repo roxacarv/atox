@@ -1,4 +1,4 @@
-package com.atox.usuario.dao;
+package com.atox.usuario.persistencia;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
