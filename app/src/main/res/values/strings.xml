@@ -29,4 +29,7 @@
 
     <!-- Aba Produtores-->
     <string name="resumo_produtores">Essa é lista dos produtores cadastrados nas cooperativas mais próximas. Você entrar em contato direto com eles e acompanhar seus produtos.</string>
+    <string name="error_no_such_user_or_pass_incorrect">O usuário não existe ou a senha está incorreta</string>
+    <string name="act_successful_login">Login bem sucedido</string>
+    <string name="error_email_or_pass_invalid">Email ou senha inválida</string>
 </resources>

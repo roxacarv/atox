@@ -10,7 +10,7 @@ public class ValidaCadastro {
     private final int TAMANHO_DATA = 10;
 
     public boolean isCampoVazio(String texto){
-        return (texto.trim().isEmpty() || TextUtils.isEmpty(texto));
+        return (TextUtils.isEmpty(texto.trim()));
     }
 
     public boolean isEmail(String texto){

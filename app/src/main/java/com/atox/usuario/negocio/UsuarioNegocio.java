@@ -2,8 +2,14 @@ package com.atox.usuario.negocio;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
+import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MediatorLiveData;
+import android.arch.lifecycle.Observer;
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
+import android.telecom.Call;
+import android.util.Log;
 
 import com.atox.infra.persistencia.DBHelper;
 import com.atox.usuario.dominio.Endereco;
@@ -16,11 +22,13 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
+import org.apache.commons.validator.routines.EmailValidator;
 
 
 public class UsuarioNegocio extends AndroidViewModel {
 
     private DBHelper bancoDeDados;
+    private String TAG = UsuarioNegocio.class.getName();
 
     public UsuarioNegocio(Application application)
     {
@@ -29,6 +37,10 @@ public class UsuarioNegocio extends AndroidViewModel {
     }
 
     public Long inserirUsuario(final Usuario usuario) throws ExecutionException, InterruptedException {
+        boolean isEmailValid = EmailValidator.getInstance().isValid(usuario.getEmail());
+        if(!isEmailValid) {
+            return Long.valueOf(-1);
+        }
         Callable<Long> call = new Callable<Long>() {
             @Override
             public Long call() throws Exception {
@@ -75,16 +87,29 @@ public class UsuarioNegocio extends AndroidViewModel {
         return future.get();
     }
 
-    public void restaurarSessao() {
-        Sessao sessao = Sessao.getSessao();
-        Long idDeRetorno = bancoDeDados.sessaoDao().ultimoIdLogado();
-        Usuario usuario = null;
-
-        if(idDeRetorno != null)
-            usuario = bancoDeDados.usuarioDao().buscarPorIdDeSessao(idDeRetorno);
-
-        sessao.setUsuarioId(usuario.getUid());
-        sessao.setUsuario(usuario);
+    public Usuario restaurarSessao() throws ExecutionException, InterruptedException {
+        final Sessao sessao = Sessao.getSessao();
+        Callable<Usuario> call = new Callable<Usuario>() {
+            @Override
+            public Usuario call() throws Exception {
+                Usuario usuario = null;
+                Long idDeRetorno = null;
+                idDeRetorno = bancoDeDados.sessaoDao().ultimoIdLogado();
+                if (idDeRetorno == null) {
+                    return null;
+                }
+                usuario = bancoDeDados.usuarioDao().buscarPorIdDeSessao(idDeRetorno);
+                if (usuario == null) {
+                    return null;
+                }
+                sessao.setUsuarioId(usuario.getUid());
+                sessao.setUsuario(usuario);
+                return usuario;
+            }
+        };
+        ExecutorService executor = new ScheduledThreadPoolExecutor(1);
+        Future<Usuario> future = executor.submit(call);
+        return future.get();
     }
 
     public LiveData<List<Usuario>> getUsuarios() {
@@ -94,14 +119,31 @@ public class UsuarioNegocio extends AndroidViewModel {
 
     public LiveData<Usuario> buscarUsuarioPorId(long id) {
         LiveData<Usuario> usuario = bancoDeDados.usuarioDao().buscarPorId(id);
+        if(!usuario.hasObservers()) {
+            return null;
+        }
         return usuario;
     }
 
-    public Usuario buscarUsuarioPorEmail(String email) {
-        Usuario usuario = bancoDeDados.usuarioDao().buscarPorEmail(email);
-        return usuario;
+    public Usuario buscarUsuarioPorEmail(final String email, final String senha) throws ExecutionException, InterruptedException {
+        Callable<Usuario> call = new Callable<Usuario>() {
+            @Override
+            public Usuario call() throws Exception {
+                Usuario usuario = null;
+                usuario = bancoDeDados.usuarioDao().buscarPorEmail(email);
+                if(usuario == null) {
+                    return null;
+                }
+                if(!usuario.getSenha().equals(senha)) {
+                    return null;
+                }
+                return usuario;
+            }
+        };
+        ExecutorService executor = new ScheduledThreadPoolExecutor(1);
+        Future<Usuario> future = executor.submit(call);
+        return future.get();
     }
-
 
     public void deletarItem(Usuario usuario)
     {

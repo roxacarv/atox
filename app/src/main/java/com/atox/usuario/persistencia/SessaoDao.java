@@ -9,7 +9,7 @@ import com.atox.usuario.dominio.Sessao;
 @Dao
 public interface SessaoDao extends BaseDao<Sessao> {
 
-    @Query("SELECT * FROM sessao ORDER BY sid DESC LIMIT 1")
+    @Query("SELECT * FROM sessao ORDER BY sid ASC LIMIT 1")
     Long ultimoIdLogado();
 
     @Query("DELETE FROM sessao")

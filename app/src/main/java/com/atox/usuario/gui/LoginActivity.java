@@ -20,6 +20,7 @@ import com.atox.infra.negocio.Criptografia;
 import com.atox.infra.negocio.ValidaCadastro;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 
@@ -37,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         mEmailView = (EditText) findViewById(R.id.editTextEmail);
         mPasswordView = (EditText) findViewById(R.id.editTextSenha);
-
+        usuarioNegocio = ViewModelProviders.of(this).get(UsuarioNegocio.class);
     }
 
     public void goToRegisterScreen(View view){
@@ -46,37 +47,59 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(registerScreen);
 
     }
-    public void logar(View view) throws ExecutionException, InterruptedException {
 
-        // apenas colocando um bypass para testar a entrada no app! pode remover dps!
+    public void goToHomeScreen(View view) {
+
         Intent homeScrenn = new Intent(LoginActivity.this, MenuActivity.class);
         startActivity(homeScrenn);
 
-        /*try {
-            validarCamposLogin();
+    }
 
+    public void logar(View view) throws ExecutionException, InterruptedException {
 
+        Usuario usuario = null;
+
+        String email = mEmailView.getText().toString();
+        String password = mPasswordView.getText().toString();
+
+        try {
+            int resposta = validarCamposLoginNaGui(email, password);
+            if(resposta == 1) {
+                String senhaCriptografa = Criptografia.encryptPassword(password);
+                usuario = usuarioNegocio.buscarUsuarioPorEmail(email, senhaCriptografa);
+            }
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
-        }*/
+        }
+
+        if(usuario != null) {
+            sessao = Sessao.getSessao();
+            sessao.setUsuarioId(usuario.getUid());
+            sessao.setUsuario(usuario);
+            usuarioNegocio.salvarSessao(sessao);
+            goToHomeScreen(view);
+        } else {
+            mEmailView.setError(getString(R.string.error_invalid_email));
+            View focusView = mEmailView;
+            focusView.requestFocus();
+            alert(getString(R.string.error_no_such_user_or_pass_incorrect));
+        }
+
     }
 
 
-    private void validarCamposLogin() throws NoSuchAlgorithmException, ExecutionException, InterruptedException {
+    private int validarCamposLoginNaGui(String email, String password) throws NoSuchAlgorithmException, ExecutionException, InterruptedException {
 
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
         ValidaCadastro validaCadastro = new ValidaCadastro();
-        // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
-
+        // Store values at the time of the login attempt
         boolean cancel = false;
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (validaCadastro.isCampoVazio(password) || validaCadastro.isSenhaValida(password) ) {
+        if (validaCadastro.isCampoVazio(password) || !validaCadastro.isSenhaValida(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -97,31 +120,21 @@ public class LoginActivity extends AppCompatActivity {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
             focusView.requestFocus();
-            alert("Login ou senha inválida");
+            alert(getString(R.string.error_email_or_pass_invalid));
+            return -1;
         } else {
             // chamar classe para validar o login(criptografado) no DB
             String realPassword = Criptografia.encryptPassword(password);
-            alert("login bem sucedido");
+            alert(getString(R.string.act_successful_login));
+            return 1;
         }
 
-        usuarioNegocio = ViewModelProviders.of(this).get(UsuarioNegocio.class);
-        usuarioNegocio.buscarUsuarioPorId(1).observe(this, new Observer<Usuario>() {
-            @Override
-            public void onChanged(@Nullable Usuario usuario) {
-
-            }
-        });
-
     }
-
-
-    public void getData(Usuario usuario) {
-        Log.i(TAG, "Nome: " + usuario.getEmail());
-    }
-
 
     private void alert(String s){
         Toast.makeText(this,s,Toast.LENGTH_LONG).show();
     }
+
+
 
 }

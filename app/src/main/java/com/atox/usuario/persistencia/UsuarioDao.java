@@ -21,7 +21,6 @@ public interface UsuarioDao extends BaseDao<Usuario> {
     @Query("SELECT * FROM usuario where uid LIKE :uid")
     Usuario buscarPorIdDeSessao(long uid);
 
-
     @Query("SELECT * FROM usuario where email LIKE :email")
     Usuario buscarPorEmail(String email);
 
