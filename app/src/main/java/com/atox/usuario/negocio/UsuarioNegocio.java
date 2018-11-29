@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.telecom.Call;
 import android.util.Log;
 
+import com.atox.infra.AtoxException;
 import com.atox.infra.persistencia.DBHelper;
 import com.atox.usuario.dominio.Endereco;
 import com.atox.usuario.dominio.Sessao;
@@ -123,6 +124,17 @@ public class UsuarioNegocio extends AndroidViewModel {
             return null;
         }
         return usuario;
+    }
+
+    public void verificaSeUsuarioCadastrado(Usuario usuario) throws AtoxException, ExecutionException, InterruptedException {
+        Usuario busca = buscarUsuarioPorEmail(usuario.getEmail(), usuario.getSenha());
+
+        if (busca == null){
+            throw new AtoxException("O usuário não existe ou a senha está incorreta");
+        }
+        else{
+            return;
+        }
     }
 
     public Usuario buscarUsuarioPorEmail(final String email, final String senha) throws ExecutionException, InterruptedException {

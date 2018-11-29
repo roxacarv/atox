@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.atox.R;
+import com.atox.infra.AtoxException;
 import com.atox.navegacao.MenuActivity;
 import com.atox.usuario.dominio.Sessao;
 import com.atox.usuario.negocio.UsuarioNegocio;
@@ -63,13 +64,18 @@ public class LoginActivity extends AppCompatActivity {
         String password = mPasswordView.getText().toString();
 
         try {
-            int resposta = validarCamposLoginNaGui(email, password);
-            if(resposta == 1) {
-                String senhaCriptografa = Criptografia.encryptPassword(password);
-                usuario = usuarioNegocio.buscarUsuarioPorEmail(email, senhaCriptografa);
-            }
+            validarCamposLoginNaGui(email,password);
+            String senhaCriptografa = Criptografia.encryptPassword(password);
+            Usuario usuarioBd = new Usuario();
+            usuarioBd.setEmail(email);
+            usuarioBd.setSenha(senhaCriptografa);
+            usuarioNegocio.verificaSeUsuarioCadastrado(usuarioBd);
+            usuario = usuarioBd;
+            alert(getString(R.string.act_successful_login));
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
+        } catch (AtoxException e) {
+            alert(e.getMessage());
         }
 
         if(usuario != null) {
@@ -78,17 +84,12 @@ public class LoginActivity extends AppCompatActivity {
             sessao.setUsuario(usuario);
             usuarioNegocio.salvarSessao(sessao);
             goToHomeScreen(view);
-        } else {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            View focusView = mEmailView;
-            focusView.requestFocus();
-            alert(getString(R.string.error_no_such_user_or_pass_incorrect));
         }
 
     }
 
 
-    private int validarCamposLoginNaGui(String email, String password) throws NoSuchAlgorithmException, ExecutionException, InterruptedException {
+    private void validarCamposLoginNaGui(String email, String password) throws AtoxException, NoSuchAlgorithmException, ExecutionException, InterruptedException {
 
         // Reset errors.
         mEmailView.setError(null);
@@ -117,16 +118,8 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
             focusView.requestFocus();
-            alert(getString(R.string.error_email_or_pass_invalid));
-            return -1;
-        } else {
-            // chamar classe para validar o login(criptografado) no DB
-            String realPassword = Criptografia.encryptPassword(password);
-            alert(getString(R.string.act_successful_login));
-            return 1;
+            throw new AtoxException(getString(R.string.error_email_or_pass_invalid));
         }
 
     }

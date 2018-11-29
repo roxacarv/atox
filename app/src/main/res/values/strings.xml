@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">atox</string>
 
-    <!-- Strings related to login -->
+    \<!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Senha (opcional)</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">Este email não é válido.</string>
-    <string name="error_invalid_password">Essa senha é muito pequena.</string>
+    <string name="error_invalid_password">Senha muito curta.</string>
     <string name="error_incorrect_password">Senha Incorreta</string>
     <string name="error_field_required">Campo necessário</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
@@ -29,7 +29,7 @@
 
     <!-- Aba Produtores-->
     <string name="resumo_produtores">Essa é lista dos produtores cadastrados nas cooperativas mais próximas. Você entrar em contato direto com eles e acompanhar seus produtos.</string>
-    <string name="error_no_such_user_or_pass_incorrect">O usuário não existe ou a senha está incorreta</string>
+    <string name="error_no_such_user_or_pass_incorrect">O usuário não cadastrado ou a senha está incorreta</string>
     <string name="act_successful_login">Login bem sucedido</string>
     <string name="error_email_or_pass_invalid">Email ou senha inválida</string>
 </resources>
