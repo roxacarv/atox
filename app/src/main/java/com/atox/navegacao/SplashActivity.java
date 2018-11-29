@@ -31,7 +31,6 @@ public class SplashActivity extends AppCompatActivity {
         usuarioNegocio = ViewModelProviders.of(this).get(UsuarioNegocio.class);
         try {
             usuario = usuarioNegocio.restaurarSessao();
-            Log.i(TAG, "Usuário Existente: " + usuario.getEmail());
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -39,12 +38,12 @@ public class SplashActivity extends AppCompatActivity {
         }
 
         if(usuario != null) {
-            Log.i(TAG, "Entrou porque usuário existe");
+            Log.i(TAG, "Entrou porque usuário havia logado anteriormente");
             sessao.setUsuario(usuario);
             sessao.setUsuarioId(usuario.getUid());
             goToHomeScreen();
         } else {
-            Log.i(TAG, "Não entrou e foi pro login");
+            Log.i(TAG, "Não entrou pois não havia usuário logado");
             goToLoginScreen();
         }
 
