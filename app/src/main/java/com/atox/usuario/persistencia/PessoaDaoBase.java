@@ -4,13 +4,13 @@ import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Query;
 
-import com.atox.infra.persistencia.BaseDao;
+import com.atox.infra.persistencia.DaoBase;
 import com.atox.usuario.dominio.Pessoa;
 
 import java.util.List;
 
 @Dao
-public interface PessoaDao extends BaseDao<Pessoa> {
+public interface PessoaDaoBase extends DaoBase<Pessoa> {
 
     @Query("SELECT * FROM pessoa")
     LiveData<List<Pessoa>> getTodas();
@@ -26,5 +26,8 @@ public interface PessoaDao extends BaseDao<Pessoa> {
 
     @Query("SELECT * FROM pessoa where telefone LIKE :telefone")
     LiveData<Pessoa> buscarPorTelefone(String telefone);
+
+    @Query("SELECT * FROM pessoa where usuario_id LIKE :usuarioId")
+    Pessoa buscarPorIdDeusuario(long usuarioId);
 
 }

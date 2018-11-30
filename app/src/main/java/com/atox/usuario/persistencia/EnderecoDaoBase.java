@@ -3,13 +3,13 @@ import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Query;
 
-import com.atox.infra.persistencia.BaseDao;
+import com.atox.infra.persistencia.DaoBase;
 import com.atox.usuario.dominio.Endereco;
 
 import java.util.List;
 
 @Dao
-public interface EnderecoDao extends BaseDao<Endereco> {
+public interface EnderecoDaoBase extends DaoBase<Endereco> {
     @Query("SELECT * FROM endereco")
     LiveData<List<Endereco>> buscarTudo();
 

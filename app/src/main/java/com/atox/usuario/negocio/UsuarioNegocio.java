@@ -2,19 +2,13 @@ package com.atox.usuario.negocio;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MediatorLiveData;
-import android.arch.lifecycle.Observer;
 import android.os.AsyncTask;
-import android.support.annotation.Nullable;
-import android.telecom.Call;
-import android.util.Log;
 
 import com.atox.infra.AtoxException;
 import com.atox.infra.persistencia.DBHelper;
 import com.atox.usuario.dominio.Endereco;
-import com.atox.usuario.dominio.Sessao;
+import com.atox.usuario.dominio.SessaoUsuario;
 import com.atox.usuario.dominio.Usuario;
 
 import java.util.List;
@@ -76,11 +70,11 @@ public class UsuarioNegocio extends AndroidViewModel {
         }).start();
     }
 
-    public Long salvarSessao(final Sessao sessao) throws ExecutionException, InterruptedException {
+    public Long salvarSessao(final SessaoUsuario sessaoUsuario) throws ExecutionException, InterruptedException {
         Callable<Long> call = new Callable<Long>() {
             @Override
             public Long call() throws Exception {
-                return bancoDeDados.sessaoDao().inserir(sessao);
+                return bancoDeDados.sessaoDao().inserir(sessaoUsuario);
             }
         };
         ExecutorService executor = new ScheduledThreadPoolExecutor(1);
@@ -89,7 +83,7 @@ public class UsuarioNegocio extends AndroidViewModel {
     }
 
     public Usuario restaurarSessao() throws ExecutionException, InterruptedException {
-        final Sessao sessao = Sessao.getSessao();
+        final SessaoUsuario sessaoUsuario = SessaoUsuario.getSessao();
         Callable<Usuario> call = new Callable<Usuario>() {
             @Override
             public Usuario call() throws Exception {
@@ -103,8 +97,7 @@ public class UsuarioNegocio extends AndroidViewModel {
                 if (usuario == null) {
                     return null;
                 }
-                sessao.setUsuarioId(usuario.getUid());
-                sessao.setUsuario(usuario);
+                sessaoUsuario.setUsuarioLogado(usuario);
                 return usuario;
             }
         };
@@ -126,14 +119,12 @@ public class UsuarioNegocio extends AndroidViewModel {
         return usuario;
     }
 
-    public void verificaSeUsuarioCadastrado(Usuario usuario) throws AtoxException, ExecutionException, InterruptedException {
-        Usuario busca = buscarUsuarioPorEmail(usuario.getEmail(), usuario.getSenha());
-
-        if (busca == null){
-            throw new AtoxException("O usuário não existe ou a senha está incorreta");
-        }
-        else{
-            return;
+    public Long verificaSeUsuarioCadastrado(Usuario usuario) throws AtoxException, ExecutionException, InterruptedException {
+        Usuario usuarioBusca = this.buscarUsuarioPorEmail(usuario.getEmail(), usuario.getSenha());
+        if (usuarioBusca == null) {
+            return Long.valueOf(-1);
+        } else {
+            return usuarioBusca.getUid();
         }
     }
 
@@ -164,13 +155,11 @@ public class UsuarioNegocio extends AndroidViewModel {
 
     private static class deleteAsyncTask extends AsyncTask<Usuario, Void, Void> {
         private DBHelper bd;
-        deleteAsyncTask(DBHelper bancoDeDados)
-        {
+        deleteAsyncTask(DBHelper bancoDeDados) {
             bd = bancoDeDados;
         }
         @Override
-        protected Void doInBackground(final Usuario... params)
-        {
+        protected Void doInBackground(final Usuario... params) {
             bd.usuarioDao().deletar(params[0]);
             return null;
         }

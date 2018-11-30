@@ -4,7 +4,7 @@ import android.arch.persistence.room.TypeConverter;
 
 import java.util.Date;
 
-public class ConversorDeTipo {
+public class ConversorDeDate {
 
     @TypeConverter
     public static Date toDate(Long value) {

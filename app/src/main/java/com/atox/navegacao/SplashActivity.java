@@ -2,14 +2,11 @@ package com.atox.navegacao;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
-import com.atox.R;
-import com.atox.usuario.dominio.Sessao;
+import com.atox.usuario.dominio.SessaoUsuario;
 import com.atox.usuario.dominio.Usuario;
 import com.atox.usuario.gui.LoginActivity;
 import com.atox.usuario.negocio.UsuarioNegocio;
@@ -18,7 +15,7 @@ import java.util.concurrent.ExecutionException;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private Sessao sessao;
+    private SessaoUsuario sessaoUsuario;
     private UsuarioNegocio usuarioNegocio;
     private Usuario usuario;
     private String TAG = SplashActivity.class.getName();
@@ -27,7 +24,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sessao = Sessao.getSessao();
+        sessaoUsuario = SessaoUsuario.getSessao();
         usuarioNegocio = ViewModelProviders.of(this).get(UsuarioNegocio.class);
         try {
             usuario = usuarioNegocio.restaurarSessao();
@@ -39,8 +36,7 @@ public class SplashActivity extends AppCompatActivity {
 
         if(usuario != null) {
             Log.i(TAG, "Entrou porque usuário havia logado anteriormente");
-            sessao.setUsuario(usuario);
-            sessao.setUsuarioId(usuario.getUid());
+            sessaoUsuario.setUsuarioLogado(usuario);
             goToHomeScreen();
         } else {
             Log.i(TAG, "Não entrou pois não havia usuário logado");

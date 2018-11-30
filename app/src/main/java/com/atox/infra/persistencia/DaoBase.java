@@ -16,7 +16,7 @@ import java.util.List;
  */
 
 @Dao
-public interface BaseDao<T> {
+public interface DaoBase<T> {
 
     /**
      * Basic operations for inserting, updating and deleting data from the SQLite database

@@ -4,8 +4,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,13 +15,10 @@ import android.widget.Toast;
 import com.atox.R;
 import com.atox.usuario.dominio.Endereco;
 import com.atox.usuario.dominio.Pessoa;
-import com.atox.usuario.dominio.Sessao;
+import com.atox.usuario.dominio.SessaoUsuario;
 import com.atox.usuario.dominio.Usuario;
 import com.atox.usuario.negocio.PessoaNegocio;
 import com.atox.usuario.negocio.UsuarioNegocio;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Place;
 import com.shishank.autocompletelocationview.interfaces.OnQueryCompleteListener;
 
@@ -41,7 +36,7 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
     private static final String TAG = EnderecoActivity.class.getName();
     private UsuarioNegocio usuarioNegocio;
     private PessoaNegocio pessoaNegocio;
-    private Sessao sessao;
+    private SessaoUsuario sessaoUsuario;
     private Bundle dadosPessoais;
     private Button buttonRegistrar;
     private AutoCompleteTextView editTextAddress;
@@ -80,20 +75,21 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
         pessoaNegocio = ViewModelProviders.of(this).get(PessoaNegocio.class);
         Usuario usuario = criarUsuario();
         Long idDeUsuario = usuarioNegocio.inserirUsuario(usuario);
-        Pessoa pessoa = criarPessoa(usuario, idDeUsuario);
+        Log.i(TAG, "Id de usuário do banco: " + idDeUsuario);
+        Pessoa pessoa = criarPessoa(idDeUsuario);
         Long idDePessoa = pessoaNegocio.inserirPessoa(pessoa);
+        Log.i(TAG, "Id de pessoa do banco: " + idDePessoa);
         //Endereco endereco = criarEndereco(idDePessoa);
         //Long idDeEndereco = usuarioNegocio.inserirEndereco(endereco);
         //pessoa.setEndereco(endereco);
         return pessoa;
     }
 
-    private Pessoa criarPessoa(Usuario usuario, Long idDoUsuario) {
+    private Pessoa criarPessoa(Long idDoUsuario) {
         Pessoa pessoa = new Pessoa();
         pessoa.setTelefone(dadosPessoais.getString("TELEFONE"));
         pessoa.setNome(dadosPessoais.getString("NOME"));
         pessoa.setUsuarioId(idDoUsuario);
-        pessoa.setUsuario(usuario);
         DateFormat dataFormatada = new SimpleDateFormat("dd/MM/yyyy");
         Date data;
         try {
@@ -154,7 +150,8 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
 
 
     public void finalizarRegistro(View view) throws ExecutionException, InterruptedException {
-        registraNoBancoDeDados();
+        Pessoa pessoa = registraNoBancoDeDados();
+        Log.i(TAG, "Id apos insercao final : " + pessoa.getUsuarioId());
         Toast.makeText(this,R.string.success_register,Toast.LENGTH_LONG).show();
         Intent loginScreen = new Intent(EnderecoActivity.this, LoginActivity.class);
         startActivity(loginScreen);

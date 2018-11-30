@@ -62,6 +62,23 @@ public class PessoaNegocio extends AndroidViewModel {
         }).start();
     }
 
+    public Pessoa buscarPorIdDeUsuario(final long usuarioId) throws ExecutionException, InterruptedException {
+        Callable<Pessoa> call = new Callable<Pessoa>() {
+            @Override
+            public Pessoa call() throws Exception {
+                Pessoa pessoa = null;
+                pessoa = bancoDeDados.pessoaDao().buscarPorIdDeusuario(usuarioId);
+                if(pessoa == null) {
+                    return null;
+                }
+                return pessoa;
+            }
+        };
+        ExecutorService executor = new ScheduledThreadPoolExecutor(1);
+        Future<Pessoa> future = executor.submit(call);
+        return future.get();
+    }
+
     public LiveData<Endereco> buscarPorIdDeEndereco(long eid) {
         LiveData<Endereco> endereco = bancoDeDados.enderecoDao().buscarPorId(eid);
         return endereco;

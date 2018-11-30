@@ -6,22 +6,22 @@ import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
-import com.atox.usuario.persistencia.EnderecoDao;
-import com.atox.usuario.persistencia.PessoaDao;
-import com.atox.usuario.persistencia.SessaoDao;
-import com.atox.usuario.persistencia.UsuarioDao;
+import com.atox.usuario.dominio.SessaoUsuario;
+import com.atox.usuario.persistencia.EnderecoDaoBase;
+import com.atox.usuario.persistencia.PessoaDaoBase;
+import com.atox.usuario.persistencia.SessaoUsuarioDaoBase;
+import com.atox.usuario.persistencia.UsuarioDaoBase;
 import com.atox.usuario.dominio.Endereco;
 import com.atox.usuario.dominio.Pessoa;
-import com.atox.usuario.dominio.Sessao;
 import com.atox.usuario.dominio.Usuario;
 
 @Database(entities = { Usuario.class,
-                       Sessao.class,
+                       SessaoUsuario.class,
                        Endereco.class,
                        Pessoa.class
                      },
           version = 1)
-@TypeConverters({ConversorDeTipo.class})
+@TypeConverters({ConversorDeDate.class})
 public abstract class DBHelper extends RoomDatabase {
 
     private static final String NOME_BANCO_DE_DADOS = "banco-de-dados-atox";
@@ -40,9 +40,9 @@ public abstract class DBHelper extends RoomDatabase {
         INSTANCE = null;
     }
 
-    public abstract UsuarioDao usuarioDao();
-    public abstract SessaoDao sessaoDao();
-    public abstract EnderecoDao enderecoDao();
-    public abstract PessoaDao pessoaDao();
+    public abstract UsuarioDaoBase usuarioDao();
+    public abstract SessaoUsuarioDaoBase sessaoDao();
+    public abstract EnderecoDaoBase enderecoDao();
+    public abstract PessoaDaoBase pessoaDao();
 
 }

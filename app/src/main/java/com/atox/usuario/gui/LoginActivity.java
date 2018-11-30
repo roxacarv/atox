@@ -1,9 +1,7 @@
 package com.atox.usuario.gui;
 
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,14 +12,15 @@ import android.widget.Toast;
 import com.atox.R;
 import com.atox.infra.AtoxException;
 import com.atox.navegacao.MenuActivity;
-import com.atox.usuario.dominio.Sessao;
+import com.atox.usuario.dominio.Pessoa;
+import com.atox.usuario.dominio.SessaoUsuario;
+import com.atox.usuario.negocio.PessoaNegocio;
 import com.atox.usuario.negocio.UsuarioNegocio;
 import com.atox.usuario.dominio.Usuario;
 import com.atox.infra.negocio.Criptografia;
 import com.atox.infra.negocio.ValidaCadastro;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 
@@ -31,7 +30,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mEmailView;
     private EditText mPasswordView;
     private UsuarioNegocio usuarioNegocio;
-    private Sessao sessao;
+    private PessoaNegocio pessoaNegocio;
+    private SessaoUsuario sessaoUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         mEmailView = (EditText) findViewById(R.id.editTextEmail);
         mPasswordView = (EditText) findViewById(R.id.editTextSenha);
         usuarioNegocio = ViewModelProviders.of(this).get(UsuarioNegocio.class);
+        pessoaNegocio = ViewModelProviders.of(this).get(PessoaNegocio.class);
     }
 
     public void goToRegisterScreen(View view){
@@ -59,18 +60,23 @@ public class LoginActivity extends AppCompatActivity {
     public void logar(View view) throws ExecutionException, InterruptedException {
 
         Usuario usuario = null;
+        Pessoa pessoa = null;
 
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         try {
             validarCamposLoginNaGui(email,password);
-            String senhaCriptografa = Criptografia.encryptPassword(password);
-            Usuario usuarioBd = new Usuario();
-            usuarioBd.setEmail(email);
-            usuarioBd.setSenha(senhaCriptografa);
-            usuarioNegocio.verificaSeUsuarioCadastrado(usuarioBd);
-            usuario = usuarioBd;
+            String senhaCriptografada = Criptografia.encryptPassword(password);
+            usuario = usuarioNegocio.buscarUsuarioPorEmail(email, senhaCriptografada);
+            if(usuario == null) {
+                throw new AtoxException("Esse usuário não existe");
+            }
+            pessoa = pessoaNegocio.buscarPorIdDeUsuario(usuario.getUid());
+            if(pessoa == null) {
+                throw new AtoxException("O usuário não está associado com nenhuma pessoa");
+            }
+            Log.i(TAG, "Pessoa existe");
             alert(getString(R.string.act_successful_login));
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -79,10 +85,10 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         if(usuario != null) {
-            sessao = Sessao.getSessao();
-            sessao.setUsuarioId(usuario.getUid());
-            sessao.setUsuario(usuario);
-            usuarioNegocio.salvarSessao(sessao);
+            sessaoUsuario = SessaoUsuario.getSessao();
+            sessaoUsuario.setUsuarioLogado(usuario);
+            sessaoUsuario.setPessoaLogada(pessoa);
+            usuarioNegocio.salvarSessao(sessaoUsuario);
             goToHomeScreen(view);
         }
 
