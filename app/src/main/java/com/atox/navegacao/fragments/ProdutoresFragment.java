@@ -1,4 +1,4 @@
-package com.atox.navegacao;
+package com.atox.navegacao.fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -10,14 +10,16 @@ import android.view.ViewGroup;
 
 import com.atox.R;
 
-public class PerfilFragment extends Fragment {
+public class ProdutoresFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_perfil, container, false);
+        return inflater.inflate(R.layout.fragment_produtores, container, false);
     }
+
+
 
 
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".navegacao.PerfilFragment">
+    tools:context=".navegacao.fragments.PerfilFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <ScrollView
@@ -72,10 +72,10 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView11"
+                        android:id="@+id/textViewPerfilNomeUsuario"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Ericka Pricila da Silva"
+                        android:text="Nome Usuario"
                         android:fontFamily="@font/google_sans_bold"
                         android:textColor="@color/lightBlack"
                         android:textSize="24sp"
@@ -103,7 +103,7 @@
                         android:id="@+id/textViewPerfilEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="psilva.ericka@gmail.com"
+                        android:text="email_usuario@gmail.com"
                         android:fontFamily="@font/google_sans_regular"
                         android:textColor="@color/lightBlack"
                         android:textSize="18sp"

@@ -1,4 +1,4 @@
-package com.atox.navegacao;
+package com.atox.navegacao.activities;
 
 import android.content.Intent;
 import android.graphics.Color;

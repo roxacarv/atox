@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.atox.R;
 import com.atox.infra.AtoxException;
-import com.atox.navegacao.MenuActivity;
+import com.atox.navegacao.activities.MenuActivity;
 import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.SessaoUsuario;
 import com.atox.usuario.negocio.PessoaNegocio;

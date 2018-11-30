@@ -1,7 +1,5 @@
-package com.atox.navegacao;
+package com.atox.navegacao.fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,14 +15,23 @@ public class InicioFragment extends Fragment {
 
     private static final String TAG = InicioFragment.class.getName();
     private SessaoUsuario sessaoUsuario;
+    private TextView textViewNomeUsuario;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_inicio, container, false);
         sessaoUsuario = SessaoUsuario.getSessao();
         Log.i(TAG, "Nome da pessoa: " + sessaoUsuario.getPessoaLogada().getNome());
+
+        textViewNomeUsuario = (TextView) view.findViewById(R.id.textViewMsgBoasVindas);
+
+        textViewNomeUsuario.setText(view.getContext().getResources().getString(R.string.texto_bemvindo) +
+                sessaoUsuario.getPessoaLogada().getNome());
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_inicio, container, false);
+        return view;
     }
 
 

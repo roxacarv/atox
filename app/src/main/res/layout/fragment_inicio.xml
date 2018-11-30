@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".navegacao.InicioFragment">
+    tools:context=".navegacao.fragments.InicioFragment">
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -24,10 +24,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:focusedByDefault="true">
 
                 <TextView
-                    android:id="@+id/textViewUserName"
+                    android:id="@+id/textViewMsgBoasVindas"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/google_sans_bold"
@@ -44,7 +47,7 @@
                     android:fontFamily="@font/google_sans_regular"
                     android:gravity="center"
                     android:paddingTop="5dp"
-                    android:text="O que você está buscando hoje?"
+                    android:text="@string/msg_saudacao"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 

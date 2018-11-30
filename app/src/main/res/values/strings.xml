@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">atox</string>
 
+    <!-- Strings de saudação -->
+    <string name="texto_bemvindo">Olá! </string>
+    <string name="msg_saudacao">O que você está buscando hoje?</string>
+
     \<!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Senha (opcional)</string>
@@ -13,6 +17,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
     <string name="success_register">Cadastro realizado com sucesso!</string>
     <string name="error_invalid_date">Data inválida</string>
     <string name="error_invalid_name">Campo \'Nome\' inválido</string>

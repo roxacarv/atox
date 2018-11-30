@@ -21,11 +21,11 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBh5DX_Oyt1GnmzcW1JIrYhnEkfkYr3tng" />
+            android:value="AIzaSyCsUKjHUXgVBpHCqRnBQ8F2i8IeEoBdFHg" />
 
         <!-- SPLASH SCREEN -->
         <activity
-            android:name=".navegacao.SplashActivity"
+            android:name=".navegacao.activities.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,7 +38,7 @@
 
 
         <!-- ONBOARD SCREEN WITH THE FRAGMENTS -->
-        <activity android:name=".navegacao.OnboardingActivity" />
+        <activity android:name=".navegacao.activities.OnboardingActivity" />
 
         <!-- THE CUSTOM LOGIN SCREEN -->
         <activity
@@ -57,7 +57,7 @@
 
         <!-- BOTTOM MENU SCREEN -->
         <activity
-            android:name=".navegacao.MenuActivity"
+            android:name=".navegacao.activities.MenuActivity"
             android:theme="@style/FullScreenWithStatusBar"
             android:label="@string/title_activity_menu"></activity>
     </application>
