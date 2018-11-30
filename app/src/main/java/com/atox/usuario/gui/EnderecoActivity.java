@@ -79,9 +79,9 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
         Pessoa pessoa = criarPessoa(idDeUsuario);
         Long idDePessoa = pessoaNegocio.inserirPessoa(pessoa);
         Log.i(TAG, "Id de pessoa do banco: " + idDePessoa);
-        //Endereco endereco = criarEndereco(idDePessoa);
-        //Long idDeEndereco = usuarioNegocio.inserirEndereco(endereco);
-        //pessoa.setEndereco(endereco);
+        Endereco endereco = criarEndereco(idDePessoa);
+        Long idDeEndereco = usuarioNegocio.inserirEndereco(endereco);
+        pessoa.setEndereco(endereco);
         return pessoa;
     }
 
