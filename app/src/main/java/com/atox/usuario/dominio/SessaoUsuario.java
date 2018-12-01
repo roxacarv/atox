@@ -21,8 +21,9 @@ public class SessaoUsuario {
     private Pessoa pessoaLogada;
 
     public static SessaoUsuario getSessao() {
-        if(INSTANCE == null)
+        if(INSTANCE == null) {
             INSTANCE = new SessaoUsuario();
+        }
         return INSTANCE;
     }
 
