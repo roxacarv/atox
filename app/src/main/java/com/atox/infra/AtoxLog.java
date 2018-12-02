@@ -3,12 +3,13 @@ package com.atox.infra;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
 public class AtoxLog {
 
 
     private int id;
 
-    private int id_usuario;
+    private int usuarioId;
 
     private int acao;
 
@@ -28,12 +29,12 @@ public class AtoxLog {
         this.id = id;
     }
 
-    public int getId_usuario() {
-        return id_usuario;
+    public int getUsuarioId() {
+        return usuarioId;
     }
 
-    public void setId_usuario(int id_usuario) {
-        this.id_usuario = id_usuario;
+    public void setUsuarioId(int usuarioId) {
+        this.usuarioId = usuarioId;
     }
 
     public int getAcao() {
