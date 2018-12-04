@@ -7,10 +7,10 @@ import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
 import com.atox.usuario.dominio.SessaoUsuario;
-import com.atox.usuario.persistencia.EnderecoDaoBase;
-import com.atox.usuario.persistencia.PessoaDaoBase;
-import com.atox.usuario.persistencia.SessaoUsuarioDaoBase;
-import com.atox.usuario.persistencia.UsuarioDaoBase;
+import com.atox.usuario.persistencia.daoroom.EnderecoDaoRoom;
+import com.atox.usuario.persistencia.daoroom.PessoaDaoRoom;
+import com.atox.usuario.persistencia.daoroom.SessaoUsuarioDaoRoom;
+import com.atox.usuario.persistencia.daoroom.UsuarioDaoRoom;
 import com.atox.usuario.dominio.Endereco;
 import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.Usuario;
@@ -22,16 +22,16 @@ import com.atox.usuario.dominio.Usuario;
                      },
           version = 1)
 @TypeConverters({ConversorDeDate.class})
-public abstract class DBHelper extends RoomDatabase {
+public abstract class BDHelper extends RoomDatabase {
 
     private static final String NOME_BANCO_DE_DADOS = "banco-de-dados-atox";
 
-    private static DBHelper INSTANCE;
+    private static BDHelper INSTANCE;
 
-    public static DBHelper getBancoDeDados(Context context) {
+    public static BDHelper getBancoDeDados(Context context) {
         if (INSTANCE == null) {
             Context appContext = context.getApplicationContext();
-            INSTANCE = Room.databaseBuilder(appContext, DBHelper.class, NOME_BANCO_DE_DADOS).build();
+            INSTANCE = Room.databaseBuilder(appContext, BDHelper.class, NOME_BANCO_DE_DADOS).build();
         }
         return INSTANCE;
     }
@@ -40,9 +40,9 @@ public abstract class DBHelper extends RoomDatabase {
         INSTANCE = null;
     }
 
-    public abstract UsuarioDaoBase usuarioDao();
-    public abstract SessaoUsuarioDaoBase sessaoDao();
-    public abstract EnderecoDaoBase enderecoDao();
-    public abstract PessoaDaoBase pessoaDao();
+    public abstract UsuarioDaoRoom usuarioDao();
+    public abstract SessaoUsuarioDaoRoom sessaoDao();
+    public abstract EnderecoDaoRoom enderecoDao();
+    public abstract PessoaDaoRoom pessoaDao();
 
 }

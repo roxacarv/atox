@@ -14,8 +14,7 @@ import com.atox.infra.AtoxException;
 import com.atox.navegacao.activities.MenuActivity;
 import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.SessaoUsuario;
-import com.atox.usuario.negocio.PessoaNegocio;
-import com.atox.usuario.negocio.UsuarioNegocio;
+import com.atox.usuario.persistencia.dao.PessoaDao;
 import com.atox.usuario.dominio.Usuario;
 import com.atox.infra.negocio.Criptografia;
 import com.atox.infra.negocio.ValidaCadastro;
@@ -29,8 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getName();
     private EditText mEmailView;
     private EditText mPasswordView;
-    private UsuarioNegocio usuarioNegocio;
-    private PessoaNegocio pessoaNegocio;
+    private PessoaDao pessoaDao;
     private SessaoUsuario sessaoUsuario;
 
     @Override
@@ -39,8 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         mEmailView = (EditText) findViewById(R.id.editTextEmail);
         mPasswordView = (EditText) findViewById(R.id.editTextSenha);
-        usuarioNegocio = ViewModelProviders.of(this).get(UsuarioNegocio.class);
-        pessoaNegocio = ViewModelProviders.of(this).get(PessoaNegocio.class);
+        pessoaDao = ViewModelProviders.of(this).get(PessoaDao.class);
     }
 
     public void goToRegisterScreen(View view){
@@ -68,11 +65,10 @@ public class LoginActivity extends AppCompatActivity {
         try {
             validarCamposLoginNaGui(email,password);
             String senhaCriptografada = Criptografia.encryptPassword(password);
-            usuario = usuarioNegocio.buscarUsuarioPorEmail(email, senhaCriptografada);
             if(usuario == null) {
                 throw new AtoxException("Esse usuário não existe");
             }
-            pessoa = pessoaNegocio.buscarPorIdDeUsuario(usuario.getUid());
+            pessoa = pessoaDao.buscarPorIdDeUsuario(usuario.getUid());
             if(pessoa == null) {
                 throw new AtoxException("O usuário não está associado com nenhuma pessoa");
             }
@@ -88,7 +84,6 @@ public class LoginActivity extends AppCompatActivity {
             sessaoUsuario = SessaoUsuario.getSessao();
             sessaoUsuario.setUsuarioLogado(usuario);
             sessaoUsuario.setPessoaLogada(pessoa);
-            usuarioNegocio.salvarSessao(sessaoUsuario);
             goToHomeScreen(view);
         }
 

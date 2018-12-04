@@ -11,34 +11,30 @@ import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.SessaoUsuario;
 import com.atox.usuario.dominio.Usuario;
 import com.atox.usuario.gui.LoginActivity;
-import com.atox.usuario.negocio.PessoaNegocio;
-import com.atox.usuario.negocio.UsuarioNegocio;
+import com.atox.usuario.persistencia.dao.PessoaDao;
 
 import java.util.concurrent.ExecutionException;
 
 public class SplashActivity extends AppCompatActivity {
 
     private SessaoUsuario sessaoUsuario;
-    private UsuarioNegocio usuarioNegocio;
     private Usuario usuario;
     private Pessoa pessoa;
     private String TAG = SplashActivity.class.getName();
-    private PessoaNegocio pessoaNegocio;
+    private PessoaDao pessoaDao;
 
     //Handler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sessaoUsuario = SessaoUsuario.getSessao();
-        usuarioNegocio = ViewModelProviders.of(this).get(UsuarioNegocio.class);
-        pessoaNegocio = ViewModelProviders.of(this).get(PessoaNegocio.class);
+        pessoaDao = ViewModelProviders.of(this).get(PessoaDao.class);
 
         try {
-            usuario = usuarioNegocio.restaurarSessao();
             if(usuario == null){
                 throw new AtoxException ("Esse usuário não existe");
             }
-            pessoa = pessoaNegocio.buscarPorIdDeUsuario(usuario.getUid());
+            pessoa = pessoaDao.buscarPorIdDeUsuario(usuario.getUid());
             if(pessoa == null){
                 throw new AtoxException ("O usuário não está associado com nenhuma pessoa");
             }

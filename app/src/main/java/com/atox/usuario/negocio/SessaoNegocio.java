@@ -1,4 +1,4 @@
 package com.atox.usuario.negocio;
 
-public class PessoaNegocio {
+public class SessaoNegocio {
 }

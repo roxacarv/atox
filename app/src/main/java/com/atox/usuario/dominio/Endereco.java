@@ -9,7 +9,7 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "endereco", foreignKeys = @ForeignKey(entity = Pessoa.class,
                                                           parentColumns = "pid",
-                                                          childColumns = "usuario_id",
+                                                          childColumns = "pessoa_id",
                                                           onDelete = CASCADE))
 
 public class Endereco {
@@ -17,8 +17,8 @@ public class Endereco {
     @PrimaryKey(autoGenerate = true)
     private long eid;
 
-    @ColumnInfo(name = "usuario_id")
-    private long usuarioId;
+    @ColumnInfo(name = "pessoa_id")
+    private long pessoaId;
 
     @ColumnInfo(name = "cep")
     private String cep;
@@ -46,8 +46,8 @@ public class Endereco {
 
     public Endereco() { }
 
-    public Endereco(int usuarioId) {
-        this.usuarioId = usuarioId;
+    public Endereco(int pessoaId) {
+        this.pessoaId = pessoaId;
     }
 
     public String getCep() {
@@ -114,12 +114,12 @@ public class Endereco {
         this.pais = pais;
     }
 
-    public long getUsuarioId() {
-        return usuarioId;
+    public long getPessoaId() {
+        return pessoaId;
     }
 
-    public void setUsuarioId(long usuarioId) {
-        this.usuarioId = usuarioId;
+    public void setPessoaId(long pessoaId) {
+        this.pessoaId = pessoaId;
     }
 
     public long getEid() {

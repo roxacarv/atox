@@ -17,8 +17,7 @@ import com.atox.usuario.dominio.Endereco;
 import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.SessaoUsuario;
 import com.atox.usuario.dominio.Usuario;
-import com.atox.usuario.negocio.PessoaNegocio;
-import com.atox.usuario.negocio.UsuarioNegocio;
+import com.atox.usuario.persistencia.dao.PessoaDao;
 import com.google.android.gms.location.places.Place;
 import com.shishank.autocompletelocationview.interfaces.OnQueryCompleteListener;
 
@@ -34,8 +33,8 @@ import java.util.concurrent.ExecutionException;
 public class EnderecoActivity extends AppCompatActivity implements OnQueryCompleteListener {
 
     private static final String TAG = EnderecoActivity.class.getName();
-    private UsuarioNegocio usuarioNegocio;
-    private PessoaNegocio pessoaNegocio;
+    private UsuarioDao usuarioDao;
+    private PessoaDao pessoaDao;
     private SessaoUsuario sessaoUsuario;
     private Bundle dadosPessoais;
     private Button buttonRegistrar;
@@ -71,16 +70,14 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
     }
 
     private Pessoa registraNoBancoDeDados() throws ExecutionException, InterruptedException {
-        usuarioNegocio = ViewModelProviders.of(this).get(UsuarioNegocio.class);
-        pessoaNegocio = ViewModelProviders.of(this).get(PessoaNegocio.class);
+        pessoaDao = ViewModelProviders.of(this).get(PessoaDao.class);
         Usuario usuario = criarUsuario();
-        Long idDeUsuario = usuarioNegocio.inserirUsuario(usuario);
         Log.i(TAG, "Id de usuário do banco: " + idDeUsuario);
         Pessoa pessoa = criarPessoa(idDeUsuario);
-        Long idDePessoa = pessoaNegocio.inserirPessoa(pessoa);
+        Long idDePessoa = pessoaDao.inserirPessoa(pessoa);
         Log.i(TAG, "Id de pessoa do banco: " + idDePessoa);
         Endereco endereco = criarEndereco(idDePessoa);
-        Long idDeEndereco = usuarioNegocio.inserirEndereco(endereco);
+        Long idDeEndereco = usuarioDao.inserirEndereco(endereco);
         pessoa.setEndereco(endereco);
         return pessoa;
     }
@@ -111,7 +108,7 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
     private Endereco criarEndereco(Long idDeUsuario) {
         Address testLocation = getAddress(editTextAddress.getText().toString());
         Endereco endereco = new Endereco();
-        endereco.setUsuarioId(idDeUsuario);
+        endereco.setPessoaId(idDeUsuario);
         endereco.setCidade(testLocation.getSubAdminArea());
         endereco.setBairro(testLocation.getSubLocality());
         endereco.setCep(testLocation.getPostalCode());

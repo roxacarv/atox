@@ -1,4 +1,4 @@
-package com.atox.usuario.persistencia;
+package com.atox.usuario.persistencia.daoroom;
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Query;
@@ -9,12 +9,12 @@ import com.atox.usuario.dominio.Endereco;
 import java.util.List;
 
 @Dao
-public interface EnderecoDaoBase extends DaoBase<Endereco> {
+public interface EnderecoDaoRoom extends DaoBase<Endereco> {
     @Query("SELECT * FROM endereco")
     LiveData<List<Endereco>> buscarTudo();
 
-    @Query("SELECT * FROM endereco WHERE usuario_id LIKE :uid")
-    LiveData<Endereco> buscarPorIdDeUsuario(long uid);
+    @Query("SELECT * FROM endereco WHERE pessoa_id LIKE :pid")
+    Endereco buscarPorIdDePessoa(long pid);
 
     @Query("SELECT * FROM endereco WHERE eid LIKE :eid")
     LiveData<Endereco> buscarPorId(long eid);
