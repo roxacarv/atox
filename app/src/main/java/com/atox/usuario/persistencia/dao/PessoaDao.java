@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.atox.infra.persistencia.BDHelper;
 import com.atox.usuario.dominio.Endereco;
@@ -34,7 +35,8 @@ public class PessoaDao extends AndroidViewModel {
         Callable<Long> call = new Callable<Long>() {
             @Override
             public Long call() throws Exception {
-                return bancoDeDados.pessoaDao().inserir(pessoa);
+                Long idDePessoa = bancoDeDados.pessoaDao().inserir(pessoa);
+                return idDePessoa;
             }
         };
 
@@ -42,11 +44,26 @@ public class PessoaDao extends AndroidViewModel {
         Future<Long> future = executor.submit(call);
         return future.get();
     }
+
     public Long inserirEndereco(final Endereco endereco) throws ExecutionException, InterruptedException {
         Callable<Long> call = new Callable<Long>() {
             @Override
             public Long call() throws Exception {
                 return bancoDeDados.enderecoDao().inserir(endereco);
+            }
+        };
+
+        ExecutorService executor = new ScheduledThreadPoolExecutor(1);
+        Future<Long> future = executor.submit(call);
+        return future.get();
+    }
+
+    public Long inserirUsuario(final Usuario usuario) throws ExecutionException, InterruptedException {
+        Callable<Long> call = new Callable<Long>() {
+            @Override
+            public Long call() throws Exception {
+                Long idDeUsuario = bancoDeDados.usuarioDao().inserir(usuario);
+                return idDeUsuario;
             }
         };
 
@@ -68,8 +85,9 @@ public class PessoaDao extends AndroidViewModel {
         Callable<Pessoa> call = new Callable<Pessoa>() {
             @Override
             public Pessoa call() throws Exception {
-                Pessoa pessoa = montaPessoa(usuarioId);
-                return pessoa;
+                Pessoa pessoa = bancoDeDados.pessoaDao().buscarPorIdDeusuario(usuarioId);
+                Pessoa pessoaRetorno = montaPessoa(pessoa);
+                return pessoaRetorno;
             }
         };
         ExecutorService executor = new ScheduledThreadPoolExecutor(1);
@@ -77,37 +95,44 @@ public class PessoaDao extends AndroidViewModel {
         return future.get();
     }
 
-    public Pessoa montaPessoa(Long usuarioId) {
-        Pessoa pessoa = bancoDeDados.pessoaDao().buscarPorIdDeusuario(usuarioId);
+    public Pessoa montaPessoa(Pessoa pessoa) {
+        Log.i("PessoaDaoActivity", "essa é a pessoa do banco: " + pessoa);
         if(pessoa == null) {
             return null;
         }
-        Usuario usuario = buscarUsuarioPorId(usuarioId);
+        Usuario usuario = this.buscarUsuarioPorId(pessoa.getUsuarioId());
         if(usuario == null) {
             return null;
         }
-        Endereco endereco = buscarEnderecoPorIdDePessoa(pessoa.getPid());
-        if(endereco == null) {
-            return null;
-        }
+        Endereco endereco = this.buscarEnderecoPorIdDePessoa(pessoa.getPid());
         pessoa.setUsuarioId(usuario.getUid());
         pessoa.setUsuario(usuario);
         pessoa.setEndereco(endereco);
         return pessoa;
     }
 
-    public Usuario buscarUsuarioPorId(Long id) {
+    private Usuario buscarUsuarioPorId(Long id) {
         Usuario usuario = bancoDeDados.usuarioDao().buscarPorId(id);
         return usuario;
     }
 
-    public Endereco buscarEnderecoPorIdDePessoa(Long id) {
+    private Endereco buscarEnderecoPorIdDePessoa(Long id) {
         Endereco endereco = bancoDeDados.enderecoDao().buscarPorIdDePessoa(id);
         return endereco;
     }
-    public Pessoa buscarPessoaPorIdDePessoa(Long id){
-        Pessoa pessoa = bancoDeDados.pessoaDao().buscarPorId(id);
-        return pessoa;
+
+    public Pessoa buscarPessoaPorId(final Long id) throws ExecutionException, InterruptedException {
+        Callable<Pessoa> call = new Callable<Pessoa>() {
+            @Override
+            public Pessoa call() throws Exception {
+                Pessoa pessoa = bancoDeDados.pessoaDao().buscarPorId(id);
+                Pessoa pessoaRetorno = montaPessoa(pessoa);
+                return pessoaRetorno;
+            }
+        };
+        ExecutorService executor = new ScheduledThreadPoolExecutor(1);
+        Future<Pessoa> future = executor.submit(call);
+        return future.get();
     }
     public Usuario buscarUsuarioPorEmailESenha(String email, String senha){
         Usuario usuario = bancoDeDados.usuarioDao().buscarPorEmailESenha(email, senha);

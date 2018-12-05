@@ -16,6 +16,10 @@ import com.atox.usuario.dominio.Usuario;
 import com.atox.usuario.negocio.PessoaNegocio;
 
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 public class RegistroActivity extends AppCompatActivity {
@@ -28,8 +32,6 @@ public class RegistroActivity extends AppCompatActivity {
     private boolean valido = true;
     private Intent registerScreen;
     private PessoaNegocio pessoaNegocio;
-    private Pessoa pessoa;
-    private Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +46,6 @@ public class RegistroActivity extends AppCompatActivity {
         mSenha = findViewById(R.id.editTextRegistroSenha);
         mSenhaConfirm = findViewById(R.id.editTextConfirmeSenha);
         pessoaNegocio = new PessoaNegocio(this);
-        pessoa = new Pessoa();
-        usuario = new Usuario();
         registerScreen = new Intent(RegistroActivity.this, EnderecoActivity.class);
     }
 
@@ -109,18 +109,19 @@ public class RegistroActivity extends AppCompatActivity {
             mSenhaConfirm.setError(getString(R.string.error_invalid_password));
             valido = false;
         }
-        else{
-            String realSenha = Criptografia.encryptPassword(senha);
-            pessoa = montarPessoa(pessoa, usuario, email, realSenha, nome, telefone);
-            pessoaNegocio.setPessoa(pessoa);
-            valido = pessoaNegocio.cadastrar();
-        }
 
 
         if(valido){
             alert("Registro bem sucedido");
-            Long idPessoa = pessoa.getPid();
-            registerScreen.putExtra("idPessoa", idPessoa);
+            String realSenha = Criptografia.encryptPassword(senha);
+            Pessoa pessoa = montarPessoa(email, realSenha, nome, telefone, dataNascimento);
+            pessoaNegocio.setPessoa(pessoa);
+            Long idUsuario = pessoaNegocio.cadastrar();
+            if(idUsuario == -1) {
+                valido = false;
+                alert("Esse nome de usuário já existe.");
+            }
+            registerScreen.putExtra("ID_USUARIO", idUsuario);
         }
         else {
             alert("Preencha os campos corretamente");
@@ -147,6 +148,7 @@ public class RegistroActivity extends AppCompatActivity {
 
         try {
             if(validarRegistro()){
+
                 startActivity(registerScreen);
             }
         } catch (NoSuchAlgorithmException e) {
@@ -157,13 +159,22 @@ public class RegistroActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-    public static Pessoa montarPessoa(Pessoa pessoa, Usuario usuario, String email, String senha,
-     String nome, String telefone){
+    public static Pessoa montarPessoa(String email, String senha, String nome, String telefone, String dataNascimento){
+        Pessoa pessoa = new Pessoa();
+        Usuario usuario = new Usuario();
         usuario.setEmail(email);
         usuario.setSenha(senha);
         pessoa.setUsuario(usuario);
         pessoa.setNome(nome);
         pessoa.setTelefone(telefone);
+        DateFormat dataFormatada = new SimpleDateFormat("dd/MM/yyyy");
+        Date data;
+        try {
+            data = dataFormatada.parse(dataNascimento);
+            pessoa.setDataNascimento(data);
+        } catch (ParseException pe) {
+            System.out.println("ERRO_NA_DATA_NASCIMENTO: " + pe);
+        }
         return pessoa;
     }
 }

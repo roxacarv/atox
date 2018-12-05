@@ -1,0 +1,231 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "722f4181fa90acde9d29cdcef2f089c1",
+    "entities": [
+      {
+        "tableName": "usuario",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `email` TEXT, `senha` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "uid",
+            "columnName": "uid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "email",
+            "columnName": "email",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "senha",
+            "columnName": "senha",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "uid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "sessao_usuario",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`sid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "sid",
+            "columnName": "sid",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "sid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "endereco",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`eid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `pessoa_id` INTEGER NOT NULL, `cep` TEXT, `logradouro` TEXT, `numero` TEXT, `complemento` TEXT, `bairro` TEXT, `cidade` TEXT, `estado` TEXT, `pais` TEXT, FOREIGN KEY(`pessoa_id`) REFERENCES `pessoa`(`pid`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "eid",
+            "columnName": "eid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pessoaId",
+            "columnName": "pessoa_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cep",
+            "columnName": "cep",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "logradouro",
+            "columnName": "logradouro",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "numero",
+            "columnName": "numero",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "complemento",
+            "columnName": "complemento",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "bairro",
+            "columnName": "bairro",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cidade",
+            "columnName": "cidade",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "estado",
+            "columnName": "estado",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "pais",
+            "columnName": "pais",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "eid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_endereco_pessoa_id",
+            "unique": false,
+            "columnNames": [
+              "pessoa_id"
+            ],
+            "createSql": "CREATE  INDEX `index_endereco_pessoa_id` ON `${TABLE_NAME}` (`pessoa_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "pessoa",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "pessoa_id"
+            ],
+            "referencedColumns": [
+              "pid"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "pessoa",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `usuario_id` INTEGER NOT NULL, `nome` TEXT, `data_nascimento` INTEGER, `cpf` TEXT, `telefone` TEXT, FOREIGN KEY(`usuario_id`) REFERENCES `usuario`(`uid`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "pid",
+            "columnName": "pid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "usuarioId",
+            "columnName": "usuario_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nome",
+            "columnName": "nome",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dataNascimento",
+            "columnName": "data_nascimento",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cpf",
+            "columnName": "cpf",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "telefone",
+            "columnName": "telefone",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "pid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_pessoa_usuario_id",
+            "unique": false,
+            "columnNames": [
+              "usuario_id"
+            ],
+            "createSql": "CREATE  INDEX `index_pessoa_usuario_id` ON `${TABLE_NAME}` (`usuario_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "usuario",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "usuario_id"
+            ],
+            "referencedColumns": [
+              "uid"
+            ]
+          }
+        ]
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"722f4181fa90acde9d29cdcef2f089c1\")"
+    ]
+  }
+}

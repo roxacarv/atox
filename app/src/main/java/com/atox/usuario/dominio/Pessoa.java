@@ -5,16 +5,18 @@ import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 import java.util.Date;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
-@Entity(tableName = "pessoa", foreignKeys = @ForeignKey(entity = Usuario.class,
-                                                        parentColumns = "uid",
-                                                        childColumns = "usuario_id",
-                                                        onDelete = CASCADE))
+@Entity(tableName = "pessoa", indices = {@Index("usuario_id")},
+        foreignKeys = @ForeignKey(entity = Usuario.class,
+                                  parentColumns = "uid",
+                                  childColumns = "usuario_id",
+                                  onDelete = CASCADE))
 public class Pessoa {
 
     @PrimaryKey(autoGenerate = true)

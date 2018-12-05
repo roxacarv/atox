@@ -13,27 +13,37 @@ import com.atox.usuario.persistencia.dao.SessaoUsuarioDao;
 import java.util.concurrent.ExecutionException;
 
 public class SessaoNegocio {
-    SessaoUsuario sessaoUsuario = SessaoUsuario.getSessao();
+    SessaoUsuario sessaoUsuario;
     SessaoUsuarioDao sessaoUsuarioDao;
 
-    public SessaoNegocio(FragmentActivity activity){
-        sessaoUsuarioDao = ViewModelProviders.of(activity).get(SessaoUsuarioDao.class);
+    public SessaoNegocio(FragmentActivity activity) {
+        this.sessaoUsuarioDao = ViewModelProviders.of(activity).get(SessaoUsuarioDao.class);
+        sessaoUsuario = SessaoUsuario.getSessao();
     }
 
     public Pessoa obterPessoaLogada(){
-        return sessaoUsuario.getPessoaLogada();
+        return this.sessaoUsuario.getPessoaLogada();
     }
 
     // metodo usado para iniciar uma nova sessao
     // Este metodo deve ser chamado apos já ter sido feita a validacao do login no BD
     public void iniciarNovaSessao(Pessoa pessoa) throws AtoxException, ExecutionException, InterruptedException {
-        Long idSessao = sessaoUsuarioDao.salvarSessao(sessaoUsuario);
+        this.sessaoUsuario.setPessoaLogada(pessoa);
+        this.sessaoUsuario.setUsuarioLogado(pessoa.getUsuario());
+        Long idSessao = sessaoUsuarioDao.salvarSessao(this.sessaoUsuario);
         if (idSessao != null){
-            sessaoUsuario.setPessoaLogada(pessoa);
+            this.sessaoUsuario.setPessoaLogada(pessoa);
         } else {
             throw new AtoxException("Sessão não pode ser iniciada.");
         }
+    }
 
+    public Pessoa restaurarSessao() throws ExecutionException, InterruptedException {
+        Pessoa pessoaLogada = this.sessaoUsuarioDao.restaurarSessao();
+        if(pessoaLogada == null) {
+            return null;
+        }
+        return pessoaLogada;
     }
 
     public void encerrarSessao(){

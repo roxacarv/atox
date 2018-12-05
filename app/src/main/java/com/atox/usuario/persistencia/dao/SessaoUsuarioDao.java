@@ -19,6 +19,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 public class SessaoUsuarioDao extends AndroidViewModel {
 
     private BDHelper bancoDeDados;
+    private SessaoUsuario sessaoUsuario;
 
     public SessaoUsuarioDao(Application application)
     {
@@ -75,12 +76,12 @@ public class SessaoUsuarioDao extends AndroidViewModel {
             return null;
         }
         Endereco endereco = buscarEnderecoPorIdDePessoa(pessoa.getPid());
-        if(endereco == null) {
-            return null;
-        }
         pessoa.setUsuarioId(usuario.getUid());
         pessoa.setUsuario(usuario);
         pessoa.setEndereco(endereco);
+        sessaoUsuario = SessaoUsuario.getSessao();
+        sessaoUsuario.setPessoaLogada(pessoa);
+        sessaoUsuario.setUsuarioLogado(pessoa.getUsuario());
         return pessoa;
     }
 

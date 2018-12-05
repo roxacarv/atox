@@ -1,6 +1,5 @@
 package com.atox.usuario.gui;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,10 +14,11 @@ import com.atox.infra.negocio.ValidaNegocio;
 import com.atox.navegacao.activities.MenuActivity;
 import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.SessaoUsuario;
-import com.atox.usuario.persistencia.dao.PessoaDao;
+import com.atox.usuario.negocio.PessoaNegocio;
 import com.atox.usuario.dominio.Usuario;
 import com.atox.infra.negocio.Criptografia;
 import com.atox.infra.negocio.ValidaCadastro;
+import com.atox.usuario.negocio.SessaoNegocio;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.ExecutionException;
@@ -29,9 +29,10 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getName();
     private EditText mEmailView;
     private EditText mPasswordView;
-    private PessoaDao pessoaDao;
     private SessaoUsuario sessaoUsuario;
     private ValidaNegocio validaNegocio;
+    private PessoaNegocio pessoaNegocio;
+    private SessaoNegocio sessaoNegocio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +40,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         mEmailView = (EditText) findViewById(R.id.editTextEmail);
         mPasswordView = (EditText) findViewById(R.id.editTextSenha);
-        pessoaDao = ViewModelProviders.of(this).get(PessoaDao.class);
+        pessoaNegocio = new PessoaNegocio(this);
         validaNegocio = new ValidaNegocio(this);
+        sessaoNegocio = new SessaoNegocio(this);
     }
 
     public void goToRegisterScreen(View view){
@@ -57,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void logar(View view) throws ExecutionException, InterruptedException {
+    public void logar(View view) throws ExecutionException, InterruptedException, AtoxException {
 
         Usuario usuario = null;
         Pessoa pessoa = null;
@@ -66,34 +68,31 @@ public class LoginActivity extends AppCompatActivity {
         String password = mPasswordView.getText().toString();
 
         try {
-            validarCamposLoginNaGui(email,password);
+            validarCamposLoginNaGui(email, password);
             String senhaCriptografada = Criptografia.encryptPassword(password);
+            usuario = pessoaNegocio.recuperarPorEmailDeUsuario(email);
             if(usuario == null) {
-                throw new AtoxException("Esse usuário não existe");
+                alert("O usuário digitada não existe ou a senha está incorreta");
             }
-            pessoa = pessoaDao.buscarPorIdDeUsuario(usuario.getUid());
+            pessoa = pessoaNegocio.recuperarPessoaPorId(usuario.getUid());
             if(pessoa == null) {
-                throw new AtoxException("O usuário não está associado com nenhuma pessoa");
+                alert("O usuário digitado não existe ou a senha está incorreta");
             }
             Log.i(TAG, "Pessoa existe");
             alert(getString(R.string.act_successful_login));
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (AtoxException e) {
-            alert(e.getMessage());
+            alert("Ocorreu um erro");
         }
 
-        if(usuario != null) {
-            sessaoUsuario = SessaoUsuario.getSessao();
-            sessaoUsuario.setUsuarioLogado(usuario);
-            sessaoUsuario.setPessoaLogada(pessoa);
+        if(pessoa != null) {
+            sessaoNegocio.iniciarNovaSessao(pessoa);
             goToHomeScreen(view);
         }
 
     }
 
 
-    private void validarCamposLoginNaGui(String email, String password) throws AtoxException, NoSuchAlgorithmException, ExecutionException, InterruptedException {
+    private void validarCamposLoginNaGui(String email, String password)  {
 
         // Reset errors.
         mEmailView.setError(null);
@@ -123,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if (cancel) {
             focusView.requestFocus();
-            throw new AtoxException(getString(R.string.error_email_or_pass_invalid));
+            alert("Email ou senha inválido");
         }
 
     }

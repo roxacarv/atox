@@ -3,14 +3,16 @@ package com.atox.usuario.dominio;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
-@Entity(tableName = "endereco", foreignKeys = @ForeignKey(entity = Pessoa.class,
-                                                          parentColumns = "pid",
-                                                          childColumns = "pessoa_id",
-                                                          onDelete = CASCADE))
+@Entity(tableName = "endereco", indices = {@Index("pessoa_id")},
+        foreignKeys = @ForeignKey(entity = Pessoa.class,
+                                  parentColumns = "pid",
+                                  childColumns = "pessoa_id",
+                                  onDelete = CASCADE))
 
 public class Endereco {
 
@@ -43,11 +45,6 @@ public class Endereco {
 
     @ColumnInfo(name = "pais")
     private String pais;
-
-
-    public Endereco(Long pessoaId) {
-        this.pessoaId = pessoaId;
-    }
 
     public String getCep() {
         return cep;

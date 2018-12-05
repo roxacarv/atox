@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.atox.infra.AtoxException;
 import com.atox.usuario.dominio.Pessoa;
@@ -22,48 +23,29 @@ public class SplashActivity extends AppCompatActivity {
     private Usuario usuario;
     private Pessoa pessoa;
     private String TAG = SplashActivity.class.getName();
-    private PessoaDao pessoaDao;
     private SessaoNegocio sessaoNegocio;
 
     //Handler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sessaoUsuario = SessaoUsuario.getSessao();
-        pessoaDao = ViewModelProviders.of(this).get(PessoaDao.class);
         sessaoNegocio = new SessaoNegocio(this);
+        //TODO verifica se já existe usuário logado.
+        Pessoa pessoaJaLogada = null;
 
         try {
-            if(usuario == null){
-                throw new AtoxException ("Esse usuário não existe");
-            }
-            pessoa = pessoaDao.buscarPorIdDeUsuario(usuario.getUid());
-            if(pessoa == null){
-                throw new AtoxException ("O usuário não está associado com nenhuma pessoa");
-            }
+            pessoaJaLogada = sessaoNegocio.restaurarSessao();
         } catch (ExecutionException e) {
-            e.printStackTrace();
+            alert("");
         } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (AtoxException e) {
-            e.printStackTrace();
+            alert("");
         }
 
-        //TODO verifica se já existe usuário logado.
-        Pessoa pessoaJaLogada = sessaoNegocio.obterPessoaLogada();
         if (pessoaJaLogada != null){
+            alert("Seja bem vindo de volta");
             goToHomeScreen();
         } else{
-            goToLoginScreen();
-        }
-
-        if(usuario != null) {
-            Log.i(TAG, "Entrou porque usuário havia logado anteriormente");
-            sessaoUsuario.setUsuarioLogado(usuario);
-            sessaoUsuario.setPessoaLogada(pessoa);
-            goToHomeScreen();
-        } else {
-            Log.i(TAG, "Não entrou pois não havia usuário logado");
+            alert("Seja bem vindo");
             goToLoginScreen();
         }
 
@@ -89,5 +71,9 @@ public class SplashActivity extends AppCompatActivity {
     protected void goToLoginScreen() {
         Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
         startActivity(intent);
+    }
+
+    private void alert(String s){
+        Toast.makeText(this,s,Toast.LENGTH_LONG).show();
     }
 }
