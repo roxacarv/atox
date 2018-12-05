@@ -44,9 +44,8 @@ public class Endereco {
     @ColumnInfo(name = "pais")
     private String pais;
 
-    public Endereco() { }
 
-    public Endereco(int pessoaId) {
+    public Endereco(Long pessoaId) {
         this.pessoaId = pessoaId;
     }
 

@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.atox.R;
 import com.atox.infra.AtoxException;
+import com.atox.infra.negocio.ValidaNegocio;
 import com.atox.navegacao.activities.MenuActivity;
 import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.SessaoUsuario;
@@ -30,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mPasswordView;
     private PessoaDao pessoaDao;
     private SessaoUsuario sessaoUsuario;
+    private ValidaNegocio validaNegocio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         mEmailView = (EditText) findViewById(R.id.editTextEmail);
         mPasswordView = (EditText) findViewById(R.id.editTextSenha);
         pessoaDao = ViewModelProviders.of(this).get(PessoaDao.class);
+        validaNegocio = new ValidaNegocio(this);
     }
 
     public void goToRegisterScreen(View view){

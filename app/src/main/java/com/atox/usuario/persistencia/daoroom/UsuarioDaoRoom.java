@@ -24,6 +24,7 @@ public interface UsuarioDaoRoom extends DaoBase<Usuario> {
     @Query("SELECT * FROM usuario where email LIKE :email")
     Usuario buscarPorEmail(String email);
 
-
+    @Query("SELECT * FROM usuario where email LIKE :email AND senha LIKE :senha")
+    Usuario buscarPorEmailESenha(String email, String senha);
 
 }

@@ -17,6 +17,7 @@ import com.atox.usuario.dominio.Endereco;
 import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.SessaoUsuario;
 import com.atox.usuario.dominio.Usuario;
+import com.atox.usuario.negocio.PessoaNegocio;
 import com.atox.usuario.persistencia.dao.PessoaDao;
 import com.google.android.gms.location.places.Place;
 import com.shishank.autocompletelocationview.interfaces.OnQueryCompleteListener;
@@ -33,8 +34,10 @@ import java.util.concurrent.ExecutionException;
 public class EnderecoActivity extends AppCompatActivity implements OnQueryCompleteListener {
 
     private static final String TAG = EnderecoActivity.class.getName();
-    private UsuarioDao usuarioDao;
-    private PessoaDao pessoaDao;
+
+    private Pessoa pessoa;
+    private Usuario usuario;
+    private PessoaNegocio pessoaNegocio;
     private SessaoUsuario sessaoUsuario;
     private Bundle dadosPessoais;
     private Button buttonRegistrar;
@@ -46,12 +49,14 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
         buttonRegistrar = (Button) findViewById(R.id.buttonRegistrar);
         editTextAddress =  (AutoCompleteTextView) findViewById(R.id.editTextAddress);
         dadosPessoais = getIntent().getExtras();
+        pessoaNegocio = new PessoaNegocio(getApplicationContext());
+        pessoa = pessoaNegocio.recuperarPessoa(dadosPessoais.getString("idPessoa"));
+        usuario = pessoa.getUsuario();
 
     }
 
     public void showTestToast(View view){
         Address testLocation = getAddress(editTextAddress.getText().toString());
-
         Toast.makeText(this,testLocation.getSubAdminArea(),Toast.LENGTH_LONG).show();
         Log.i(TAG, "Pais: " + testLocation.getCountryName());
         Log.i(TAG, "Estado: " + testLocation.getAdminArea());
@@ -67,17 +72,16 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
         Intent registerScreen = new Intent(EnderecoActivity.this, RegistroActivity.class);
         startActivity(registerScreen);
 
+
     }
 
     private Pessoa registraNoBancoDeDados() throws ExecutionException, InterruptedException {
-        pessoaDao = ViewModelProviders.of(this).get(PessoaDao.class);
-        Usuario usuario = criarUsuario();
+        Long idDeUsuario = usuario.getUid();
         Log.i(TAG, "Id de usuário do banco: " + idDeUsuario);
-        Pessoa pessoa = criarPessoa(idDeUsuario);
-        Long idDePessoa = pessoaDao.inserirPessoa(pessoa);
+        Long idDePessoa = pessoa.getPid();
         Log.i(TAG, "Id de pessoa do banco: " + idDePessoa);
         Endereco endereco = criarEndereco(idDePessoa);
-        Long idDeEndereco = usuarioDao.inserirEndereco(endereco);
+        Long idDeEndereco = pessoaNegocio.registrarEndereco(endereco);
         pessoa.setEndereco(endereco);
         return pessoa;
     }
@@ -98,16 +102,11 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
         return pessoa;
     }
 
-    private Usuario criarUsuario() {
-        Usuario usuario = new Usuario();
-        usuario.setSenha(dadosPessoais.getString("SENHA"));
-        usuario.setEmail(dadosPessoais.getString("EMAIL"));
-        return usuario;
-    }
+
 
     private Endereco criarEndereco(Long idDeUsuario) {
         Address testLocation = getAddress(editTextAddress.getText().toString());
-        Endereco endereco = new Endereco();
+        Endereco endereco = new Endereco(idDeUsuario);
         endereco.setPessoaId(idDeUsuario);
         endereco.setCidade(testLocation.getSubAdminArea());
         endereco.setBairro(testLocation.getSubLocality());

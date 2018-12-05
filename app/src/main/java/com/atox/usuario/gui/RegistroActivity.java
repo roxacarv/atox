@@ -11,8 +11,12 @@ import com.atox.R;
 import com.atox.infra.persistencia.Mascara;
 import com.atox.infra.negocio.Criptografia;
 import com.atox.infra.negocio.ValidaCadastro;
+import com.atox.usuario.dominio.Pessoa;
+import com.atox.usuario.dominio.Usuario;
+import com.atox.usuario.negocio.PessoaNegocio;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.concurrent.ExecutionException;
 
 public class RegistroActivity extends AppCompatActivity {
     private EditText mNome;
@@ -23,6 +27,9 @@ public class RegistroActivity extends AppCompatActivity {
     private EditText mSenhaConfirm;
     private boolean valido = true;
     private Intent registerScreen;
+    private PessoaNegocio pessoaNegocio;
+    private Pessoa pessoa;
+    private Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +43,13 @@ public class RegistroActivity extends AppCompatActivity {
         mEmail = findViewById(R.id.editTextRegistroEmail);
         mSenha = findViewById(R.id.editTextRegistroSenha);
         mSenhaConfirm = findViewById(R.id.editTextConfirmeSenha);
-
+        pessoaNegocio = new PessoaNegocio(this);
+        pessoa = new Pessoa();
+        usuario = new Usuario();
         registerScreen = new Intent(RegistroActivity.this, EnderecoActivity.class);
     }
 
-    public boolean validarRegistro() throws NoSuchAlgorithmException {
+    public boolean validarRegistro() throws NoSuchAlgorithmException, ExecutionException, InterruptedException {
         mEmail.setError(null);
         mTelefone.setError(null);
         mSenha.setError(null);
@@ -101,20 +110,19 @@ public class RegistroActivity extends AppCompatActivity {
             valido = false;
         }
         else{
-            valido = true;
+            String realSenha = Criptografia.encryptPassword(senha);
+            pessoa = montarPessoa(pessoa, usuario, email, realSenha, nome, telefone);
+            pessoaNegocio.setPessoa(pessoa);
+            valido = pessoaNegocio.cadastrar();
         }
 
 
         if(valido){
             alert("Registro bem sucedido");
-            String realSenha = Criptografia.encryptPassword(senha);
-
-            registerScreen.putExtra("TELEFONE", telefone);
-            registerScreen.putExtra("SENHA", realSenha);
-            registerScreen.putExtra("NOME", nome);
-            registerScreen.putExtra("DATA_NASCIMENTO", dataNascimento);
-            registerScreen.putExtra("EMAIL", email);
-        } else {
+            Long idPessoa = pessoa.getPid();
+            registerScreen.putExtra("idPessoa", idPessoa);
+        }
+        else {
             alert("Preencha os campos corretamente");
 
         }
@@ -143,7 +151,20 @@ public class RegistroActivity extends AppCompatActivity {
             }
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
     }
-
+    public static Pessoa montarPessoa(Pessoa pessoa, Usuario usuario, String email, String senha,
+     String nome, String telefone){
+        usuario.setEmail(email);
+        usuario.setSenha(senha);
+        pessoa.setUsuario(usuario);
+        pessoa.setNome(nome);
+        pessoa.setTelefone(telefone);
+        return pessoa;
+    }
 }
+

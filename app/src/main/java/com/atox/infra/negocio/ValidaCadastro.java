@@ -5,7 +5,10 @@ import android.util.Patterns;
 
 import com.atox.infra.persistencia.FormataData;
 
+import java.util.Date;
+
 public class ValidaCadastro {
+
     private final int TAMANHO_CPF = 14;
     private final int TAMANHO_DATA = 10;
 
@@ -28,8 +31,7 @@ public class ValidaCadastro {
 
     public boolean isDataNascimento (String data){
 
-        return (FormataData.dataExiste(data) && FormataData.dataMenorOuIgualQueAtual(data) && data.length() == TAMANHO_DATA);
-
+        return (FormataData.dataExiste(data) && FormataData.dataMenorOuIgualQueAtual(data)
+                && data.length() == TAMANHO_DATA);
     }
-
 }

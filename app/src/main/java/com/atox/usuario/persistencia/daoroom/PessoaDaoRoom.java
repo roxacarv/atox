@@ -30,4 +30,5 @@ public interface PessoaDaoRoom extends DaoBase<Pessoa> {
     @Query("SELECT * FROM pessoa where usuario_id LIKE :usuarioId")
     Pessoa buscarPorIdDeusuario(long usuarioId);
 
+
 }

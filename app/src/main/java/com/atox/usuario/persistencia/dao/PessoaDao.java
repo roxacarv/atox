@@ -42,6 +42,18 @@ public class PessoaDao extends AndroidViewModel {
         Future<Long> future = executor.submit(call);
         return future.get();
     }
+    public Long inserirEndereco(final Endereco endereco) throws ExecutionException, InterruptedException {
+        Callable<Long> call = new Callable<Long>() {
+            @Override
+            public Long call() throws Exception {
+                return bancoDeDados.enderecoDao().inserir(endereco);
+            }
+        };
+
+        ExecutorService executor = new ScheduledThreadPoolExecutor(1);
+        Future<Long> future = executor.submit(call);
+        return future.get();
+    }
 
     public void atualizar(final Pessoa pessoa) {
         new Thread(new Runnable() {
@@ -93,21 +105,41 @@ public class PessoaDao extends AndroidViewModel {
         Endereco endereco = bancoDeDados.enderecoDao().buscarPorIdDePessoa(id);
         return endereco;
     }
+    public Pessoa buscarPessoaPorIdDePessoa(Long id){
+        Pessoa pessoa = bancoDeDados.pessoaDao().buscarPorId(id);
+        return pessoa;
+    }
+    public Usuario buscarUsuarioPorEmailESenha(String email, String senha){
+        Usuario usuario = bancoDeDados.usuarioDao().buscarPorEmailESenha(email, senha);
+        return usuario;
+    }
+    public Usuario buscarPorEmaildeUsuario(final String usuarioEmail) throws ExecutionException, InterruptedException {
+        Callable<Usuario> call = new Callable<Usuario>() {
+            @Override
+            public Usuario call() throws Exception {
+                Usuario usuario = bancoDeDados.usuarioDao().buscarPorEmail(usuarioEmail);
+                if(usuario == null){
+                    return null;
+                }
+                return usuario;
+            }
+        };
+        ExecutorService executor = new ScheduledThreadPoolExecutor(1);
+        Future<Usuario> future = executor.submit(call);
+        return future.get();
+    }
+    public void deletarItem(Pessoa pessoa) {
 
-    public void deletarItem(Pessoa pessoa)
-    {
         new deleteAsyncTask(bancoDeDados).execute(pessoa);
     }
 
     private static class deleteAsyncTask extends AsyncTask<Pessoa, Void, Void> {
         private BDHelper bd;
-        deleteAsyncTask(BDHelper bancoDeDados)
-        {
+        deleteAsyncTask(BDHelper bancoDeDados) {
             bd = bancoDeDados;
         }
         @Override
-        protected Void doInBackground(final Pessoa... params)
-        {
+        protected Void doInBackground(final Pessoa... params){
             bd.pessoaDao().deletar(params[0]);
             return null;
         }

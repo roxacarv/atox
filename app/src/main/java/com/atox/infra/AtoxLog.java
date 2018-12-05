@@ -7,11 +7,11 @@ import java.util.Date;
 public class AtoxLog {
 
 
-    private int id;
+    private long id;
 
-    private int usuarioId;
+    private long usuarioId;
 
-    private int acao;
+    private long acao;
 
     private String erro;
 
@@ -21,7 +21,7 @@ public class AtoxLog {
 
 
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -29,7 +29,7 @@ public class AtoxLog {
         this.id = id;
     }
 
-    public int getUsuarioId() {
+    public long getUsuarioId() {
         return usuarioId;
     }
 
@@ -37,7 +37,7 @@ public class AtoxLog {
         this.usuarioId = usuarioId;
     }
 
-    public int getAcao() {
+    public long getAcao() {
         return acao;
     }
 
