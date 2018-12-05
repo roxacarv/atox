@@ -11,6 +11,7 @@ import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.SessaoUsuario;
 import com.atox.usuario.dominio.Usuario;
 import com.atox.usuario.gui.LoginActivity;
+import com.atox.usuario.negocio.SessaoNegocio;
 import com.atox.usuario.persistencia.dao.PessoaDao;
 
 import java.util.concurrent.ExecutionException;
@@ -22,6 +23,7 @@ public class SplashActivity extends AppCompatActivity {
     private Pessoa pessoa;
     private String TAG = SplashActivity.class.getName();
     private PessoaDao pessoaDao;
+    private SessaoNegocio sessaoNegocio;
 
     //Handler handler;
     @Override
@@ -29,6 +31,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         sessaoUsuario = SessaoUsuario.getSessao();
         pessoaDao = ViewModelProviders.of(this).get(PessoaDao.class);
+        sessaoNegocio = new SessaoNegocio(this);
 
         try {
             if(usuario == null){
@@ -44,6 +47,14 @@ public class SplashActivity extends AppCompatActivity {
             e.printStackTrace();
         } catch (AtoxException e) {
             e.printStackTrace();
+        }
+
+        //TODO verifica se já existe usuário logado.
+        Pessoa pessoaJaLogada = sessaoNegocio.obterPessoaLogada();
+        if (pessoaJaLogada != null){
+            goToHomeScreen();
+        } else{
+            goToLoginScreen();
         }
 
         if(usuario != null) {

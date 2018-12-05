@@ -2,6 +2,7 @@ package com.atox.usuario.persistencia.dao;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
+import android.os.AsyncTask;
 
 import com.atox.infra.persistencia.BDHelper;
 import com.atox.usuario.dominio.Endereco;
@@ -15,11 +16,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
-public class SessaoDao extends AndroidViewModel {
+public class SessaoUsuarioDao extends AndroidViewModel {
 
     private BDHelper bancoDeDados;
 
-    public SessaoDao(Application application)
+    public SessaoUsuarioDao(Application application)
     {
         super(application);
         bancoDeDados = BDHelper.getBancoDeDados(this.getApplication());
@@ -96,5 +97,23 @@ public class SessaoDao extends AndroidViewModel {
     }
 
 
+    public void deletarItem(SessaoUsuario sessao)
+    {
+        new SessaoUsuarioDao.deleteAsyncTaskSessao(bancoDeDados).execute(sessao);
+    }
+
+    private static class deleteAsyncTaskSessao extends AsyncTask<SessaoUsuario, Void, Void> {
+        private BDHelper bd;
+        deleteAsyncTaskSessao(BDHelper bancoDeDados)
+        {
+            bd = bancoDeDados;
+        }
+        @Override
+        protected Void doInBackground(final SessaoUsuario... params)
+        {
+            bd.sessaoDao().deletar(params[0]);
+            return null;
+        }
+    }
 
 }
