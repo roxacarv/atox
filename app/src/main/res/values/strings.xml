@@ -11,7 +11,8 @@
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">Este email não é válido.</string>
-    <string name="error_invalid_password">Senha muito curta.</string>
+    <string name="error_invalid_password">Senha inválida.</string>
+    <string name="error_password_too_short">Senha muito curta.</string>
     <string name="error_incorrect_password">Senha Incorreta</string>
     <string name="error_field_required">Campo necessário</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
@@ -22,6 +23,8 @@
     <string name="error_invalid_date">Data inválida</string>
     <string name="error_invalid_name">Campo \'Nome\' inválido</string>
     <string name="error_invalid_tel">Telefone inválido</string>
+    <string name="select_address">Informe o seu endereço.</string>
+    <string name="email_already_exists">Esse email já foi cadastrado.</string>
     <string name="title_activity_menu">MenuActivity</string>
 
     <!--menu-->
@@ -34,7 +37,7 @@
 
     <!-- Aba Produtores-->
     <string name="resumo_produtores">Essa é lista dos produtores cadastrados nas cooperativas mais próximas. Você entrar em contato direto com eles e acompanhar seus produtos.</string>
-    <string name="error_no_such_user_or_pass_incorrect">O usuário não cadastrado ou a senha está incorreta</string>
+    <string name="error_no_such_user_or_pass_incorrect">Usuário não cadastrado ou senha incorreta.</string>
     <string name="act_successful_login">Login bem sucedido</string>
     <string name="error_email_or_pass_invalid">Email ou senha inválida</string>
 </resources>

@@ -29,7 +29,6 @@ public class RegistroActivity extends AppCompatActivity {
     private EditText mEmail;
     private EditText mSenha;
     private EditText mSenhaConfirm;
-    private boolean valido = true;
     private Intent registerScreen;
     private PessoaNegocio pessoaNegocio;
 
@@ -50,6 +49,7 @@ public class RegistroActivity extends AppCompatActivity {
     }
 
     public boolean validarRegistro() throws NoSuchAlgorithmException, ExecutionException, InterruptedException {
+        boolean valido = true;
         mEmail.setError(null);
         mTelefone.setError(null);
         mSenha.setError(null);
@@ -112,16 +112,18 @@ public class RegistroActivity extends AppCompatActivity {
 
 
         if(valido){
-            alert("Registro bem sucedido");
             String realSenha = Criptografia.encryptPassword(senha);
             Pessoa pessoa = montarPessoa(email, realSenha, nome, telefone, dataNascimento);
             pessoaNegocio.setPessoa(pessoa);
             Long idUsuario = pessoaNegocio.cadastrar();
             if(idUsuario == -1) {
                 valido = false;
-                alert("Esse nome de usuário já existe.");
+                alert(getString(R.string.email_already_exists));
+            } else{
+                alert(getString(R.string.select_address));
+                registerScreen.putExtra("ID_USUARIO", idUsuario);
             }
-            registerScreen.putExtra("ID_USUARIO", idUsuario);
+
         }
         else {
             alert("Preencha os campos corretamente");

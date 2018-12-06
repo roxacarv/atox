@@ -68,18 +68,29 @@ public class LoginActivity extends AppCompatActivity {
         String password = mPasswordView.getText().toString();
 
         try {
-            validarCamposLoginNaGui(email, password);
-            String senhaCriptografada = Criptografia.encryptPassword(password);
-            usuario = pessoaNegocio.recuperarPorEmailDeUsuario(email);
-            if(usuario == null) {
-                alert("O usuário digitada não existe ou a senha está incorreta");
+            boolean camposValidos = validarCamposLoginNaGui(email, password);
+            if (camposValidos){
+                String senhaCriptografada = Criptografia.encryptPassword(password);
+                //preencher um objeto Usuario e enviar para o negocio confirmar se usuario cadastrado
+                Usuario usuarioInformadoNoLogin = new Usuario();
+                usuarioInformadoNoLogin.setEmail(email);
+                usuarioInformadoNoLogin.setSenha(senhaCriptografada);
+
+                usuario = pessoaNegocio.isUsuarioCadastrado(usuarioInformadoNoLogin);
+                if(usuario == null) {
+                    //usuario não cadastrado ou senha incorreta
+                    alert(getString(R.string.error_no_such_user_or_pass_incorrect));
+                } else{
+                    pessoa = pessoaNegocio.recuperarPessoaPorId(usuario.getUid());
+                    if(pessoa == null) {
+                        alert("O usuário digitado não existe ou a senha está incorreta.");
+                    }
+                    Log.i(TAG, "Pessoa existe.");
+                    alert(getString(R.string.act_successful_login));
+                }
+
             }
-            pessoa = pessoaNegocio.recuperarPessoaPorId(usuario.getUid());
-            if(pessoa == null) {
-                alert("O usuário digitado não existe ou a senha está incorreta");
-            }
-            Log.i(TAG, "Pessoa existe");
-            alert(getString(R.string.act_successful_login));
+
         } catch (NoSuchAlgorithmException e) {
             alert("Ocorreu um erro");
         }
@@ -92,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private void validarCamposLoginNaGui(String email, String password)  {
+    private boolean validarCamposLoginNaGui(String email, String password)  {
 
         // Reset errors.
         mEmailView.setError(null);
@@ -103,8 +114,13 @@ public class LoginActivity extends AppCompatActivity {
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (validaCadastro.isCampoVazio(password) || !validaCadastro.isSenhaValida(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
+        if (validaCadastro.isCampoVazio(password)) {
+            mPasswordView.setError(getString(R.string.error_field_required));
+            focusView = mPasswordView;
+            cancel = true;
+        }
+        else if(!validaCadastro.isSenhaValida(password)){
+            mPasswordView.setError(getString(R.string.error_password_too_short));
             focusView = mPasswordView;
             cancel = true;
         }
@@ -124,6 +140,7 @@ public class LoginActivity extends AppCompatActivity {
             focusView.requestFocus();
             alert("Email ou senha inválido");
         }
+        return !cancel;
 
     }
 

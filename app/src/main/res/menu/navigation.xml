@@ -7,7 +7,7 @@
         android:title="@string/title_inicio" />
 
     <item
-        android:id="@+id/navigation_produtor"
+        android:id="@+id/navigation_produtores"
         android:icon="@drawable/ic_leaf"
         android:title="@string/title_produtores" />
 

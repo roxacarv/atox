@@ -45,9 +45,23 @@ public class PessoaNegocio{
         return pessoa;
     }
 
-    public Usuario recuperarPorEmailDeUsuario(String email) throws ExecutionException, InterruptedException {
-        Usuario usuario = pessoaDao.buscarPorEmaildeUsuario(email);
-        return usuario;
+    public Usuario isUsuarioCadastrado(Usuario usuarioInformadoNoLogin) throws ExecutionException, InterruptedException {
+        Usuario usuarioCadastradoNoBanco = pessoaDao.buscarPorEmaildeUsuario(usuarioInformadoNoLogin.getEmail());
+        if (usuarioCadastradoNoBanco == null){
+            //usuario nao cadastrado
+            return null;
+        } else{
+            //compara se a senha do usuario informado no login é a mesma do usuário cadastrado
+            String senhaInformada = usuarioInformadoNoLogin.getSenha();
+            String senhaCadastrada = usuarioCadastradoNoBanco.getSenha();
+            if (senhaInformada.equals(senhaCadastrada)){
+                //usuario ja esta cadastrado
+                return usuarioCadastradoNoBanco;
+            } else{
+                //senha incorreta para o usuario informado.
+                return null;
+            }
+        }
     }
 
     public Long registrarEndereco(Endereco endereco) throws ExecutionException, InterruptedException {
