@@ -7,9 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import com.atox.R;
-import com.atox.http.gui.fragments.HomeFragment;
-import com.atox.http.gui.fragments.NotificationsFragment;
-import com.atox.http.gui.fragments.ProfileFragment;
+
 
 public class ProdutorActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
     @Override
@@ -18,7 +16,7 @@ public class ProdutorActivity extends AppCompatActivity implements BottomNavigat
         setContentView(R.layout.activity_produtor);
 
         //loading the default fragment
-        loadFragment(new HomeFragment());
+        //loadFragment(new HomeFragment());
 
         //getting bottom navigation view and attaching the listener
         BottomNavigationView navigation = findViewById(R.id.navigation);
@@ -32,19 +30,11 @@ public class ProdutorActivity extends AppCompatActivity implements BottomNavigat
 
         switch (item.getItemId()) {
             case R.id.navigation_inicio:
-                fragment = new HomeFragment();
-                break;
-
-            /*case R.id.navigation_dashboard:
-                fragment = new DashboardFragment();
-                break;*/
-
-            case R.id.navigation_notificacoes:
-                fragment = new NotificationsFragment();
+                //fragment = new HomeFragment();
                 break;
 
             case R.id.navigation_perfil:
-                fragment = new ProfileFragment();
+                //fragment = new ProfileFragment();
                 break;
         }
 

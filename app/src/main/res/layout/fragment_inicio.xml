@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".navegacao.fragments.InicioFragment">
 
     <ScrollView
@@ -147,9 +148,13 @@
                         android:textColor="@color/white" />
                 </LinearLayout>
 
-            </LinearLayout>
-
-
+            </LinearLayout><ImageView
+            android:id="@+id/imageViewSad"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="20dp"
+            android:tint="@color/lightGray"
+            app:srcCompat="@drawable/ic_sad" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -160,8 +165,8 @@
                 android:paddingLeft="75dp"
                 android:paddingRight="75dp"
                 android:textSize="16sp"
-                android:layout_marginTop="100dp"
                 android:text="Ops! Ainda não implementamos esta parte" />
+
 
         </LinearLayout>
 
