@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        app:srcCompat="@drawable/btn_fair" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewNomeProdutor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/google_sans_bold"
+            android:text="ADALGISA DE ARAÚJO"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textViewCidadeProdutor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/google_sans_regular"
+            android:text="Recife - PE"
+            android:textColor="@color/lightBlack"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textViewCooperativa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/google_sans_regular"
+            android:text="Cooperativa A"
+            android:textColor="@color/lightBlack"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textViewEmailProdutor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/google_sans_regular"
+            android:text="produtor@email.com"
+            android:textColor="@color/lightBlack"
+            android:textSize="16sp" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
