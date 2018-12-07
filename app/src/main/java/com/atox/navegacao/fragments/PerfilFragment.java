@@ -22,6 +22,7 @@ public class PerfilFragment extends Fragment {
     private TextView textViewPerfilDataNascimento;
     private TextView textViewPerfilEndereco;
     private TextView textViewPerfilEmail;
+    private TextView textViewPerfilTelefone;
     private String dataFinal;
 
     @Override
@@ -34,9 +35,12 @@ public class PerfilFragment extends Fragment {
         textViewPerfilDataNascimento = (TextView) view.findViewById(R.id.textViewPerfilDataNascimento);
         textViewPerfilEndereco = (TextView) view.findViewById(R.id.textViewPerfilEndereco);
         textViewPerfilEmail = (TextView) view.findViewById(R.id.textViewPerfilEmail);
+        textViewPerfilTelefone = (TextView) view.findViewById(R.id.textViewPerfilTelefone);
 
         textViewPerfilNomeUsuario.setText(sessaoUsuario.getPessoaLogada().getNome());
         textViewPerfilEmail.setText(sessaoUsuario.getUsuarioLogado().getEmail());
+        textViewPerfilTelefone.setText(sessaoUsuario.getPessoaLogada().getTelefone());
+
 
         dataFinal = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy").format(sessaoUsuario.getPessoaLogada().getDataNascimento());
         textViewPerfilDataNascimento.setText(dataFinal);

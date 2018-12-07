@@ -36,18 +36,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"
-                    android:layout_marginRight="200dp"
+                    android:layout_marginRight="180dp"
                     android:text="PERFIL"
                     android:textColor="@color/lightBlack"
                     android:fontFamily="@font/google_sans_bold"
                     android:textSize="24sp"
-                    android:gravity="center"/>
+                    />
 
                 <Button
                     android:id="@+id/button3"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:background="@drawable/ic_btn_editar"/>
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/ic_btn_editar" />
             </LinearLayout>
 
             <LinearLayout
@@ -78,44 +79,48 @@
                         android:text="Nome Usuario"
                         android:fontFamily="@font/google_sans_bold"
                         android:textColor="@color/lightBlack"
-                        android:textSize="24sp"
+                        android:textSize="20sp"
                         android:paddingRight="120dp"/>
 
                     <TextView
                         android:id="@+id/textViewPerfilDataNascimento"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:text="02 de julho de 1995"
                         android:fontFamily="@font/google_sans_regular"
                         android:textColor="@color/lightBlack"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         />
 
                     <TextView
                         android:id="@+id/textViewPerfilEndereco"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:text="Jordão Baixo, Recife - PE"
                         android:fontFamily="@font/google_sans_regular"
                         android:textColor="@color/lightBlack"
-                        android:textSize="18sp"/>
+                        android:textSize="16sp"/>
                     <TextView
                         android:id="@+id/textViewPerfilEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:text="email_usuario@gmail.com"
                         android:fontFamily="@font/google_sans_regular"
                         android:textColor="@color/lightBlack"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         />
                     <TextView
-                        android:id="@+id/textView15"
+                        android:id="@+id/textViewPerfilTelefone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:text="(81) 9 9788 8932"
                         android:fontFamily="@font/google_sans_regular"
                         android:textColor="@color/lightBlack"
-                        android:textSize="18sp"/>
+                        android:textSize="16sp"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -157,9 +162,9 @@
 
                 <TextView
                     android:id="@+id/textView"
-                    android:layout_width="108dp"
+                    android:layout_width="94dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
+                    android:layout_marginLeft="20dp"
                     android:fontFamily="@font/google_sans_regular"
                     android:text="MONTE SUA HORTA"
                     android:textAlignment="center"
@@ -180,7 +185,7 @@
                     android:id="@+id/textView3"
                     android:layout_width="88dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="18dp"
+                    android:layout_marginLeft="15dp"
                     android:fontFamily="@font/google_sans_regular"
                     android:text="CUIDE DO PLANETA"
                     android:textAlignment="center"
@@ -212,6 +217,20 @@
                 android:textSize="16sp"
                 android:fontFamily="@font/google_sans_regular"
                 android:text="Quanto mais você favoritas locais, mais você receberá receitas que combinam com você!" />
+
+            <Button
+                android:id="@+id/btnSairDoApp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:text="Sair"
+                android:textSize="18sp"
+                android:fontFamily="@font/google_sans_regular"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_rounded"/>
         </LinearLayout>
     </ScrollView>
 
