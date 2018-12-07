@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.atox.R;
 import com.atox.usuario.dominio.SessaoUsuario;
 
+import java.text.SimpleDateFormat;
+
 public class PerfilFragment extends Fragment {
 
     private static final String TAG = InicioFragment.class.getName();
@@ -20,6 +22,7 @@ public class PerfilFragment extends Fragment {
     private TextView textViewPerfilDataNascimento;
     private TextView textViewPerfilEndereco;
     private TextView textViewPerfilEmail;
+    private String dataFinal;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,6 +38,8 @@ public class PerfilFragment extends Fragment {
         textViewPerfilNomeUsuario.setText(sessaoUsuario.getPessoaLogada().getNome());
         textViewPerfilEmail.setText(sessaoUsuario.getUsuarioLogado().getEmail());
 
+        dataFinal = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy").format(sessaoUsuario.getPessoaLogada().getDataNascimento());
+        textViewPerfilDataNascimento.setText(dataFinal);
         // Inflate the layout for this fragment
         return view;
 
