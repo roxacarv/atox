@@ -1,4 +1,4 @@
-package com.atox.http.gui.adapter;
+package com.atox.network.gui;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.atox.R;
-import com.atox.http.dominio.Produtor;
+import com.atox.network.dominio.Produtor;
 
 import java.util.List;
 
@@ -52,17 +52,10 @@ public class ProdutorCustomAdapter extends RecyclerView.Adapter<ProdutorCustomAd
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
 
-        holder.txtName.setText(dataList.get(position).getNome());
+        holder.txtName.setText(dataList.get(position).getNome().toUpperCase());
         holder.txtCidade.setText(dataList.get(position).getCidade());
-        holder.txtCooperativa.setText(dataList.get(position).getCooperativa());
+        holder.txtCooperativa.setText(dataList.get(position).getCooperativa().toLowerCase());
         holder.txtEmail.setText(dataList.get(position).getEmail());
-
-        /*Picasso.Builder builder = new Picasso.Builder(context);
-        builder.downloader(new OkHttp3Downloader(context));
-        builder.build().load(dataList.get(position).getThumbnailUrl())
-                .placeholder((R.drawable.ic_launcher_background))
-                .error(R.drawable.ic_launcher_background)
-                .into(holder.coverImage);*/
 
     }
 

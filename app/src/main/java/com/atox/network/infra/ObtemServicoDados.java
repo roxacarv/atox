@@ -1,6 +1,6 @@
-package com.atox.http.infra;
+package com.atox.network.infra;
 
-import com.atox.http.dominio.Produtor;
+import com.atox.network.dominio.Produtor;
 
 import java.util.List;
 

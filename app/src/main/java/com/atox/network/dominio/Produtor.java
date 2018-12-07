@@ -1,6 +1,8 @@
-package com.atox.http.dominio;
+package com.atox.network.dominio;
 
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class Produtor {
 
@@ -78,4 +80,5 @@ public class Produtor {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
+
 }

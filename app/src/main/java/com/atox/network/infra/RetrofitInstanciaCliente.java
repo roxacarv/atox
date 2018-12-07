@@ -1,4 +1,4 @@
-package com.atox.http.infra;
+package com.atox.network.infra;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
