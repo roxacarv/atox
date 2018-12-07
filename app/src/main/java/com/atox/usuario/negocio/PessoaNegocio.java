@@ -14,7 +14,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.concurrent.ExecutionException;
 
-public class PessoaNegocio{
+public class PessoaNegocio {
 
     private PessoaDao pessoaDao;
     private Pessoa pessoa;

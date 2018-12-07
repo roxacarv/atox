@@ -43,9 +43,6 @@ public class ProdutoresFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Produtor>> call, Response<List<Produtor>> response) {
                 generateDataList(response.body(),customRecyclerViewProdutor, getContext(), pAdapter);
-                System.out.println("RESPOSTINHA");
-                System.out.println(response.body().get(0).getNome());
-                System.out.println(response.body().get(8).getAtividades());
             }
 
             @Override
@@ -53,7 +50,6 @@ public class ProdutoresFragment extends Fragment {
                 Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
-
 
         return view;
     }
