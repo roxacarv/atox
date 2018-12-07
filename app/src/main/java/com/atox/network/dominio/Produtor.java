@@ -1,26 +1,40 @@
 package com.atox.network.dominio;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+@Entity(tableName = "produtor")
 public class Produtor {
 
+    @PrimaryKey(autoGenerate = true)
+    private long prid;
+
+    @ColumnInfo(name = "nome")
     @SerializedName("nome")
     private String nome;
 
+    @ColumnInfo(name = "cidade")
     @SerializedName("cidade")
     private String cidade;
 
+    @ColumnInfo(name = "cooperativa")
     @SerializedName("entidade")
     private String cooperativa;
 
+    @ColumnInfo(name = "atividades")
     @SerializedName("atividades")
     private String atividades;
 
+    @ColumnInfo(name = "contato")
     @SerializedName("contato")
     private String email;
 
+    @ColumnInfo(name = "telefone")
     @SerializedName("telefone")
     private String telefone;
 
@@ -81,4 +95,11 @@ public class Produtor {
         this.telefone = telefone;
     }
 
+    public long getPrid() {
+        return prid;
+    }
+
+    public void setPrid(long prid) {
+        this.prid = prid;
+    }
 }

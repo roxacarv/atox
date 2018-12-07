@@ -31,7 +31,7 @@ public class SessaoUsuarioDao extends AndroidViewModel {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                bancoDeDados.sessaoDao().atualizar(sessaoUsuario);
+                bancoDeDados.sessaoDaoRoom().atualizar(sessaoUsuario);
             }
         }).start();
     }
@@ -40,7 +40,7 @@ public class SessaoUsuarioDao extends AndroidViewModel {
         Callable<Long> call = new Callable<Long>() {
             @Override
             public Long call() throws Exception {
-                Long idDeRetorno = bancoDeDados.sessaoDao().inserir(sessaoUsuario);
+                Long idDeRetorno = bancoDeDados.sessaoDaoRoom().inserir(sessaoUsuario);
                 return idDeRetorno;
             }
         };
@@ -53,7 +53,7 @@ public class SessaoUsuarioDao extends AndroidViewModel {
         Callable<Pessoa> call = new Callable<Pessoa>() {
             @Override
             public Pessoa call() throws Exception {
-                Long idDeRetorno = bancoDeDados.sessaoDao().ultimoIdLogado();
+                Long idDeRetorno = bancoDeDados.sessaoDaoRoom().ultimoIdLogado();
                 if (idDeRetorno == null) {
                     return null;
                 }
@@ -67,7 +67,7 @@ public class SessaoUsuarioDao extends AndroidViewModel {
     }
 
     public Pessoa iniciarSessao(Long id) {
-        Pessoa pessoa = bancoDeDados.pessoaDao().buscarPorIdDeusuario(id);
+        Pessoa pessoa = bancoDeDados.pessoaDaoRoom().buscarPorIdDeusuario(id);
         if(pessoa == null) {
             return null;
         }
@@ -88,12 +88,12 @@ public class SessaoUsuarioDao extends AndroidViewModel {
 
 
     public Usuario buscarUsuarioPorId(Long id) {
-        Usuario usuario = bancoDeDados.usuarioDao().buscarPorId(id);
+        Usuario usuario = bancoDeDados.usuarioDaoRoom().buscarPorId(id);
         return usuario;
     }
 
     public Endereco buscarEnderecoPorIdDePessoa(Long id) {
-        Endereco endereco = bancoDeDados.enderecoDao().buscarPorIdDePessoa(id);
+        Endereco endereco = bancoDeDados.enderecoDaoRoom().buscarPorIdDePessoa(id);
         return endereco;
     }
 
@@ -112,7 +112,7 @@ public class SessaoUsuarioDao extends AndroidViewModel {
         @Override
         protected Void doInBackground(final SessaoUsuario... params)
         {
-            bd.sessaoDao().deletar(params[0]);
+            bd.sessaoDaoRoom().deletar(params[0]);
             return null;
         }
     }

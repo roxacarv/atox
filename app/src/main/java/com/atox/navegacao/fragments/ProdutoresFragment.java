@@ -15,6 +15,7 @@ import com.atox.network.gui.ProdutorCustomAdapter;
 import com.atox.network.infra.ObtemServicoDados;
 import com.atox.network.infra.RetrofitInstanciaCliente;
 import com.atox.network.dominio.Produtor;
+import com.atox.network.negocio.ProdutorNegocio;
 
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class ProdutoresFragment extends Fragment {
 
     private ProdutorCustomAdapter pAdapter;
     private RecyclerView customRecyclerViewProdutor;
+    private ProdutorNegocio produtorNegocio;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,6 +35,7 @@ public class ProdutoresFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_produtores, container, false);
         customRecyclerViewProdutor = (RecyclerView) view.findViewById(R.id.customRecyclerViewProdutor);
+        produtorNegocio = new ProdutorNegocio(this.getActivity());
 
         /*Create handle for the RetrofitInstance interface*/
         ObtemServicoDados service = RetrofitInstanciaCliente.getRetrofitInstance().create(ObtemServicoDados.class);
@@ -56,6 +59,7 @@ public class ProdutoresFragment extends Fragment {
 
     /*Method to generate List of data using RecyclerView with custom adapter*/
     private void generateDataList(List<Produtor> photoList, RecyclerView recycleViewProdutor, Context context, ProdutorCustomAdapter pAdapter) {
+        List<Long> idDeProdutores = produtorNegocio.inserirProdutores(photoList);
         customRecyclerViewProdutor = recycleViewProdutor;
         pAdapter = new ProdutorCustomAdapter(context,photoList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);

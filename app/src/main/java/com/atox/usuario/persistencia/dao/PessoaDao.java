@@ -2,17 +2,14 @@ package com.atox.usuario.persistencia.dao;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
-import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.atox.infra.persistencia.BDHelper;
 import com.atox.usuario.dominio.Endereco;
 import com.atox.usuario.dominio.Pessoa;
-import com.atox.usuario.dominio.SessaoUsuario;
 import com.atox.usuario.dominio.Usuario;
 
-import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -35,7 +32,7 @@ public class PessoaDao extends AndroidViewModel {
         Callable<Long> call = new Callable<Long>() {
             @Override
             public Long call() throws Exception {
-                Long idDePessoa = bancoDeDados.pessoaDao().inserir(pessoa);
+                Long idDePessoa = bancoDeDados.pessoaDaoRoom().inserir(pessoa);
                 return idDePessoa;
             }
         };
@@ -49,7 +46,7 @@ public class PessoaDao extends AndroidViewModel {
         Callable<Long> call = new Callable<Long>() {
             @Override
             public Long call() throws Exception {
-                return bancoDeDados.enderecoDao().inserir(endereco);
+                return bancoDeDados.enderecoDaoRoom().inserir(endereco);
             }
         };
 
@@ -62,7 +59,7 @@ public class PessoaDao extends AndroidViewModel {
         Callable<Long> call = new Callable<Long>() {
             @Override
             public Long call() throws Exception {
-                Long idDeUsuario = bancoDeDados.usuarioDao().inserir(usuario);
+                Long idDeUsuario = bancoDeDados.usuarioDaoRoom().inserir(usuario);
                 return idDeUsuario;
             }
         };
@@ -76,7 +73,7 @@ public class PessoaDao extends AndroidViewModel {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                bancoDeDados.pessoaDao().atualizar(pessoa);
+                bancoDeDados.pessoaDaoRoom().atualizar(pessoa);
             }
         }).start();
     }
@@ -85,7 +82,7 @@ public class PessoaDao extends AndroidViewModel {
         Callable<Pessoa> call = new Callable<Pessoa>() {
             @Override
             public Pessoa call() throws Exception {
-                Pessoa pessoa = bancoDeDados.pessoaDao().buscarPorIdDeusuario(usuarioId);
+                Pessoa pessoa = bancoDeDados.pessoaDaoRoom().buscarPorIdDeusuario(usuarioId);
                 Pessoa pessoaRetorno = montaPessoa(pessoa);
                 return pessoaRetorno;
             }
@@ -112,12 +109,12 @@ public class PessoaDao extends AndroidViewModel {
     }
 
     private Usuario buscarUsuarioPorId(Long id) {
-        Usuario usuario = bancoDeDados.usuarioDao().buscarPorId(id);
+        Usuario usuario = bancoDeDados.usuarioDaoRoom().buscarPorId(id);
         return usuario;
     }
 
     private Endereco buscarEnderecoPorIdDePessoa(Long id) {
-        Endereco endereco = bancoDeDados.enderecoDao().buscarPorIdDePessoa(id);
+        Endereco endereco = bancoDeDados.enderecoDaoRoom().buscarPorIdDePessoa(id);
         return endereco;
     }
 
@@ -125,7 +122,7 @@ public class PessoaDao extends AndroidViewModel {
         Callable<Pessoa> call = new Callable<Pessoa>() {
             @Override
             public Pessoa call() throws Exception {
-                Pessoa pessoa = bancoDeDados.pessoaDao().buscarPorId(id);
+                Pessoa pessoa = bancoDeDados.pessoaDaoRoom().buscarPorId(id);
                 Pessoa pessoaRetorno = montaPessoa(pessoa);
                 return pessoaRetorno;
             }
@@ -135,14 +132,14 @@ public class PessoaDao extends AndroidViewModel {
         return future.get();
     }
     public Usuario buscarUsuarioPorEmailESenha(String email, String senha){
-        Usuario usuario = bancoDeDados.usuarioDao().buscarPorEmailESenha(email, senha);
+        Usuario usuario = bancoDeDados.usuarioDaoRoom().buscarPorEmailESenha(email, senha);
         return usuario;
     }
     public Usuario buscarPorEmaildeUsuario(final String usuarioEmail) throws ExecutionException, InterruptedException {
         Callable<Usuario> call = new Callable<Usuario>() {
             @Override
             public Usuario call() throws Exception {
-                Usuario usuario = bancoDeDados.usuarioDao().buscarPorEmail(usuarioEmail);
+                Usuario usuario = bancoDeDados.usuarioDaoRoom().buscarPorEmail(usuarioEmail);
                 if(usuario == null){
                     return null;
                 }
@@ -165,7 +162,7 @@ public class PessoaDao extends AndroidViewModel {
         }
         @Override
         protected Void doInBackground(final Pessoa... params){
-            bd.pessoaDao().deletar(params[0]);
+            bd.pessoaDaoRoom().deletar(params[0]);
             return null;
         }
     }

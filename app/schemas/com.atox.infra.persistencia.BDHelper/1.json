@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "722f4181fa90acde9d29cdcef2f089c1",
+    "identityHash": "36b85ec2762c05da7a14e8d5ef800ae8",
     "entities": [
       {
         "tableName": "usuario",
@@ -221,11 +221,67 @@
             ]
           }
         ]
+      },
+      {
+        "tableName": "produtor",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`prid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `nome` TEXT, `cidade` TEXT, `cooperativa` TEXT, `atividades` TEXT, `contato` TEXT, `telefone` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "prid",
+            "columnName": "prid",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nome",
+            "columnName": "nome",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cidade",
+            "columnName": "cidade",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cooperativa",
+            "columnName": "cooperativa",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "atividades",
+            "columnName": "atividades",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "email",
+            "columnName": "contato",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "telefone",
+            "columnName": "telefone",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "prid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"722f4181fa90acde9d29cdcef2f089c1\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"36b85ec2762c05da7a14e8d5ef800ae8\")"
     ]
   }
 }
