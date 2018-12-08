@@ -23,6 +23,7 @@ public class PerfilFragment extends Fragment {
     private TextView textViewPerfilDataNascimento;
     private TextView textViewPerfilEndereco;
     private TextView textViewPerfilEmail;
+    private TextView textViewPerfilTelefone;
     private String dataFinal;
     private SessaoNegocio sessaoNegocio;
 
@@ -37,9 +38,12 @@ public class PerfilFragment extends Fragment {
         textViewPerfilDataNascimento = (TextView) view.findViewById(R.id.textViewPerfilDataNascimento);
         textViewPerfilEndereco = (TextView) view.findViewById(R.id.textViewPerfilEndereco);
         textViewPerfilEmail = (TextView) view.findViewById(R.id.textViewPerfilEmail);
+        textViewPerfilTelefone = (TextView) view.findViewById(R.id.textViewPerfilTelefone);
 
         textViewPerfilNomeUsuario.setText(sessaoUsuario.getPessoaLogada().getNome());
         textViewPerfilEmail.setText(sessaoUsuario.getUsuarioLogado().getEmail());
+        textViewPerfilTelefone.setText(sessaoUsuario.getPessoaLogada().getTelefone());
+
 
         if(sessaoUsuario.getPessoaLogada().getEndereco() != null) {
             String bairro = sessaoUsuario.getPessoaLogada().getEndereco().getBairro();
