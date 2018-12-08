@@ -67,13 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         try {
             boolean camposValidos = validarCamposLoginNaGui(email, password);
             if (camposValidos){
-                String senhaCriptografada = Criptografia.encryptPassword(password);
-                //preencher um objeto Usuario e enviar para o negocio confirmar se usuario cadastrado
-                Usuario usuarioInformadoNoLogin = new Usuario();
-                usuarioInformadoNoLogin.setEmail(email);
-                usuarioInformadoNoLogin.setSenha(senhaCriptografada);
-
-                usuario = pessoaNegocio.isUsuarioCadastrado(usuarioInformadoNoLogin);
+                usuario = pessoaNegocio.efetuarLogin(email, password);
                 if(usuario == null) {
                     //usuario não cadastrado ou senha incorreta
                     alert(getString(R.string.error_no_such_user_or_pass_incorrect));

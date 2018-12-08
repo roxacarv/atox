@@ -27,9 +27,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textViewProfile"
@@ -37,11 +37,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"
                     android:layout_marginRight="180dp"
+                    android:fontFamily="@font/google_sans_bold"
                     android:text="PERFIL"
                     android:textColor="@color/lightBlack"
-                    android:fontFamily="@font/google_sans_bold"
-                    android:textSize="24sp"
-                    />
+                    android:textSize="24sp" />
 
                 <Button
                     android:id="@+id/button3"
@@ -60,8 +59,8 @@
                     android:id="@+id/imageView2"
                     android:layout_width="100dp"
                     android:layout_height="180dp"
-                    android:layout_marginRight="30dp"
                     android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
                     android:paddingBottom="30dp"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_perfil_padrao" />
@@ -76,51 +75,51 @@
                         android:id="@+id/textViewPerfilNomeUsuario"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Nome Usuario"
                         android:fontFamily="@font/google_sans_bold"
+                        android:paddingRight="120dp"
+                        android:text="Nome Usuario"
                         android:textColor="@color/lightBlack"
-                        android:textSize="20sp"
-                        android:paddingRight="120dp"/>
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/textViewPerfilDataNascimento"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="02 de julho de 1995"
                         android:fontFamily="@font/google_sans_regular"
+                        android:text="02 de julho de 1995"
                         android:textColor="@color/lightBlack"
-                        android:textSize="16sp"
-                        />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/textViewPerfilEndereco"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="Jordão Baixo, Recife - PE"
                         android:fontFamily="@font/google_sans_regular"
+                        android:text="Jordão Baixo, Recife - PE"
                         android:textColor="@color/lightBlack"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp" />
+
                     <TextView
                         android:id="@+id/textViewPerfilEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="email_usuario@gmail.com"
                         android:fontFamily="@font/google_sans_regular"
+                        android:text="email_usuario@gmail.com"
                         android:textColor="@color/lightBlack"
-                        android:textSize="16sp"
-                        />
+                        android:textSize="16sp" />
+
                     <TextView
                         android:id="@+id/textViewPerfilTelefone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="(81) 9 9788 8932"
                         android:fontFamily="@font/google_sans_regular"
+                        android:text="(81) 9 9788 8932"
                         android:textColor="@color/lightBlack"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -154,6 +153,7 @@
                     android:background="@drawable/btn_salve_planeta" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -176,9 +176,9 @@
                     android:layout_width="97dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="18dp"
-                    android:textAlignment="center"
                     android:fontFamily="@font/google_sans_regular"
                     android:text="CUIDADO COM SUA COMIDA"
+                    android:textAlignment="center"
                     android:textColor="@color/lightBlack" />
 
                 <TextView
@@ -204,33 +204,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:text="SUAS RECEITAS"
-                android:textSize="20sp"
                 android:fontFamily="@font/google_sans_bold"
-                android:textColor="@color/lightBlack"/>
+                android:text="SUAS RECEITAS"
+                android:textColor="@color/lightBlack"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/textView16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:textSize="16sp"
                 android:fontFamily="@font/google_sans_regular"
-                android:text="Quanto mais você favoritas locais, mais você receberá receitas que combinam com você!" />
+                android:text="Quanto mais você favoritas locais, mais você receberá receitas que combinam com você!"
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/btnSairDoApp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="30dp"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginRight="15dp"
-                android:text="Sair"
-                android:textSize="18sp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/bg_rounded"
                 android:fontFamily="@font/google_sans_regular"
+                android:text="Sair"
                 android:textColor="@color/white"
-                android:background="@drawable/bg_rounded"/>
+                android:textSize="18sp" />
         </LinearLayout>
     </ScrollView>
 

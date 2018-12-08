@@ -61,4 +61,18 @@ public class Usuario {
     public void setUid(long uid) {
         this.uid = uid;
     }
+
+    public int compararSenha(String senhaParaComparar) {
+        if(this.senha.equals(senhaParaComparar)) {
+            return 1;
+        }
+        return 0;
+    }
+
+    public int compararEmail(String emailParaComparar) {
+        if(this.email.equals(emailParaComparar)) {
+            return 1;
+        }
+        return 0;
+    }
 }

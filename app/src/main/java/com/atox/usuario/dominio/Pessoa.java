@@ -43,7 +43,6 @@ public class Pessoa {
     @ColumnInfo(name = "telefone")
     private String telefone;
 
-
     public String getNome() {
         return nome;
     }

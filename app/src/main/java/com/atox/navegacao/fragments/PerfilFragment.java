@@ -10,7 +10,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.atox.R;
+import com.atox.usuario.dominio.Endereco;
+import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.SessaoUsuario;
+import com.atox.usuario.dominio.Usuario;
 import com.atox.usuario.negocio.SessaoNegocio;
 
 import java.text.SimpleDateFormat;
@@ -26,6 +29,9 @@ public class PerfilFragment extends Fragment {
     private TextView textViewPerfilTelefone;
     private String dataFinal;
     private SessaoNegocio sessaoNegocio;
+    private Usuario usuarioPerfil;
+    private Pessoa pessoaPerfil;
+    private Endereco enderecoPerfil;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,6 +39,9 @@ public class PerfilFragment extends Fragment {
         sessaoNegocio = new SessaoNegocio(this.getActivity());
         View view = inflater.inflate(R.layout.fragment_perfil, container, false);
         sessaoUsuario = SessaoUsuario.getSessao();
+        pessoaPerfil = sessaoUsuario.getPessoaLogada();
+        usuarioPerfil = pessoaPerfil.getUsuario();
+        enderecoPerfil = pessoaPerfil.getEndereco();
 
         textViewPerfilNomeUsuario = (TextView) view.findViewById(R.id.textViewPerfilNomeUsuario);
         textViewPerfilDataNascimento = (TextView) view.findViewById(R.id.textViewPerfilDataNascimento);
@@ -40,27 +49,31 @@ public class PerfilFragment extends Fragment {
         textViewPerfilEmail = (TextView) view.findViewById(R.id.textViewPerfilEmail);
         textViewPerfilTelefone = (TextView) view.findViewById(R.id.textViewPerfilTelefone);
 
-        textViewPerfilNomeUsuario.setText(sessaoUsuario.getPessoaLogada().getNome());
-        textViewPerfilEmail.setText(sessaoUsuario.getUsuarioLogado().getEmail());
-        textViewPerfilTelefone.setText(sessaoUsuario.getPessoaLogada().getTelefone());
+        String nome = pessoaPerfil.getNome();
+        String telefone = pessoaPerfil.getTelefone();
+        String email = usuarioPerfil.getEmail();
+
+        textViewPerfilNomeUsuario.setText(nome);
+        textViewPerfilEmail.setText(email);
+        textViewPerfilTelefone.setText(telefone);
 
 
         if(sessaoUsuario.getPessoaLogada().getEndereco() != null) {
-            String bairro = sessaoUsuario.getPessoaLogada().getEndereco().getBairro();
-            String cidade = sessaoUsuario.getPessoaLogada().getEndereco().getCidade();
-            String estado = sessaoUsuario.getPessoaLogada().getEndereco().getEstado();
+            String bairro = enderecoPerfil.getBairro();
+            String cidade = enderecoPerfil.getCidade();
+            String estado = enderecoPerfil.getEstado();
             String endereco = bairro + ", " + cidade + " - " + estado;
             textViewPerfilEndereco.setText(endereco);
         }
 
-        dataFinal = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy").format(sessaoUsuario.getPessoaLogada().getDataNascimento());
+        dataFinal = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy").format(pessoaPerfil.getDataNascimento());
         textViewPerfilDataNascimento.setText(dataFinal);
         // Inflate the layout for this fragment
         return view;
 
     }
 
-    public void encerrarSessao() {
+    public void voltarParaTelaDeLogin(View view) {
         sessaoNegocio.encerrarSessao();
         //mudar de tela
     }

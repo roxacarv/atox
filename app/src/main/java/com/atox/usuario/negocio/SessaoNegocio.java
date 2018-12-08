@@ -21,10 +21,6 @@ public class SessaoNegocio {
         sessaoUsuario = SessaoUsuario.getSessao();
     }
 
-    public Pessoa obterPessoaLogada(){
-        return this.sessaoUsuario.getPessoaLogada();
-    }
-
     // metodo usado para iniciar uma nova sessao
     // Este metodo deve ser chamado apos já ter sido feita a validacao do login no BD
     public void iniciarNovaSessao(Pessoa pessoa) throws AtoxException, ExecutionException, InterruptedException {

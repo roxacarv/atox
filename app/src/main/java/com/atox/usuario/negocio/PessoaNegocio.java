@@ -4,12 +4,14 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
+import com.atox.infra.negocio.Criptografia;
 import com.atox.infra.negocio.ValidaCadastro;
 import com.atox.usuario.dominio.Endereco;
 import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.Usuario;
 import com.atox.usuario.persistencia.dao.PessoaDao;
 
+import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.concurrent.ExecutionException;
@@ -18,23 +20,18 @@ public class PessoaNegocio {
 
     private PessoaDao pessoaDao;
     private Pessoa pessoa;
-    private ValidaCadastro validaCadastro;
 
     public PessoaNegocio(FragmentActivity activity){
         pessoaDao = ViewModelProviders.of(activity).get(PessoaDao.class);
-        validaCadastro = new ValidaCadastro();
     }
 
     public Long cadastrar() throws ExecutionException, InterruptedException {
-
         String email = this.pessoa.getUsuario().getEmail();
         Usuario usuarioExiste = this.validarSeUsuarioExiste(email);
         if(usuarioExiste == null) {
             Long idDeUsuario = pessoaDao.inserirUsuario(this.pessoa.getUsuario());
             this.pessoa.setUsuarioId(idDeUsuario);
-            Log.i("PessoaNegocio", "IdDeUsuarioÉ: " + this.pessoa.getUsuarioId());
             Long idDePessoa = pessoaDao.inserirPessoa(this.pessoa);
-            Log.i("PessoaNegocio", "IdDePessoaÉ: " + idDePessoa);
             return idDeUsuario;
         }
         return Long.valueOf(-1);
@@ -45,23 +42,19 @@ public class PessoaNegocio {
         return pessoa;
     }
 
-    public Usuario isUsuarioCadastrado(Usuario usuarioInformadoNoLogin) throws ExecutionException, InterruptedException {
-        Usuario usuarioCadastradoNoBanco = pessoaDao.buscarPorEmaildeUsuario(usuarioInformadoNoLogin.getEmail());
-        if (usuarioCadastradoNoBanco == null){
-            //usuario nao cadastrado
+    public Usuario efetuarLogin(String emailParaLogin, String senhaParaLogin) throws ExecutionException, InterruptedException, NoSuchAlgorithmException {
+        Usuario usuarioCadastradoNoBanco = pessoaDao.buscarPorEmaildeUsuario(emailParaLogin);
+        if (usuarioCadastradoNoBanco == null) {
             return null;
-        } else{
-            //compara se a senha do usuario informado no login é a mesma do usuário cadastrado
-            String senhaInformada = usuarioInformadoNoLogin.getSenha();
-            String senhaCadastrada = usuarioCadastradoNoBanco.getSenha();
-            if (senhaInformada.equals(senhaCadastrada)){
-                //usuario ja esta cadastrado
-                return usuarioCadastradoNoBanco;
-            } else{
-                //senha incorreta para o usuario informado.
-                return null;
-            }
         }
+        int resultadoEmail = usuarioCadastradoNoBanco.compararEmail(emailParaLogin);
+        String senhaCriptografada = Criptografia.encryptPassword(senhaParaLogin);
+        int resultadoSenha = usuarioCadastradoNoBanco.compararSenha(senhaCriptografada);
+        Usuario resultado = null;
+        if (resultadoEmail == 1 && resultadoSenha == 1){
+            resultado = usuarioCadastradoNoBanco;
+        }
+        return resultado;
     }
 
     public Long registrarEndereco(Endereco endereco) throws ExecutionException, InterruptedException {
@@ -83,31 +76,5 @@ public class PessoaNegocio {
             return null;
         }
         return usuario;
-    }
-
-    public boolean validarEmailESenha(String email, String senha) {
-        Usuario retorno = pessoaDao.buscarUsuarioPorEmailESenha(email, senha);
-        if (retorno == null) {
-            return false;
-        }
-        return true;
-    }
-
-    //ver se é realmente necessário (perguntar a Gabriel)
-    public boolean ValidarPessoa(Pessoa pessoa) {
-        DateFormat dataFormatada = new SimpleDateFormat("dd/MM/yyyy");
-        String dataParaValidar;
-        dataParaValidar = dataFormatada.format(pessoa.getDataNascimento());
-
-        Usuario usuario = pessoa.getUsuario();
-
-        boolean emailValido = validaCadastro.isEmail(usuario.getEmail());
-        boolean senhaValida = validaCadastro.isSenhaValida(usuario.getSenha());
-        boolean dataValida = validaCadastro.isDataNascimento(dataParaValidar);
-
-        if(emailValido && senhaValida && dataValida){
-            return true;
-        }
-        return false;
     }
 }
