@@ -35,12 +35,10 @@ public class FormataData {
      */
 
     public static String americano(String data){
-        StringBuilder novaData = new StringBuilder();
-        novaData.append(data.substring(NUMDATA1));
-        novaData.append(data.substring(NUMDATA2, NUMDATA3));
-        novaData.append(data.substring(NUMDATA4, NUMDATA5));
 
-        return novaData.toString();
+        return data.substring(NUMDATA1) +
+                data.substring(NUMDATA2, NUMDATA3) +
+                data.substring(NUMDATA4, NUMDATA5);
     }
 
     /**

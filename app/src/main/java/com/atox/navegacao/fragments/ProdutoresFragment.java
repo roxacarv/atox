@@ -2,6 +2,7 @@ package com.atox.navegacao.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,11 +31,11 @@ public class ProdutoresFragment extends Fragment {
     private ProdutorNegocio produtorNegocio;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_produtores, container, false);
-        customRecyclerViewProdutor = (RecyclerView) view.findViewById(R.id.customRecyclerViewProdutor);
+        customRecyclerViewProdutor = view.findViewById(R.id.customRecyclerViewProdutor);
         produtorNegocio = new ProdutorNegocio(this.getActivity());
 
         /*Create handle for the RetrofitInstance interface*/
@@ -44,12 +45,12 @@ public class ProdutoresFragment extends Fragment {
         call.enqueue(new Callback<List<Produtor>>() {
 
             @Override
-            public void onResponse(Call<List<Produtor>> call, Response<List<Produtor>> response) {
-                generateDataList(response.body(),customRecyclerViewProdutor, getContext(), pAdapter);
+            public void onResponse(@NonNull Call<List<Produtor>> call, @NonNull Response<List<Produtor>> response) {
+                generateDataList(response.body(),customRecyclerViewProdutor, getContext());
             }
 
             @Override
-            public void onFailure(Call<List<Produtor>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<Produtor>> call, @NonNull Throwable t) {
                 Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
@@ -58,10 +59,10 @@ public class ProdutoresFragment extends Fragment {
     }
 
     /*Method to generate List of data using RecyclerView with custom adapter*/
-    private void generateDataList(List<Produtor> photoList, RecyclerView recycleViewProdutor, Context context, ProdutorCustomAdapter pAdapter) {
+    private void generateDataList(List<Produtor> photoList, RecyclerView recycleViewProdutor, Context context) {
         List<Long> idDeProdutores = produtorNegocio.inserirProdutores(photoList);
         customRecyclerViewProdutor = recycleViewProdutor;
-        pAdapter = new ProdutorCustomAdapter(context,photoList);
+        ProdutorCustomAdapter pAdapter = new ProdutorCustomAdapter(context, photoList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         customRecyclerViewProdutor.setLayoutManager(layoutManager);
         customRecyclerViewProdutor.setAdapter(pAdapter);

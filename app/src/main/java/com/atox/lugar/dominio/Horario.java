@@ -28,11 +28,11 @@ public enum Horario {
     VINTE_TRES_HORAS("23:00");
 
 
-    private Horario(String descricao) {
+    Horario(String descricao) {
         this.descricao = descricao;
     }
 
-    private String descricao;
+    private final String descricao;
 
     public String getDescricao() {
         return descricao;

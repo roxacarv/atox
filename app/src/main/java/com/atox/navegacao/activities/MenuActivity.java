@@ -17,7 +17,6 @@ import com.atox.usuario.dominio.SessaoUsuario;
 public class MenuActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 
     private static final String TAG = MenuActivity.class.getName();
-    private SessaoUsuario sessaoUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +27,8 @@ public class MenuActivity extends AppCompatActivity implements BottomNavigationV
         //getting bottom navigation view and attaching the listener
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
-        sessaoUsuario = SessaoUsuario.getSessao();
-        Log.i(TAG, "Nome da pessoa: " + sessaoUsuario.getPessoaLogada().getNome());
+        SessaoUsuario sessaoUsuario = SessaoUsuario.getSessao();
+        Log.i(TAG, getString(com.atox.R.string.nome_da_pessoa) + sessaoUsuario.getPessoaLogada().getNome());
     }
 
 

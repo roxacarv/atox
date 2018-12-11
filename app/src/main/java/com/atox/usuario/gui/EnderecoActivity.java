@@ -1,8 +1,11 @@
 package com.atox.usuario.gui;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -22,6 +25,7 @@ import com.shishank.autocompletelocationview.interfaces.OnQueryCompleteListener;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 public class EnderecoActivity extends AppCompatActivity implements OnQueryCompleteListener {
@@ -30,27 +34,27 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
 
     private Pessoa pessoa;
     private Usuario usuario;
-    private PessoaNegocio pessoaNegocio;
     private SessaoUsuario sessaoUsuario;
-    private Bundle dadosPessoais;
-    private Button buttonRegistrar;
     private AutoCompleteTextView editTextAddress;
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_endereco);
-        buttonRegistrar = (Button) findViewById(R.id.buttonRegistrar);
-        editTextAddress =  (AutoCompleteTextView) findViewById(R.id.editTextAddress);
-        dadosPessoais = getIntent().getExtras();
-        pessoaNegocio = new PessoaNegocio(this);
+        Button buttonRegistrar = findViewById(R.id.buttonRegistrar);
+        editTextAddress = findViewById(R.id.editTextAddress);
+        Bundle dadosPessoais = getIntent().getExtras();
+        PessoaNegocio pessoaNegocio = new PessoaNegocio(this);
 
         try {
+            dadosPessoais = Objects.requireNonNull(dadosPessoais);
             pessoa = pessoaNegocio.recuperarPessoaPorId(dadosPessoais.getLong("ID_USUARIO"));
         } catch (ExecutionException e) {
-            alert("Ocorreu um erro na hora de realizar o cadastro");
+            alert(getString(com.atox.R.string.erro_na_hora_de_realizar_cadastro));
             irParaTelaDeLogin();
         } catch (InterruptedException e) {
-            alert("O programa parou de funcionar inesperadamente");
+            alert(getString(com.atox.R.string.parou_de_funcionar_inesperadamente));
             irParaTelaDeLogin();
         }
 
@@ -64,7 +68,7 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
 
     }
 
-    private Pessoa registraNoBancoDeDados() throws ExecutionException, InterruptedException {
+    private Pessoa registraNoBancoDeDados() {
         //Long idDePessoa = pessoa.getPid();
         //Log.i(TAG, "Id de pessoa do banco: " + idDePessoa);
         //Endereco endereco = criarEndereco(idDePessoa);
@@ -74,10 +78,13 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private Endereco criarEndereco(Long idDePessoa) {
         Address testLocation = getAddress(editTextAddress.getText().toString());
+
         Endereco endereco = new Endereco();
         endereco.setPessoaId(idDePessoa);
+        testLocation = Objects.requireNonNull(testLocation);
         endereco.setCidade(testLocation.getSubAdminArea());
         endereco.setBairro(testLocation.getSubLocality());
         endereco.setCep(testLocation.getPostalCode());
@@ -87,7 +94,7 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
         return endereco;
     }
 
-    public Address getAddress(String completeAddress)
+    private Address getAddress(String completeAddress)
     {
         Geocoder geocoder;
         List addresses;
@@ -117,14 +124,14 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
         Toast.makeText(this,s,Toast.LENGTH_LONG).show();
     }
 
-    public void finalizarRegistro(View view) throws ExecutionException, InterruptedException {
+    public void finalizarRegistro(View view) {
         Pessoa pessoa = registraNoBancoDeDados();
         Toast.makeText(this,R.string.success_register,Toast.LENGTH_LONG).show();
         Intent loginScreen = new Intent(EnderecoActivity.this, LoginActivity.class);
         startActivity(loginScreen);
     }
 
-    public void irParaTelaDeLogin() {
+    private void irParaTelaDeLogin() {
         Intent loginScreen = new Intent(EnderecoActivity.this, LoginActivity.class);
         startActivity(loginScreen);
     }

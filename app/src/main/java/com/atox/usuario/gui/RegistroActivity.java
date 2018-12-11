@@ -48,7 +48,7 @@ public class RegistroActivity extends AppCompatActivity {
         registerScreen = new Intent(RegistroActivity.this, EnderecoActivity.class);
     }
 
-    public boolean validarRegistro() throws NoSuchAlgorithmException, ExecutionException, InterruptedException {
+    private boolean validarRegistro() throws NoSuchAlgorithmException, ExecutionException, InterruptedException {
         boolean valido = true;
         mEmail.setError(null);
         mTelefone.setError(null);
@@ -86,19 +86,19 @@ public class RegistroActivity extends AppCompatActivity {
             valido = false;
         }
 
-        else if(!validaCadastro.isEmail(email)){
+        else if(validaCadastro.isEmail(email)){
             mEmail.requestFocus();
             mEmail.setError(getString(R.string.error_invalid_email));
             valido = false;
         }
 
-        else if(!validaCadastro.isSenhaValida(senha)){
+        else if(validaCadastro.isSenhaValida(senha)){
             mSenha.requestFocus();
             mSenha.setError(getString(R.string.error_invalid_password));
             valido = false;
         }
 
-        else if(!validaCadastro.isSenhaValida(confirmSenha)){
+        else if(validaCadastro.isSenhaValida(confirmSenha)){
             mSenhaConfirm.requestFocus();
             mSenhaConfirm.setError(getString(R.string.error_invalid_password));
             valido = false;
@@ -126,7 +126,7 @@ public class RegistroActivity extends AppCompatActivity {
 
         }
         else {
-            alert("Preencha os campos corretamente");
+            alert(getString(com.atox.R.string.preencha_corretamente_os_campos));
 
         }
         return valido;
@@ -161,7 +161,7 @@ public class RegistroActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-    public static Pessoa montarPessoa(String email, String senha, String nome, String telefone, String dataNascimento){
+    private static Pessoa montarPessoa(String email, String senha, String nome, String telefone, String dataNascimento){
         Pessoa pessoa = new Pessoa();
         Usuario usuario = new Usuario();
         usuario.setEmail(email);

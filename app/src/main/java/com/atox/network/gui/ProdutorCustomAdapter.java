@@ -1,6 +1,7 @@
 package com.atox.network.gui;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,22 +14,20 @@ import com.atox.network.dominio.Produtor;
 import java.util.List;
 
 public class ProdutorCustomAdapter extends RecyclerView.Adapter<ProdutorCustomAdapter.CustomViewHolder>{
-    private List<Produtor> dataList;
-    private Context context;
+    private final List<Produtor> dataList;
 
     public ProdutorCustomAdapter(Context context,List<Produtor> dataList){
-        this.context = context;
         this.dataList = dataList;
     }
 
     static class CustomViewHolder extends RecyclerView.ViewHolder {
 
-        public final View mView;
+        final View mView;
 
-        TextView txtName;
-        TextView txtCidade;
-        TextView txtCooperativa;
-        TextView txtEmail;
+        final TextView txtName;
+        final TextView txtCidade;
+        final TextView txtCooperativa;
+        final TextView txtEmail;
 
         CustomViewHolder(View itemView) {
             super(itemView);
@@ -42,15 +41,16 @@ public class ProdutorCustomAdapter extends RecyclerView.Adapter<ProdutorCustomAd
         }
     }
 
+    @NonNull
     @Override
-    public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.card_produtor, parent, false);
         return new CustomViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(CustomViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
 
         holder.txtName.setText(dataList.get(position).getNome().toUpperCase());
         holder.txtCidade.setText(dataList.get(position).getCidade());

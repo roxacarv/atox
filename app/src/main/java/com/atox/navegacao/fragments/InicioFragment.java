@@ -1,8 +1,9 @@
 package com.atox.navegacao.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,24 +16,22 @@ import com.atox.usuario.dominio.SessaoUsuario;
 public class InicioFragment extends Fragment {
 
     private static final String TAG = InicioFragment.class.getName();
-    private SessaoUsuario sessaoUsuario;
-    private TextView textViewNomeUsuario;
 
+    @SuppressLint("SetTextI18n")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_inicio, container, false);
-        sessaoUsuario = SessaoUsuario.getSessao();
+        SessaoUsuario sessaoUsuario = SessaoUsuario.getSessao();
 
-        textViewNomeUsuario = (TextView) view.findViewById(R.id.textViewMsgBoasVindas);
+        TextView textViewNomeUsuario = view.findViewById(R.id.textViewMsgBoasVindas);
 
         Pessoa pessoaLogada = sessaoUsuario.getPessoaLogada();
 
         if (pessoaLogada != null){
             textViewNomeUsuario.setText(view.getContext().getResources().getString(R.string.texto_bemvindo) +
-                    " " +
-                    pessoaLogada.getNome());
+                    " " + pessoaLogada.getNome());
         }
 
 

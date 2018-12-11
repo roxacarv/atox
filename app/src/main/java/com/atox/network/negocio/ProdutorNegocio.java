@@ -12,7 +12,7 @@ import java.util.concurrent.ExecutionException;
 
 public class ProdutorNegocio {
 
-    private ProdutorDao produtorDao;
+    private final ProdutorDao produtorDao;
     private Produtor produtor;
 
     public ProdutorNegocio(FragmentActivity activity){
@@ -21,7 +21,7 @@ public class ProdutorNegocio {
 
     public List<Long> inserirProdutores(List<Produtor> produtoresParaInserir) {
         List<Long> idDeProdutores = null;
-        Produtor[] produtores = produtoresParaInserir.toArray(new Produtor[produtoresParaInserir.size()]);
+        Produtor[] produtores = produtoresParaInserir.toArray(new Produtor[0]);
         try {
             List<Long> idsDoBanco = produtorDao.inserirProdutores(produtores);
             if(idsDoBanco != null) {

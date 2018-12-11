@@ -18,8 +18,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 public class SessaoUsuarioDao extends AndroidViewModel {
 
-    private BDHelper bancoDeDados;
-    private SessaoUsuario sessaoUsuario;
+    private final BDHelper bancoDeDados;
 
     public SessaoUsuarioDao(Application application)
     {
@@ -39,9 +38,8 @@ public class SessaoUsuarioDao extends AndroidViewModel {
     public Long salvarSessao(final SessaoUsuario sessaoUsuario) throws ExecutionException, InterruptedException {
         Callable<Long> call = new Callable<Long>() {
             @Override
-            public Long call() throws Exception {
-                Long idDeRetorno = bancoDeDados.sessaoDaoRoom().inserir(sessaoUsuario);
-                return idDeRetorno;
+            public Long call() {
+                return bancoDeDados.sessaoDaoRoom().inserir(sessaoUsuario);
             }
         };
         ExecutorService executor = new ScheduledThreadPoolExecutor(1);
@@ -52,13 +50,12 @@ public class SessaoUsuarioDao extends AndroidViewModel {
     public Pessoa restaurarSessao() throws ExecutionException, InterruptedException {
         Callable<Pessoa> call = new Callable<Pessoa>() {
             @Override
-            public Pessoa call() throws Exception {
+            public Pessoa call() {
                 Long idDeRetorno = bancoDeDados.sessaoDaoRoom().ultimoIdLogado();
                 if (idDeRetorno == null) {
                     return null;
                 }
-                Pessoa pessoa = iniciarSessao(idDeRetorno);
-                return pessoa;
+                return iniciarSessao(idDeRetorno);
             }
         };
         ExecutorService executor = new ScheduledThreadPoolExecutor(1);
@@ -66,7 +63,7 @@ public class SessaoUsuarioDao extends AndroidViewModel {
         return future.get();
     }
 
-    public Pessoa iniciarSessao(Long id) {
+    private Pessoa iniciarSessao(Long id) {
         Pessoa pessoa = bancoDeDados.pessoaDaoRoom().buscarPorIdDeusuario(id);
         if(pessoa == null) {
             return null;
@@ -79,7 +76,7 @@ public class SessaoUsuarioDao extends AndroidViewModel {
         pessoa.setUsuarioId(usuario.getUid());
         pessoa.setUsuario(usuario);
         pessoa.setEndereco(endereco);
-        sessaoUsuario = SessaoUsuario.getSessao();
+        SessaoUsuario sessaoUsuario = SessaoUsuario.getSessao();
         sessaoUsuario.setPessoaLogada(pessoa);
         sessaoUsuario.setUsuarioLogado(pessoa.getUsuario());
         return pessoa;
@@ -87,14 +84,12 @@ public class SessaoUsuarioDao extends AndroidViewModel {
 
 
 
-    public Usuario buscarUsuarioPorId(Long id) {
-        Usuario usuario = bancoDeDados.usuarioDaoRoom().buscarPorId(id);
-        return usuario;
+    private Usuario buscarUsuarioPorId(Long id) {
+        return bancoDeDados.usuarioDaoRoom().buscarPorId(id);
     }
 
-    public Endereco buscarEnderecoPorIdDePessoa(Long id) {
-        Endereco endereco = bancoDeDados.enderecoDaoRoom().buscarPorIdDePessoa(id);
-        return endereco;
+    private Endereco buscarEnderecoPorIdDePessoa(Long id) {
+        return bancoDeDados.enderecoDaoRoom().buscarPorIdDePessoa(id);
     }
 
 
@@ -104,7 +99,7 @@ public class SessaoUsuarioDao extends AndroidViewModel {
     }
 
     private static class deleteAsyncTaskSessao extends AsyncTask<SessaoUsuario, Void, Void> {
-        private BDHelper bd;
+        private final BDHelper bd;
         deleteAsyncTaskSessao(BDHelper bancoDeDados)
         {
             bd = bancoDeDados;

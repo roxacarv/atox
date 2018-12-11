@@ -1,19 +1,15 @@
 package com.atox.navegacao.activities;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.atox.infra.AtoxException;
 import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.SessaoUsuario;
 import com.atox.usuario.dominio.Usuario;
 import com.atox.usuario.gui.LoginActivity;
 import com.atox.usuario.negocio.SessaoNegocio;
-import com.atox.usuario.persistencia.dao.PessoaDao;
 
 import java.util.concurrent.ExecutionException;
 
@@ -23,13 +19,12 @@ public class SplashActivity extends AppCompatActivity {
     private Usuario usuario;
     private Pessoa pessoa;
     private String TAG = SplashActivity.class.getName();
-    private SessaoNegocio sessaoNegocio;
 
     //Handler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sessaoNegocio = new SessaoNegocio(this);
+        SessaoNegocio sessaoNegocio = new SessaoNegocio(this);
         //TODO verifica se já existe usuário logado.
         Pessoa pessoaJaLogada = null;
 
@@ -42,10 +37,10 @@ public class SplashActivity extends AppCompatActivity {
         }
 
         if (pessoaJaLogada != null){
-            alert("Seja bem vindo de volta");
+            alert(getString(com.atox.R.string.bem_vindo_de_volta));
             goToHomeScreen();
         } else{
-            alert("Seja bem vindo");
+            alert(getString(com.atox.R.string.bem_vindo));
             goToLoginScreen();
         }
 
@@ -63,12 +58,12 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
-    protected void goToHomeScreen() {
+    private void goToHomeScreen() {
         Intent intent = new Intent(SplashActivity.this, MenuActivity.class);
         startActivity(intent);
     }
 
-    protected void goToLoginScreen() {
+    private void goToLoginScreen() {
         Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
         startActivity(intent);
     }

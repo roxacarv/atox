@@ -15,7 +15,6 @@ import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.SessaoUsuario;
 import com.atox.usuario.negocio.PessoaNegocio;
 import com.atox.usuario.dominio.Usuario;
-import com.atox.infra.negocio.Criptografia;
 import com.atox.infra.negocio.ValidaCadastro;
 import com.atox.usuario.negocio.SessaoNegocio;
 
@@ -36,8 +35,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        mEmailView = (EditText) findViewById(R.id.editTextEmail);
-        mPasswordView = (EditText) findViewById(R.id.editTextSenha);
+        mEmailView = findViewById(R.id.editTextEmail);
+        mPasswordView = findViewById(R.id.editTextSenha);
         pessoaNegocio = new PessoaNegocio(this);
         sessaoNegocio = new SessaoNegocio(this);
     }
@@ -49,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void goToHomeScreen(View view) {
+    private void goToHomeScreen() {
 
         Intent homeScrenn = new Intent(LoginActivity.this, MenuActivity.class);
         startActivity(homeScrenn);
@@ -58,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void logar(View view) throws ExecutionException, InterruptedException, AtoxException {
 
-        Usuario usuario = null;
+        Usuario usuario;
         Pessoa pessoa = null;
 
         String email = mEmailView.getText().toString();
@@ -88,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if(pessoa != null) {
             sessaoNegocio.iniciarNovaSessao(pessoa);
-            goToHomeScreen(view);
+            goToHomeScreen();
         }
 
     }
@@ -110,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
             focusView = mPasswordView;
             cancel = true;
         }
-        else if(!validaCadastro.isSenhaValida(password)){
+        else if(validaCadastro.isSenhaValida(password)){
             mPasswordView.setError(getString(R.string.error_password_too_short));
             focusView = mPasswordView;
             cancel = true;
@@ -121,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
-        } else if (!validaCadastro.isEmail(email)) {
+        } else if (validaCadastro.isEmail(email)) {
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;

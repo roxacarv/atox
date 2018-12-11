@@ -15,7 +15,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 public class ProdutorDao extends AndroidViewModel {
 
-    private BDHelper bancoDeDados;
+    private final BDHelper bancoDeDados;
 
     public ProdutorDao(Application application)
     {
@@ -27,7 +27,7 @@ public class ProdutorDao extends AndroidViewModel {
     public List<Long> inserirProdutores(final Produtor... produtores) throws ExecutionException, InterruptedException {
         Callable<List<Long>> call = new Callable<List<Long>>() {
             @Override
-            public List<Long> call() throws Exception {
+            public List<Long> call() {
                 List<Long> idDosProdutores = bancoDeDados.produtorDaoRoom().inserirTudo(produtores);
                 if(idDosProdutores.isEmpty()) {
                     return null;
@@ -44,7 +44,7 @@ public class ProdutorDao extends AndroidViewModel {
     public List<Produtor> buscarTodosProdutores() throws ExecutionException, InterruptedException {
         Callable<List<Produtor>> call = new Callable<List<Produtor>>() {
             @Override
-            public List<Produtor> call() throws Exception {
+            public List<Produtor> call() {
                 List<Produtor> produtores = bancoDeDados.produtorDaoRoom().getProdutores();
                 if(produtores.isEmpty()) {
                     return null;

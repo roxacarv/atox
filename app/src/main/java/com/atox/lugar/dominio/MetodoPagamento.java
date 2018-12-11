@@ -7,9 +7,6 @@ public enum MetodoPagamento {
     DEBITO("Débito");
 
 
-    private String descricao;
-
-    private MetodoPagamento(String descricao){
-        this.descricao = descricao;
+    MetodoPagamento(String descricao){
     }
 }

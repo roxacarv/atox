@@ -40,4 +40,11 @@
     <string name="error_no_such_user_or_pass_incorrect">Usuário não cadastrado ou senha incorreta.</string>
     <string name="act_successful_login">Login bem sucedido</string>
     <string name="error_email_or_pass_invalid">Email ou senha inválida</string>
+    <string name="ajudando_voc_a_achar_comida_limpa">ajudando você a achar comida limpa</string>
+    <string name="erro_na_hora_de_realizar_cadastro">Ocorreu um erro na hora de realizar o cadastro</string>
+    <string name="parou_de_funcionar_inesperadamente">O programa parou de funcionar inesperadamente</string>
+    <string name="preencha_corretamente_os_campos">Preencha os campos corretamente</string>
+    <string name="bem_vindo_de_volta">Seja bem vindo de volta</string>
+    <string name="bem_vindo">Seja bem vindo</string>
+    <string name="nome_da_pessoa">Nome da pessoa:</string>
 </resources>

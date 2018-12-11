@@ -2,23 +2,19 @@ package com.atox.usuario.negocio;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 
 import com.atox.infra.negocio.Criptografia;
-import com.atox.infra.negocio.ValidaCadastro;
 import com.atox.usuario.dominio.Endereco;
 import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.Usuario;
 import com.atox.usuario.persistencia.dao.PessoaDao;
 
 import java.security.NoSuchAlgorithmException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.concurrent.ExecutionException;
 
 public class PessoaNegocio {
 
-    private PessoaDao pessoaDao;
+    private final PessoaDao pessoaDao;
     private Pessoa pessoa;
 
     public PessoaNegocio(FragmentActivity activity){
@@ -34,12 +30,11 @@ public class PessoaNegocio {
             Long idDePessoa = pessoaDao.inserirPessoa(this.pessoa);
             return idDeUsuario;
         }
-        return Long.valueOf(-1);
+        return (long) -1;
     }
 
     public Pessoa recuperarPessoaPorId(Long idUsuario) throws ExecutionException, InterruptedException {
-        Pessoa pessoa = pessoaDao.buscarPorIdDeUsuario(idUsuario);
-        return pessoa;
+        return pessoaDao.buscarPorIdDeUsuario(idUsuario);
     }
 
     public Usuario efetuarLogin(String emailParaLogin, String senhaParaLogin) throws ExecutionException, InterruptedException, NoSuchAlgorithmException {
@@ -58,8 +53,7 @@ public class PessoaNegocio {
     }
 
     public Long registrarEndereco(Endereco endereco) throws ExecutionException, InterruptedException {
-        Long retorno = pessoaDao.inserirEndereco(endereco);
-        return retorno;
+        return pessoaDao.inserirEndereco(endereco);
     }
 
     public Pessoa getPessoa(){
@@ -70,7 +64,7 @@ public class PessoaNegocio {
         this.pessoa = novaPessoa;
     }
 
-    public Usuario validarSeUsuarioExiste(String email) throws ExecutionException, InterruptedException {
+    private Usuario validarSeUsuarioExiste(String email) throws ExecutionException, InterruptedException {
         Usuario usuario = pessoaDao.buscarPorEmaildeUsuario(email);
         if (usuario == null) {
             return null;

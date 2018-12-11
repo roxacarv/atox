@@ -20,9 +20,7 @@ public class Criptografia {
             hexString.append(String.format("%02X", b));
         }
 
-        String outputPassword = hexString.toString();
-
-        return outputPassword;
+        return hexString.toString();
     }
 
 
