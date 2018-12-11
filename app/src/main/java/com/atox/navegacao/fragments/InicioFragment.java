@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.atox.R;
+import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.SessaoUsuario;
 
 public class InicioFragment extends Fragment {
@@ -23,12 +24,17 @@ public class InicioFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_inicio, container, false);
         sessaoUsuario = SessaoUsuario.getSessao();
-        Log.i(TAG, "Nome da pessoa: " + sessaoUsuario.getPessoaLogada().getNome());
 
         textViewNomeUsuario = (TextView) view.findViewById(R.id.textViewMsgBoasVindas);
 
-        textViewNomeUsuario.setText(view.getContext().getResources().getString(R.string.texto_bemvindo) +
-                sessaoUsuario.getPessoaLogada().getNome());
+        Pessoa pessoaLogada = sessaoUsuario.getPessoaLogada();
+
+        if (pessoaLogada != null){
+            textViewNomeUsuario.setText(view.getContext().getResources().getString(R.string.texto_bemvindo) +
+                    " " +
+                    pessoaLogada.getNome());
+        }
+
 
         // Inflate the layout for this fragment
         return view;

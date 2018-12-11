@@ -228,7 +228,6 @@
                 android:layout_marginBottom="30dp"
                 android:background="@drawable/bg_rounded"
                 android:fontFamily="@font/google_sans_regular"
-                android:onClick="voltarParaTelaDeLogin"
                 android:text="Sair"
                 android:textColor="@color/white"
                 android:textSize="18sp" />

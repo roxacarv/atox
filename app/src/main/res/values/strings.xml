@@ -2,7 +2,7 @@
     <string name="app_name">atox</string>
 
     <!-- Strings de saudação -->
-    <string name="texto_bemvindo">Olá! </string>
+    <string name="texto_bemvindo">Olá</string>
     <string name="msg_saudacao">O que você está buscando hoje?</string>
 
     \<!-- Strings related to login -->

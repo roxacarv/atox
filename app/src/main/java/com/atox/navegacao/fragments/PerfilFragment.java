@@ -1,12 +1,15 @@
 package com.atox.navegacao.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.atox.R;
@@ -14,6 +17,7 @@ import com.atox.usuario.dominio.Endereco;
 import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.SessaoUsuario;
 import com.atox.usuario.dominio.Usuario;
+import com.atox.usuario.gui.LoginActivity;
 import com.atox.usuario.negocio.SessaoNegocio;
 
 import java.text.SimpleDateFormat;
@@ -32,6 +36,8 @@ public class PerfilFragment extends Fragment {
     private Usuario usuarioPerfil;
     private Pessoa pessoaPerfil;
     private Endereco enderecoPerfil;
+    private Button btnSair;
+    private Intent homeScreen;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,6 +55,7 @@ public class PerfilFragment extends Fragment {
         textViewPerfilEmail = (TextView) view.findViewById(R.id.textViewPerfilEmail);
         textViewPerfilTelefone = (TextView) view.findViewById(R.id.textViewPerfilTelefone);
 
+
         String nome = pessoaPerfil.getNome();
         String telefone = pessoaPerfil.getTelefone();
         String email = usuarioPerfil.getEmail();
@@ -56,6 +63,16 @@ public class PerfilFragment extends Fragment {
         textViewPerfilNomeUsuario.setText(nome);
         textViewPerfilEmail.setText(email);
         textViewPerfilTelefone.setText(telefone);
+
+        homeScreen = new Intent(this.getActivity(), LoginActivity.class);
+        btnSair = (Button)view.findViewById(R.id.btnSairDoApp);
+        btnSair.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sessaoNegocio.encerrarSessao();
+                startActivity(homeScreen);
+            }
+        });
 
 
         if(sessaoUsuario.getPessoaLogada().getEndereco() != null) {
@@ -74,7 +91,6 @@ public class PerfilFragment extends Fragment {
     }
 
     public void voltarParaTelaDeLogin(View view) {
-        sessaoNegocio.encerrarSessao();
         //mudar de tela
     }
 
