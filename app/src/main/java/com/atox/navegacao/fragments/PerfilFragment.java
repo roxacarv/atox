@@ -17,6 +17,7 @@ import com.atox.usuario.dominio.Endereco;
 import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.SessaoUsuario;
 import com.atox.usuario.dominio.Usuario;
+import com.atox.usuario.gui.EditarPerfilActivity;
 import com.atox.usuario.gui.LoginActivity;
 import com.atox.usuario.negocio.SessaoNegocio;
 
@@ -38,6 +39,8 @@ public class PerfilFragment extends Fragment {
     private Endereco enderecoPerfil;
     private Button btnSair;
     private Intent homeScreen;
+    private Button btnEditar;
+    private Intent editActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,6 +57,15 @@ public class PerfilFragment extends Fragment {
         textViewPerfilEndereco = (TextView) view.findViewById(R.id.textViewPerfilEndereco);
         textViewPerfilEmail = (TextView) view.findViewById(R.id.textViewPerfilEmail);
         textViewPerfilTelefone = (TextView) view.findViewById(R.id.textViewPerfilTelefone);
+
+        editActivity = new Intent(this.getActivity(), EditarPerfilActivity.class);
+        btnEditar = (Button)view.findViewById(R.id.btnEditarDados);
+        btnEditar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(editActivity);
+            }
+        });
 
 
         String nome = pessoaPerfil.getNome();

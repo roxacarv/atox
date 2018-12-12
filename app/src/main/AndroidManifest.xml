@@ -60,6 +60,11 @@
             android:name=".usuario.gui.EnderecoActivity"
             android:theme="@style/FullScreenTheme" />
 
+        <!-- EDIT PROFILE SCREEN-->
+        <activity
+            android:name=".usuario.gui.EditarPerfilActivity"
+            android:theme="@style/FullScreenTheme"/>
+
         <!-- BOTTOM MENU SCREEN -->
         <activity
             android:name=".navegacao.activities.MenuActivity"

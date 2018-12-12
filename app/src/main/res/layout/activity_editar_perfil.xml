@@ -73,7 +73,7 @@
                 />
 
             <EditText
-                android:id="@+id/editTextRegistroNome"
+                android:id="@+id/editTextEditarNome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -90,7 +90,7 @@
                 android:outlineSpotShadowColor="@color/colorPrimary"/>
 
             <EditText
-                android:id="@+id/editTextRegistroTelefone"
+                android:id="@+id/editTextEditarTelefone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -104,7 +104,7 @@
                 android:textSize="14sp"/>
 
             <EditText
-                android:id="@+id/editTextDataNascimento"
+                android:id="@+id/editTextEditarDataNascimento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -129,7 +129,7 @@
                 android:textColor="@color/colorPrimary"/>
 
             <EditText
-                android:id="@+id/editTextRegistroEmail"
+                android:id="@+id/editTextEditarEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -144,7 +144,7 @@
                 android:textSize="14sp"/>
 
             <EditText
-                android:id="@+id/editTextRegistroSenha"
+                android:id="@+id/editTextEditarSenha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -159,7 +159,7 @@
                 android:textSize="14sp"/>
 
             <EditText
-                android:id="@+id/editTextConfirmeSenha"
+                android:id="@+id/editTextEditarConfirmacaoSenha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"

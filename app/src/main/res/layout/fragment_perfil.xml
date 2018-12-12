@@ -43,7 +43,7 @@
                     android:textSize="24sp" />
 
                 <Button
-                    android:id="@+id/button3"
+                    android:id="@+id/btnEditarDados"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginRight="25dp"
