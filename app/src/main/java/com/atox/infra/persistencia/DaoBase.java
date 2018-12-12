@@ -36,6 +36,6 @@ public interface DaoBase<T> {
     void atualizar(T data);
 
     @Delete
-    void deletar(T data);
+    int deletar(T data);
 
 }

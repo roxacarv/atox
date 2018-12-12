@@ -3,6 +3,7 @@ package com.atox.usuario.persistencia.dao;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.atox.infra.persistencia.BDHelper;
 import com.atox.usuario.dominio.Endereco;
@@ -53,7 +54,8 @@ public class SessaoUsuarioDao extends AndroidViewModel {
         Callable<Pessoa> call = new Callable<Pessoa>() {
             @Override
             public Pessoa call() throws Exception {
-                Long idDeRetorno = bancoDeDados.sessaoDaoRoom().ultimoIdLogado();
+                Long idDeRetorno = null;
+                idDeRetorno = bancoDeDados.sessaoDaoRoom().ultimoIdLogado();
                 if (idDeRetorno == null) {
                     return null;
                 }
@@ -100,11 +102,12 @@ public class SessaoUsuarioDao extends AndroidViewModel {
 
     public void deletarItem(SessaoUsuario sessao)
     {
+        Log.i("SESSAO DAO", "Iniciou a deleção do sessão");
         new SessaoUsuarioDao.deleteAsyncTaskSessao(bancoDeDados).execute(sessao);
     }
 
     private static class deleteAsyncTaskSessao extends AsyncTask<SessaoUsuario, Void, Void> {
-        private BDHelper bd;
+        private final BDHelper bd;
         deleteAsyncTaskSessao(BDHelper bancoDeDados)
         {
             bd = bancoDeDados;
@@ -112,7 +115,7 @@ public class SessaoUsuarioDao extends AndroidViewModel {
         @Override
         protected Void doInBackground(final SessaoUsuario... params)
         {
-            bd.sessaoDaoRoom().deletar(params[0]);
+            int idDeletado = bd.sessaoDaoRoom().deletar(params[0]);
             return null;
         }
     }

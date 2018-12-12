@@ -3,6 +3,7 @@ package com.atox.usuario.negocio;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
 import com.atox.infra.AtoxException;
 import com.atox.usuario.dominio.Pessoa;
@@ -28,10 +29,12 @@ public class SessaoNegocio {
         this.sessaoUsuario.setUsuarioLogado(pessoa.getUsuario());
         Long idSessao = sessaoUsuarioDao.salvarSessao(this.sessaoUsuario);
         if (idSessao != null){
+            this.sessaoUsuario.setSid(idSessao);
             this.sessaoUsuario.setPessoaLogada(pessoa);
         } else {
             throw new AtoxException("Sessão não pode ser iniciada.");
         }
+
     }
 
     public Pessoa restaurarSessao() throws ExecutionException, InterruptedException {
@@ -42,9 +45,9 @@ public class SessaoNegocio {
         return pessoaLogada;
     }
 
-    public void encerrarSessao(){
-        sessaoUsuario.setPessoaLogada(null);
+    public void encerrarSessao() {
         sessaoUsuarioDao.deletarItem(sessaoUsuario);
+        sessaoUsuario.setPessoaLogada(null);
     }
 
 
