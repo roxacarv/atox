@@ -20,7 +20,7 @@ public class SessaoUsuario {
     @Ignore
     private Pessoa pessoaLogada;
 
-    public static SessaoUsuario getSessao() {
+    public static SessaoUsuario getInstance() {
         if(INSTANCE == null) {
             INSTANCE = new SessaoUsuario();
         }

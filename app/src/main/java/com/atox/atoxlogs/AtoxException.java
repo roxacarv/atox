@@ -1,4 +1,4 @@
-package com.atox.infra;
+package com.atox.atoxlogs;
 
 public class AtoxException extends Exception {
 

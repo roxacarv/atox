@@ -81,7 +81,7 @@ public class SessaoUsuarioDao extends AndroidViewModel {
         pessoa.setUsuarioId(usuario.getUid());
         pessoa.setUsuario(usuario);
         pessoa.setEndereco(endereco);
-        sessaoUsuario = SessaoUsuario.getSessao();
+        sessaoUsuario = SessaoUsuario.getInstance();
         sessaoUsuario.setPessoaLogada(pessoa);
         sessaoUsuario.setUsuarioLogado(pessoa.getUsuario());
         return pessoa;

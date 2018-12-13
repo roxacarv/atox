@@ -28,8 +28,7 @@ public class MenuActivity extends AppCompatActivity implements BottomNavigationV
         //getting bottom navigation view and attaching the listener
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(this);
-        sessaoUsuario = SessaoUsuario.getSessao();
-        Log.i(TAG, "Nome da pessoa: " + sessaoUsuario.getPessoaLogada().getNome());
+        sessaoUsuario = SessaoUsuario.getInstance();
     }
 
 

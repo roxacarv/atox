@@ -1,19 +1,15 @@
 package com.atox.navegacao.activities;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.atox.infra.AtoxException;
 import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.SessaoUsuario;
 import com.atox.usuario.dominio.Usuario;
 import com.atox.usuario.gui.LoginActivity;
 import com.atox.usuario.negocio.SessaoNegocio;
-import com.atox.usuario.persistencia.dao.PessoaDao;
 
 import java.util.concurrent.ExecutionException;
 
@@ -33,13 +29,7 @@ public class SplashActivity extends AppCompatActivity {
         //TODO verifica se já existe usuário logado.
         Pessoa pessoaJaLogada = null;
 
-        try {
-            pessoaJaLogada = sessaoNegocio.restaurarSessao();
-        } catch (ExecutionException e) {
-            alert("");
-        } catch (InterruptedException e) {
-            alert("");
-        }
+        pessoaJaLogada = sessaoNegocio.restaurarSessao();
 
         if (pessoaJaLogada != null){
             alert("Seja bem vindo de volta");

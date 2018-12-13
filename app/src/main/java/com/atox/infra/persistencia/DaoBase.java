@@ -33,7 +33,7 @@ public interface DaoBase<T> {
     List<Long> inserirTudo(T... data);
 
     @Update
-    void atualizar(T data);
+    int atualizar(T data);
 
     @Delete
     int deletar(T data);

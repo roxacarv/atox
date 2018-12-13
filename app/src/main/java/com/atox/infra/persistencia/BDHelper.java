@@ -6,6 +6,8 @@ import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
+import com.atox.atoxlogs.AtoxLog;
+import com.atox.atoxlogs.persistencia.daoroom.AtoxLogDaoRoom;
 import com.atox.network.dominio.Produtor;
 import com.atox.network.persistencia.daoroom.ProdutorDaoRoom;
 import com.atox.usuario.dominio.SessaoUsuario;
@@ -21,7 +23,8 @@ import com.atox.usuario.dominio.Usuario;
                        SessaoUsuario.class,
                        Endereco.class,
                        Pessoa.class,
-                       Produtor.class
+                       Produtor.class,
+                       AtoxLog.class
                      },
           version = 1)
 @TypeConverters({ConversorDeDate.class})
@@ -48,5 +51,6 @@ public abstract class BDHelper extends RoomDatabase {
     public abstract EnderecoDaoRoom enderecoDaoRoom();
     public abstract PessoaDaoRoom pessoaDaoRoom();
     public abstract ProdutorDaoRoom produtorDaoRoom();
+    public abstract AtoxLogDaoRoom atoxLogDaoRoom();
 
 }

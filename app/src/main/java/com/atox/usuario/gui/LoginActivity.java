@@ -9,17 +9,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.atox.R;
-import com.atox.infra.AtoxException;
+import com.atox.atoxlogs.AtoxException;
 import com.atox.navegacao.activities.MenuActivity;
 import com.atox.usuario.dominio.Pessoa;
-import com.atox.usuario.dominio.SessaoUsuario;
 import com.atox.usuario.negocio.PessoaNegocio;
 import com.atox.usuario.dominio.Usuario;
-import com.atox.infra.negocio.Criptografia;
 import com.atox.infra.negocio.ValidaCadastro;
 import com.atox.usuario.negocio.SessaoNegocio;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.ExecutionException;
 
 
@@ -28,7 +25,6 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getName();
     private EditText mEmailView;
     private EditText mPasswordView;
-    private SessaoUsuario sessaoUsuario;
     private PessoaNegocio pessoaNegocio;
     private SessaoNegocio sessaoNegocio;
 
@@ -64,33 +60,27 @@ public class LoginActivity extends AppCompatActivity {
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
-        try {
-            boolean camposValidos = validarCamposLoginNaGui(email, password);
-            if (camposValidos){
-                usuario = pessoaNegocio.efetuarLogin(email, password);
-                if(usuario == null) {
-                    //usuario não cadastrado ou senha incorreta
-                    alert(getString(R.string.error_no_such_user_or_pass_incorrect));
-                } else{
-                    pessoa = pessoaNegocio.recuperarPessoaPorId(usuario.getUid());
-                    if(pessoa == null) {
-                        alert("O usuário digitado não existe ou a senha está incorreta.");
-                    }
-                    Log.i(TAG, "Pessoa existe.");
-                    alert(getString(R.string.act_successful_login));
+        boolean camposValidos = validarCamposLoginNaGui(email, password);
+
+        if (camposValidos) {
+            usuario = pessoaNegocio.efetuarLogin(email, password);
+            if (usuario == null) {
+                //usuario não cadastrado ou senha incorreta
+                alert(getString(R.string.error_no_such_user_or_pass_incorrect));
+            } else {
+                pessoa = pessoaNegocio.recuperarPessoaPorId(usuario.getUid());
+                if (pessoa == null) {
+                    alert("O usuário digitado não existe ou a senha está incorreta.");
                 }
-
+                Log.i(TAG, "Pessoa existe.");
+                alert(getString(R.string.act_successful_login));
             }
-
-        } catch (NoSuchAlgorithmException e) {
-            alert("Ocorreu um erro");
         }
 
         if(pessoa != null) {
             sessaoNegocio.iniciarNovaSessao(pessoa);
             goToHomeScreen(view);
         }
-
     }
 
 

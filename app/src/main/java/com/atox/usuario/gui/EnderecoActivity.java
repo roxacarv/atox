@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.atox.R;
+import com.atox.atoxlogs.AtoxLog;
+import com.atox.atoxlogs.AtoxMensagem;
 import com.atox.usuario.dominio.Endereco;
 import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.SessaoUsuario;
@@ -44,27 +46,16 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
         dadosPessoais = getIntent().getExtras();
         pessoaNegocio = new PessoaNegocio(this);
 
-        try {
-            pessoa = pessoaNegocio.recuperarPessoaPorId(dadosPessoais.getLong("ID_USUARIO"));
-        } catch (ExecutionException e) {
-            alert("Ocorreu um erro na hora de realizar o cadastro");
-            irParaTelaDeLogin();
-        } catch (InterruptedException e) {
-            alert("O programa parou de funcionar inesperadamente");
-            irParaTelaDeLogin();
-        }
+        pessoa = pessoaNegocio.recuperarPessoaPorId(dadosPessoais.getLong("ID_USUARIO"));
 
     }
 
     public void backToRegistroScreen(View view){
-
         Intent registerScreen = new Intent(EnderecoActivity.this, RegistroActivity.class);
         startActivity(registerScreen);
-
-
     }
 
-    private Pessoa registraNoBancoDeDados() throws ExecutionException, InterruptedException {
+    private Pessoa registraNoBancoDeDados() {
         //Long idDePessoa = pessoa.getPid();
         //Log.i(TAG, "Id de pessoa do banco: " + idDePessoa);
         //Endereco endereco = criarEndereco(idDePessoa);
@@ -97,7 +88,11 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
             addresses = geocoder.getFromLocationName(completeAddress, 1);
             return (Address) addresses.get(0);
         } catch (IOException e) {
-            e.printStackTrace();
+            AtoxLog log = new AtoxLog();
+            log.novoRegistro(AtoxMensagem.ACAO_REQUISITAR_ENDERECO_API_GOOGLE,
+                    AtoxMensagem.ERRO_NO_USO_DE_API,
+                    "Um erro ocorreu na requisição da API da Google: " + e.getMessage());
+            log.empurraRegistrosPraFila();
         }
 
         return null;
@@ -117,7 +112,7 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
         Toast.makeText(this,s,Toast.LENGTH_LONG).show();
     }
 
-    public void finalizarRegistro(View view) throws ExecutionException, InterruptedException {
+    public void finalizarRegistro(View view) {
         Pessoa pessoa = registraNoBancoDeDados();
         Toast.makeText(this,R.string.success_register,Toast.LENGTH_LONG).show();
         Intent loginScreen = new Intent(EnderecoActivity.this, LoginActivity.class);

@@ -3,6 +3,7 @@ package com.atox.usuario.gui;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -48,7 +49,7 @@ public class RegistroActivity extends AppCompatActivity {
         registerScreen = new Intent(RegistroActivity.this, EnderecoActivity.class);
     }
 
-    public boolean validarRegistro() throws NoSuchAlgorithmException, ExecutionException, InterruptedException {
+    public boolean validarRegistro() {
         boolean valido = true;
         mEmail.setError(null);
         mTelefone.setError(null);
@@ -67,77 +68,60 @@ public class RegistroActivity extends AppCompatActivity {
 
         ValidaCadastro validaCadastro = new ValidaCadastro();
 
-
-        if(validaCadastro.isCampoVazio(nome)){
+        if(validaCadastro.isCampoVazio(nome)) {
             mNome.requestFocus();
             mNome.setError(getString(R.string.error_invalid_name));
             valido = false;
         }
 
-        if(validaCadastro.isCampoVazio(telefone)){
+        if(validaCadastro.isCampoVazio(telefone)) {
             mTelefone.requestFocus();
             mTelefone.setError(getString(R.string.error_invalid_tel));
             valido = false;
-        }
-
-        else if(!validaCadastro.isDataNascimento(dataNascimento)){
+        } else if(!validaCadastro.isDataNascimento(dataNascimento)) {
             mData.requestFocus();
             mData.setError(getString(R.string.error_invalid_date));
             valido = false;
-        }
-
-        else if(!validaCadastro.isEmail(email)){
+        } else if(!validaCadastro.isEmail(email)) {
             mEmail.requestFocus();
             mEmail.setError(getString(R.string.error_invalid_email));
             valido = false;
-        }
-
-        else if(!validaCadastro.isSenhaValida(senha)){
+        } else if(!validaCadastro.isSenhaValida(senha)) {
             mSenha.requestFocus();
             mSenha.setError(getString(R.string.error_invalid_password));
             valido = false;
-        }
-
-        else if(!validaCadastro.isSenhaValida(confirmSenha)){
+        } else if(!validaCadastro.isSenhaValida(confirmSenha)) {
+            mSenhaConfirm.requestFocus();
+            mSenhaConfirm.setError(getString(R.string.error_invalid_password));
+            valido = false;
+        } else if(!(senha.equals(confirmSenha))) {
             mSenhaConfirm.requestFocus();
             mSenhaConfirm.setError(getString(R.string.error_invalid_password));
             valido = false;
         }
 
-        else if(!(senha.equals(confirmSenha))){
-            mSenhaConfirm.requestFocus();
-            mSenhaConfirm.setError(getString(R.string.error_invalid_password));
-            valido = false;
-        }
-
-
-        if(valido){
+        if(valido) {
             String realSenha = Criptografia.encryptPassword(senha);
             Pessoa pessoa = montarPessoa(email, realSenha, nome, telefone, dataNascimento);
+            Log.i("REGISTRO ACTIVITY", "PESSOA RETORNO: " + pessoa);
             pessoaNegocio.setPessoa(pessoa);
             Long idUsuario = pessoaNegocio.cadastrar();
             if(idUsuario == -1) {
                 valido = false;
                 alert(getString(R.string.email_already_exists));
-            } else{
+            } else {
                 alert(getString(R.string.select_address));
                 registerScreen.putExtra("ID_USUARIO", idUsuario);
             }
-
-        }
-        else {
+        } else {
             alert("Preencha os campos corretamente");
-
         }
         return valido;
     }
 
-
     private void alert(String s){
         Toast.makeText(this,s,Toast.LENGTH_LONG).show();
     }
-
-
 
     public void backToLoginScreen(View view){
 
@@ -146,22 +130,13 @@ public class RegistroActivity extends AppCompatActivity {
 
     }
 
-    public void goToEnderecoScreen(View view){
-
-        try {
-            if(validarRegistro()){
-
-                startActivity(registerScreen);
-            }
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+    public void goToEnderecoScreen(View view) {
+        if(validarRegistro()) {
+            startActivity(registerScreen);
         }
     }
-    public static Pessoa montarPessoa(String email, String senha, String nome, String telefone, String dataNascimento){
+
+    public static Pessoa montarPessoa(String email, String senha, String nome, String telefone, String dataNascimento) {
         Pessoa pessoa = new Pessoa();
         Usuario usuario = new Usuario();
         usuario.setEmail(email);

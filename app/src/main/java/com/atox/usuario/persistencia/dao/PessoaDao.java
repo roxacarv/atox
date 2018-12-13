@@ -69,13 +69,32 @@ public class PessoaDao extends AndroidViewModel {
         return future.get();
     }
 
-    public void atualizar(final Pessoa pessoa) {
-        new Thread(new Runnable() {
+    public Long atualizar(final Pessoa pessoa) throws ExecutionException, InterruptedException {
+        Callable<Long> call = new Callable<Long>() {
             @Override
-            public void run() {
-                bancoDeDados.pessoaDaoRoom().atualizar(pessoa);
+            public Long call() throws Exception {
+                int resultado = bancoDeDados.pessoaDaoRoom().atualizar(pessoa);
+                return Long.valueOf(resultado);
             }
-        }).start();
+        };
+
+        ExecutorService executor = new ScheduledThreadPoolExecutor(1);
+        Future<Long> future = executor.submit(call);
+        return future.get();
+    }
+
+    public Long atualizarUsuario(final Usuario usuario) throws ExecutionException, InterruptedException {
+        Callable<Long> call = new Callable<Long>() {
+            @Override
+            public Long call() throws Exception {
+                int resultado = bancoDeDados.usuarioDaoRoom().atualizar(usuario);
+                return Long.valueOf(resultado);
+            }
+        };
+
+        ExecutorService executor = new ScheduledThreadPoolExecutor(1);
+        Future<Long> future = executor.submit(call);
+        return future.get();
     }
 
     public Pessoa buscarPorIdDeUsuario(final long usuarioId) throws ExecutionException, InterruptedException {

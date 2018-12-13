@@ -3,7 +3,7 @@ package com.atox.network.negocio;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.v4.app.FragmentActivity;
 
-import com.atox.infra.AtoxLog;
+import com.atox.atoxlogs.AtoxLog;
 import com.atox.network.dominio.Produtor;
 import com.atox.network.persistencia.dao.ProdutorDao;
 
