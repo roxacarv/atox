@@ -37,6 +37,13 @@ public class PessoaNegocio {
         return Long.valueOf(-1);
     }
 
+    public void atualizar() throws ExecutionException, InterruptedException {
+
+        pessoaDao.atualizar(this.pessoa);
+
+
+    }
+
     public Pessoa recuperarPessoaPorId(Long idUsuario) throws ExecutionException, InterruptedException {
         Pessoa pessoa = pessoaDao.buscarPorIdDeUsuario(idUsuario);
         return pessoa;
