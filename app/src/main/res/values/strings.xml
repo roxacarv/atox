@@ -2,7 +2,7 @@
     <string name="app_name">atox</string>
 
     <!-- Strings de saudação -->
-    <string name="texto_bemvindo">Olá</string>
+    <string name="texto_bemvindo">Olá </string>
     <string name="msg_saudacao">O que você está buscando hoje?</string>
 
     \<!-- Strings related to login -->
@@ -40,4 +40,6 @@
     <string name="error_no_such_user_or_pass_incorrect">Usuário não cadastrado ou senha incorreta.</string>
     <string name="act_successful_login">Login bem sucedido</string>
     <string name="error_email_or_pass_invalid">Email ou senha inválida</string>
+    <string name="title_activity_lugar_detalhe">LugarDetalheActivity</string>
+    <string name="action_settings">Settings</string>
 </resources>

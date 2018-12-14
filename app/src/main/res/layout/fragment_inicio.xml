@@ -148,24 +148,13 @@
                         android:textColor="@color/white" />
                 </LinearLayout>
 
-            </LinearLayout><ImageView
-            android:id="@+id/imageViewSad"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginTop="20dp"
-            android:tint="@color/lightGray"
-            app:srcCompat="@drawable/ic_sad" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView5"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/customRecyclerViewFeirinha"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:fontFamily="@font/google_sans_regular"
-                android:paddingLeft="75dp"
-                android:paddingRight="75dp"
-                android:textSize="16sp"
-                android:text="Ops! Ainda não implementamos esta parte" />
+                android:layout_height="match_parent"
+                />
 
 
         </LinearLayout>

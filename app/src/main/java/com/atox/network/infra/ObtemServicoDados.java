@@ -1,5 +1,7 @@
 package com.atox.network.infra;
 
+import com.atox.lugar.dominio.Lugar;
+import com.atox.network.dominio.Feirinha;
 import com.atox.network.dominio.Produtor;
 
 import java.util.List;
@@ -11,4 +13,7 @@ public interface ObtemServicoDados {
     //id de um host de API temporario
     @GET("/bins/hutxi")
     Call<List<Produtor>> getAllProdutores();
+
+    @GET("/bins/f6nto")
+    Call<List<Feirinha>> getAllFeirinhas();
 }

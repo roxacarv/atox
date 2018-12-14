@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    android:background="@drawable/bg_card"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageViewFeirinha"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            app:srcCompat="@drawable/icon_feirinha" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewNomeFeirinha"
+                android:layout_width="275dp"
+                android:maxWidth="275dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="45dp"
+                android:textSize="14sp"
+                android:fontFamily="@font/google_sans_medium"
+                android:text="Nome Feirinha De Tal Lugar"
+                android:textColor="@color/black1" />
+
+            <TextView
+                android:id="@+id/textViewLocalFeirinha"
+                android:layout_width="275dp"
+                android:maxWidth="275dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/google_sans_regular"
+                android:text="Rua da Feirinha - Bairro"
+                android:textColor="@color/lightGray2"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/textViewHorarioFuncionamento"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:text="Dia-feira - XX:00 até XX:00"
+                android:fontFamily="@font/google_sans_regular"
+                android:textColor="@color/lightGray2"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>

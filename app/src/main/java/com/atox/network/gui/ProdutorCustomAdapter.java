@@ -12,7 +12,7 @@ import com.atox.network.dominio.Produtor;
 
 import java.util.List;
 
-public class ProdutorCustomAdapter extends RecyclerView.Adapter<ProdutorCustomAdapter.CustomViewHolder>{
+public class ProdutorCustomAdapter extends RecyclerView.Adapter<ProdutorCustomAdapter.ProdutorViewHolder>{
     private List<Produtor> dataList;
     private Context context;
 
@@ -21,7 +21,7 @@ public class ProdutorCustomAdapter extends RecyclerView.Adapter<ProdutorCustomAd
         this.dataList = dataList;
     }
 
-    static class CustomViewHolder extends RecyclerView.ViewHolder {
+    static class ProdutorViewHolder extends RecyclerView.ViewHolder {
 
         public final View mView;
 
@@ -30,7 +30,7 @@ public class ProdutorCustomAdapter extends RecyclerView.Adapter<ProdutorCustomAd
         TextView txtCooperativa;
         TextView txtEmail;
 
-        CustomViewHolder(View itemView) {
+        ProdutorViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
 
@@ -43,14 +43,14 @@ public class ProdutorCustomAdapter extends RecyclerView.Adapter<ProdutorCustomAd
     }
 
     @Override
-    public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ProdutorViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.card_produtor, parent, false);
-        return new CustomViewHolder(view);
+        return new ProdutorViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(CustomViewHolder holder, int position) {
+    public void onBindViewHolder(ProdutorViewHolder holder, int position) {
 
         holder.txtName.setText(dataList.get(position).getNome().toUpperCase());
         holder.txtCidade.setText(dataList.get(position).getCidade());
