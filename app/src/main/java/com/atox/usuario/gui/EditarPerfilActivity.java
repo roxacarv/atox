@@ -10,6 +10,8 @@ import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -128,17 +130,16 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.i("REQUEST_CODE", ":::requestCode" + requestCode);
-        Log.i("REQUEST_CODE", ":::resultCode" + resultCode);
-        Log.i("REQUEST_CODE", ":::result" + RESULT_OK);
         if (resultCode == RESULT_OK) {
             Uri path = data.getData();
-            Log.i("EDITAR_PERFIL", "entrou no try");
             try {
-                caminhoAvatar = path.getPath();
+                caminhoAvatar = path.toString();
                 Log.i("EDITAR_PERFIL", ":::caminho" + caminhoAvatar);
                 Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(path));
-                image.setImageBitmap(bitmap);
+                RoundedBitmapDrawable roundDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+                roundDrawable.setCircular(true);
+                image.setImageDrawable(roundDrawable);
+                //image.setImageBitmap(bitmap);
                 salvarParaMemoriaInterna(bitmap);
             } catch (IOException e) {
                 log.novoRegistro(usuarioLogado.getUid(),
@@ -280,6 +281,7 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
             fos = new FileOutputStream(caminhoMemoria);
             // Use the compress method on the BitMap object to write image to the OutputStream
             bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            pessoaLogada.setCaminhoDoAvatar(diretorio.getAbsolutePath());
         } catch (Exception e) {
             log = new AtoxLog();
             log.novoRegistro(usuarioLogado.getUid(),
