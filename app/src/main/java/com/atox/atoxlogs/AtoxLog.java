@@ -4,12 +4,17 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+
+import com.atox.atoxlogs.negocio.AtoxLogNegocio;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 @Entity(tableName = "atox_log")
 public class AtoxLog {
@@ -35,11 +40,18 @@ public class AtoxLog {
     @Ignore
     private List<AtoxLog> logs;
 
+    @Ignore
+    private Queue<AtoxLog> filaDeLogs;
+
+    @Ignore
+    private AtoxLogNegocio atoxLogNegocio;
+
     @ColumnInfo(name = "tipo")
     private int tipo;
 
     public AtoxLog() {
         this.logs = new ArrayList<>();
+        this.filaDeLogs = new LinkedList<>();
     }
 
     public Long getId() {
@@ -154,6 +166,31 @@ public class AtoxLog {
     }
 
     public void empurraRegistrosPraFila() {
+        if(!this.logs.isEmpty()) {
+            List<AtoxLog> logsParaRemover = new ArrayList<>();
+            for (AtoxLog log : this.logs) {
+                logsParaRemover.add(log);
+                this.filaDeLogs.add(log);
+            }
+            this.logs.removeAll(logsParaRemover);
+        }
+    }
+
+    public void salvaRegistrosNoBancoDeDados(FragmentActivity fragmentActivity) {
+        if(!this.filaDeLogs.isEmpty()) {
+            atoxLogNegocio = new AtoxLogNegocio(fragmentActivity);
+            for (int i = 0; i < this.filaDeLogs.size(); i++) {
+                AtoxLog logParaRemover = this.filaDeLogs.peek();
+                AtoxLog logRemovido = null;
+                Long resultadoDaInsercao = null;
+                if (logParaRemover != null) {
+                    resultadoDaInsercao = atoxLogNegocio.cadastrar(logParaRemover);
+                }
+                if (resultadoDaInsercao != null) {
+                    logRemovido = this.filaDeLogs.poll();
+                }
+            }
+        }
 
     }
 

@@ -9,6 +9,7 @@ public class AtoxMensagem {
     public static final String ERRO_ATUALIZAR_REGISTRO_NO_BANCO = "e1";
     public static final String ERRO_BUSCAR_REGISTRO_NO_BANCO = "e2";
     public static final String ERRO_NO_USO_DE_API = "e3";
+    public static final String ERRO_AO_ACESSAR_A_MEMORIA_INTERNA = "e4";
 
     //possíveis ações que estejam sendo feitas
     public static final String ACAO_INSERIR_REGISTRO_NO_BANCO = "a0";
@@ -24,6 +25,8 @@ public class AtoxMensagem {
     public static final String ACAO_RESTAURAR_SESSAO = "a10";
     public static final String ACAO_INICIAR_NOVA_SESSAO = "a11";
     public static final String ACAO_REQUISITAR_ENDERECO_API_GOOGLE = "a12";
+    public static final String ACAO_BUSCAR_IMAGEM_NA_MEMORIA_INTERNA = "a13";
+    public static final String ACAO_SALVAR_IMAGEM_NA_MEMORIA_INTERNA = "a14";
 
     public static AtoxMensagem getInstance() {
         if(INSTANCE == null) {

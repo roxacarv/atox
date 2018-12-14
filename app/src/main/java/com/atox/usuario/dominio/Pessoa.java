@@ -43,6 +43,9 @@ public class Pessoa {
     @ColumnInfo(name = "telefone")
     private String telefone;
 
+    @ColumnInfo(name = "pessoa_avatar")
+    private String caminhoDoAvatar;
+
     public String getNome() {
         return nome;
     }
@@ -105,5 +108,13 @@ public class Pessoa {
 
     public void setPid(long pid) {
         this.pid = pid;
+    }
+
+    public String getCaminhoDoAvatar() {
+        return caminhoDoAvatar;
+    }
+
+    public void setCaminhoDoAvatar(String caminhoDoAvatar) {
+        this.caminhoDoAvatar = caminhoDoAvatar;
     }
 }

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "f0719ad3a212e72a372a6afe8fe54892",
+    "identityHash": "01b95c4cf9568ea7ddd137f4fcf0cf4d",
     "entities": [
       {
         "tableName": "usuario",
@@ -153,7 +153,7 @@
       },
       {
         "tableName": "pessoa",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `usuario_id` INTEGER NOT NULL, `nome` TEXT, `data_nascimento` INTEGER, `cpf` TEXT, `telefone` TEXT, FOREIGN KEY(`usuario_id`) REFERENCES `usuario`(`uid`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `usuario_id` INTEGER NOT NULL, `nome` TEXT, `data_nascimento` INTEGER, `cpf` TEXT, `telefone` TEXT, `pessoa_avatar` TEXT, FOREIGN KEY(`usuario_id`) REFERENCES `usuario`(`uid`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "pid",
@@ -188,6 +188,12 @@
           {
             "fieldPath": "telefone",
             "columnName": "telefone",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "caminhoDoAvatar",
+            "columnName": "pessoa_avatar",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -337,7 +343,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"f0719ad3a212e72a372a6afe8fe54892\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"01b95c4cf9568ea7ddd137f4fcf0cf4d\")"
     ]
   }
 }
