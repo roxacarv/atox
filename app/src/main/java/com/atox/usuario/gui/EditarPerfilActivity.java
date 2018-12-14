@@ -1,6 +1,7 @@
 package com.atox.usuario.gui;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
@@ -50,6 +51,7 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
     private Button buttonSalvar;
     private Pessoa pessoaLogada;
     private Usuario usuarioLogado;
+    private static final int PICK_IMAGE_REQUEST = 100;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,9 +109,9 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
     }
 
     private void carregarImagem() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setType("image/");
-        startActivityForResult(intent.createChooser(intent, "selecione a aplicação"), 10);
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
     @Override
@@ -117,7 +119,12 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_OK) {
             Uri path = data.getData();
-            image.setImageURI(path);
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), path);
+                image.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
