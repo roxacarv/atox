@@ -9,7 +9,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +25,7 @@ import com.atox.atoxlogs.AtoxLog;
 import com.atox.atoxlogs.AtoxMensagem;
 import com.atox.infra.negocio.Criptografia;
 import com.atox.infra.negocio.ValidaCadastro;
+import com.atox.infra.persistencia.Mascara;
 import com.atox.navegacao.activities.MenuActivity;
 import com.atox.usuario.dominio.Endereco;
 import com.atox.usuario.dominio.Pessoa;
@@ -40,6 +40,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -47,7 +49,7 @@ import java.util.Locale;
 
 public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCompleteListener {
 
-    private SimpleDateFormat sdf;
+    private DateFormat sdf;
     private EditText mNome;
     private EditText mTelefone;
     private EditText mData;
@@ -68,18 +70,14 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_perfil);
-        inicializarCampos();
-        image = (ImageView) findViewById(R.id.imageNew);
-        buttonSalvar = (Button) findViewById(R.id.salvarPerfil);
-
-        pessoaNegocio = new PessoaNegocio(this);
-
+        inicializarVariaveis();
         pessoaLogada = sessaoUsuario.getPessoaLogada();
         mNome.setText(pessoaLogada.getNome());
         mTelefone.setText(pessoaLogada.getTelefone());
+        mTelefone.addTextChangedListener(Mascara.insert("(##)#####-####",mTelefone));
+        mData.addTextChangedListener(Mascara.insert("##/##/####", mData));
         String dataNascimentoFormatada = sdf.format(pessoaLogada.getDataNascimento());
         mData.setText(dataNascimentoFormatada);
-
         usuarioLogado = pessoaLogada.getUsuario();
         mEmail.setText(usuarioLogado.getEmail());
 
@@ -151,7 +149,7 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
         }
     }
 
-    public void inicializarCampos() {
+    public void inicializarVariaveis() {
         sdf = new SimpleDateFormat("dd/MM/yyyy");
         mNome = (EditText) findViewById(R.id.editTextEditarNome);
         mTelefone = (EditText) findViewById(R.id.editTextEditarTelefone);
@@ -161,6 +159,9 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
         mSenhaConfirm = (EditText) findViewById(R.id.editTextEditarConfirmacaoSenha);
         editTextAddress = (AutoCompleteTextView) findViewById(R.id.editTextEditarEndereco);
         sessaoUsuario = SessaoUsuario.getInstance();
+        image = (ImageView) findViewById(R.id.imageNew);
+        buttonSalvar = (Button) findViewById(R.id.salvarPerfil);
+        pessoaNegocio = new PessoaNegocio(this);
     }
 
 
@@ -174,7 +175,7 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
 
     }
 
-    public void salvar(Pessoa pessoa, Usuario usuario, String caminhoAvatar) {
+    public void salvar(Pessoa pessoa, Usuario usuario, String caminhoAvatar) throws ParseException {
 
         Boolean valido = true;
         String nome = mNome.getText().toString();
@@ -224,7 +225,8 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
             String realSenha = Criptografia.encryptPassword(senha);
             pessoa.setNome(nome);
             pessoa.setTelefone(telefone);
-            pessoa.setDataNascimento(new Date(dataNascimento));
+            Date data = sdf.parse(dataNascimento);
+            pessoa.setDataNascimento(data);
             pessoa.setCaminhoDoAvatar(caminhoAvatar);
             usuario.setEmail(email);
             usuario.setSenha(realSenha);
@@ -245,7 +247,7 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
         Toast.makeText(this, s, Toast.LENGTH_LONG).show();
     }
 
-    public void salvarPerfil(View view) {
+    public void salvarPerfil(View view) throws ParseException {
         salvar(pessoaLogada, usuarioLogado, caminhoAvatar);
     }
 
