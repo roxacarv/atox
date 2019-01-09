@@ -3,12 +3,14 @@ package com.atox.usuario.gui;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +27,6 @@ import com.atox.atoxlogs.AtoxLog;
 import com.atox.atoxlogs.AtoxMensagem;
 import com.atox.infra.negocio.Criptografia;
 import com.atox.infra.negocio.ValidaCadastro;
-import com.atox.infra.persistencia.Mascara;
 import com.atox.navegacao.activities.MenuActivity;
 import com.atox.usuario.dominio.Endereco;
 import com.atox.usuario.dominio.Pessoa;
@@ -40,8 +41,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -49,7 +48,7 @@ import java.util.Locale;
 
 public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCompleteListener {
 
-    private DateFormat sdf;
+    private SimpleDateFormat sdf;
     private EditText mNome;
     private EditText mTelefone;
     private EditText mData;
@@ -70,14 +69,18 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_perfil);
-        inicializarVariaveis();
+        inicializarCampos();
+        image = (ImageView) findViewById(R.id.imageNew);
+        buttonSalvar = (Button) findViewById(R.id.salvarPerfil);
+
+        pessoaNegocio = new PessoaNegocio(this);
+
         pessoaLogada = sessaoUsuario.getPessoaLogada();
         mNome.setText(pessoaLogada.getNome());
         mTelefone.setText(pessoaLogada.getTelefone());
-        mTelefone.addTextChangedListener(Mascara.insert("(##)#####-####",mTelefone));
-        mData.addTextChangedListener(Mascara.insert("##/##/####", mData));
         String dataNascimentoFormatada = sdf.format(pessoaLogada.getDataNascimento());
         mData.setText(dataNascimentoFormatada);
+
         usuarioLogado = pessoaLogada.getUsuario();
         mEmail.setText(usuarioLogado.getEmail());
 
@@ -131,14 +134,13 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
         if (resultCode == RESULT_OK) {
             Uri path = data.getData();
             try {
-                caminhoAvatar = path.toString();
-                Log.i("EDITAR_PERFIL", ":::caminho" + caminhoAvatar);
                 Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(path));
                 RoundedBitmapDrawable roundDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
                 roundDrawable.setCircular(true);
                 image.setImageDrawable(roundDrawable);
-                //image.setImageBitmap(bitmap);
                 salvarParaMemoriaInterna(bitmap);
+                caminhoAvatar = getRealPathFromURI(path);
+                pessoaLogada.setCaminhoDoAvatar(caminhoAvatar);
             } catch (IOException e) {
                 log.novoRegistro(usuarioLogado.getUid(),
                         AtoxMensagem.ACAO_BUSCAR_IMAGEM_NA_MEMORIA_INTERNA,
@@ -149,7 +151,7 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
         }
     }
 
-    public void inicializarVariaveis() {
+    public void inicializarCampos() {
         sdf = new SimpleDateFormat("dd/MM/yyyy");
         mNome = (EditText) findViewById(R.id.editTextEditarNome);
         mTelefone = (EditText) findViewById(R.id.editTextEditarTelefone);
@@ -159,9 +161,6 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
         mSenhaConfirm = (EditText) findViewById(R.id.editTextEditarConfirmacaoSenha);
         editTextAddress = (AutoCompleteTextView) findViewById(R.id.editTextEditarEndereco);
         sessaoUsuario = SessaoUsuario.getInstance();
-        image = (ImageView) findViewById(R.id.imageNew);
-        buttonSalvar = (Button) findViewById(R.id.salvarPerfil);
-        pessoaNegocio = new PessoaNegocio(this);
     }
 
 
@@ -175,7 +174,7 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
 
     }
 
-    public void salvar(Pessoa pessoa, Usuario usuario, String caminhoAvatar) throws ParseException {
+    public void salvar(Pessoa pessoa, Usuario usuario, String caminhoAvatar) {
 
         Boolean valido = true;
         String nome = mNome.getText().toString();
@@ -225,8 +224,7 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
             String realSenha = Criptografia.encryptPassword(senha);
             pessoa.setNome(nome);
             pessoa.setTelefone(telefone);
-            Date data = sdf.parse(dataNascimento);
-            pessoa.setDataNascimento(data);
+            pessoa.setDataNascimento(new Date(dataNascimento));
             pessoa.setCaminhoDoAvatar(caminhoAvatar);
             usuario.setEmail(email);
             usuario.setSenha(realSenha);
@@ -247,7 +245,7 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
         Toast.makeText(this, s, Toast.LENGTH_LONG).show();
     }
 
-    public void salvarPerfil(View view) throws ParseException {
+    public void salvarPerfil(View view) {
         salvar(pessoaLogada, usuarioLogado, caminhoAvatar);
     }
 
@@ -271,11 +269,17 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
         }
     }
 
-    private String salvarParaMemoriaInterna(Bitmap bitmapImage){
+    public String getRealPathFromURI(Uri uri) {
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+        return cursor.getString(idx);
+    }
+
+    private String salvarParaMemoriaInterna(Bitmap bitmapImage) {
+
         ContextWrapper cw = new ContextWrapper(getApplicationContext());
-        // path to /data/data/yourapp/app_data/imageDir
         File diretorio = cw.getDir("imageDir", Context.MODE_PRIVATE);
-        // Create imageDir
         File caminhoMemoria = new File(diretorio,"profile.jpg");
 
         FileOutputStream fos = null;
@@ -283,7 +287,6 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
             fos = new FileOutputStream(caminhoMemoria);
             // Use the compress method on the BitMap object to write image to the OutputStream
             bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
-            pessoaLogada.setCaminhoDoAvatar(diretorio.getAbsolutePath());
         } catch (Exception e) {
             log = new AtoxLog();
             log.novoRegistro(usuarioLogado.getUid(),
