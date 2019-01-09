@@ -31,30 +31,24 @@ public class MenuActivity extends AppCompatActivity implements BottomNavigationV
         sessaoUsuario = SessaoUsuario.getInstance();
     }
 
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment = null;
-
         switch (item.getItemId()) {
             case R.id.navigation_inicio:
                 fragment = new InicioFragment();
                 break;
-
             case R.id.navigation_produtores:
                 fragment = new ProdutoresFragment();
                 break;
-
             case R.id.navigation_perfil:
                 fragment = new PerfilFragment();
                 break;
         }
-
         return loadFragment(fragment);
     }
 
     private boolean loadFragment(Fragment fragment) {
-        //switching fragment
         if (fragment != null) {
             getSupportFragmentManager()
                     .beginTransaction()

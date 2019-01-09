@@ -26,6 +26,7 @@ import com.atox.R;
 import com.atox.atoxlogs.AtoxLog;
 import com.atox.atoxlogs.AtoxMensagem;
 import com.atox.infra.negocio.Criptografia;
+import com.atox.infra.negocio.ImageSaver;
 import com.atox.infra.negocio.ValidaCadastro;
 import com.atox.navegacao.activities.MenuActivity;
 import com.atox.usuario.dominio.Endereco;
@@ -72,18 +73,14 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
         inicializarCampos();
         image = (ImageView) findViewById(R.id.imageNew);
         buttonSalvar = (Button) findViewById(R.id.salvarPerfil);
-
         pessoaNegocio = new PessoaNegocio(this);
-
         pessoaLogada = sessaoUsuario.getPessoaLogada();
         mNome.setText(pessoaLogada.getNome());
         mTelefone.setText(pessoaLogada.getTelefone());
         String dataNascimentoFormatada = sdf.format(pessoaLogada.getDataNascimento());
         mData.setText(dataNascimentoFormatada);
-
         usuarioLogado = pessoaLogada.getUsuario();
         mEmail.setText(usuarioLogado.getEmail());
-
         log = new AtoxLog();
     }
 
@@ -104,7 +101,6 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
         Geocoder geocoder;
         List addresses;
         geocoder = new Geocoder(this, Locale.getDefault());
-
         try {
             addresses = geocoder.getFromLocationName(completeAddress, 1);
             return (Address) addresses.get(0);
@@ -114,7 +110,6 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
                     "Um erro ocorreu na requisição da API da Google: " + e.getMessage());
             log.empurraRegistrosPraFila();
         }
-
         return null;
     }
 
@@ -138,9 +133,10 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
                 RoundedBitmapDrawable roundDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
                 roundDrawable.setCircular(true);
                 image.setImageDrawable(roundDrawable);
-                salvarParaMemoriaInterna(bitmap);
-                caminhoAvatar = getRealPathFromURI(path);
-                pessoaLogada.setCaminhoDoAvatar(caminhoAvatar);
+                new ImageSaver(getApplicationContext()).
+                        setFileName("profile.png").
+                        setDirectoryName("images").
+                        save(bitmap);
             } catch (IOException e) {
                 log.novoRegistro(usuarioLogado.getUid(),
                         AtoxMensagem.ACAO_BUSCAR_IMAGEM_NA_MEMORIA_INTERNA,
@@ -183,15 +179,12 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
         String email = mEmail.getText().toString();
         String senha = mSenha.getText().toString();
         String confirmSenha = mSenhaConfirm.getText().toString();
-
         ValidaCadastro validaCadastro = new ValidaCadastro();
-
         if (validaCadastro.isCampoVazio(nome)) {
             mNome.requestFocus();
             mNome.setError(getString(R.string.error_invalid_name));
             valido = false;
         }
-
         if (validaCadastro.isCampoVazio(telefone)) {
             mTelefone.requestFocus();
             mTelefone.setError(getString(R.string.error_invalid_tel));
@@ -217,9 +210,7 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
             mSenhaConfirm.setError(getString(R.string.error_invalid_password));
             valido = false;
         }
-
         Long resultadoDaAtualizacao = null;
-
         if (valido) {
             String realSenha = Criptografia.encryptPassword(senha);
             pessoa.setNome(nome);
@@ -231,7 +222,6 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
             pessoaNegocio.setPessoa(pessoa);
             resultadoDaAtualizacao = pessoaNegocio.atualizar();
         }
-
         if(resultadoDaAtualizacao != null) {
             sessaoUsuario.setPessoaLogada(pessoa);
             sessaoUsuario.setUsuarioLogado(usuario);
@@ -253,60 +243,4 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
         Intent homeScrenn = new Intent(EditarPerfilActivity.this, MenuActivity.class);
         startActivity(homeScrenn);
     }
-
-    private void carregarImagem(String path){
-        try {
-            File arquivoDaImagem = new File(path, "profile.jpg");
-            Bitmap arquivoEmBitmap = BitmapFactory.decodeStream(new FileInputStream(arquivoDaImagem));
-            image.setImageBitmap(arquivoEmBitmap); // it will display the image in imageview
-            String caminhoDaImagem = salvarParaMemoriaInterna(arquivoEmBitmap); // store this file_path in db
-        } catch (FileNotFoundException e) {
-            log.novoRegistro(usuarioLogado.getUid(),
-                    AtoxMensagem.ACAO_SALVAR_IMAGEM_NA_MEMORIA_INTERNA,
-                    AtoxMensagem.ERRO_AO_ACESSAR_A_MEMORIA_INTERNA,
-                    "Não foi possível salvar a imagem na memória interna: " + e.getMessage());
-            log.empurraRegistrosPraFila();
-        }
-    }
-
-    public String getRealPathFromURI(Uri uri) {
-        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-        cursor.moveToFirst();
-        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-        return cursor.getString(idx);
-    }
-
-    private String salvarParaMemoriaInterna(Bitmap bitmapImage) {
-
-        ContextWrapper cw = new ContextWrapper(getApplicationContext());
-        File diretorio = cw.getDir("imageDir", Context.MODE_PRIVATE);
-        File caminhoMemoria = new File(diretorio,"profile.jpg");
-
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(caminhoMemoria);
-            // Use the compress method on the BitMap object to write image to the OutputStream
-            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
-        } catch (Exception e) {
-            log = new AtoxLog();
-            log.novoRegistro(usuarioLogado.getUid(),
-                    AtoxMensagem.ACAO_SALVAR_IMAGEM_NA_MEMORIA_INTERNA,
-                    AtoxMensagem.ERRO_AO_ACESSAR_A_MEMORIA_INTERNA,
-                    "Não foi possível salvar a imagem na memória interna: " + e.getMessage());
-            log.empurraRegistrosPraFila();
-        } finally {
-            try {
-                fos.close();
-            } catch (IOException e) {
-                log = new AtoxLog();
-                log.novoRegistro(usuarioLogado.getUid(),
-                        AtoxMensagem.ACAO_SALVAR_IMAGEM_NA_MEMORIA_INTERNA,
-                        AtoxMensagem.ERRO_AO_ACESSAR_A_MEMORIA_INTERNA,
-                        "Não foi possível fechar o FileOutputStream: " + e.getMessage());
-                log.empurraRegistrosPraFila();
-            }
-        }
-        return caminhoMemoria.getAbsolutePath();
-    }
-
 }

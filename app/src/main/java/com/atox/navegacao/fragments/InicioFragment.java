@@ -32,7 +32,6 @@ public class InicioFragment extends Fragment {
     private static final String TAG = InicioFragment.class.getName();
     private SessaoUsuario sessaoUsuario;
     private TextView textViewNomeUsuario;
-
     // configurando a recycle view pra feirinhas
     private FeirinhaCustomAdapter fAdapter;
     private RecyclerView customRecycleViewFeirinha;
@@ -41,41 +40,29 @@ public class InicioFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_inicio, container, false);
         sessaoUsuario = SessaoUsuario.getInstance();
-
         textViewNomeUsuario = (TextView) view.findViewById(R.id.textViewMsgBoasVindas);
         customRecycleViewFeirinha = (RecyclerView) view.findViewById(R.id.customRecyclerViewFeirinha);
-
         Pessoa pessoaLogada = sessaoUsuario.getPessoaLogada();
-
         if (pessoaLogada != null){
             textViewNomeUsuario.setText(view.getContext().getResources().getString(R.string.texto_bemvindo) +
                     " " +
                     pessoaLogada.getNome());
         }
-
         /*Create handle for the RetrofitInstance interface*/
         ObtemServicoDados service = RetrofitInstanciaCliente.getRetrofitInstance().create(ObtemServicoDados.class);
-
         Call<List<Feirinha>> call = service.getAllFeirinhas();
         call.enqueue(new Callback<List<Feirinha>>() {
-
             @Override
             public void onResponse(Call<List<Feirinha>> call, Response<List<Feirinha>> response) {
                 generateDataList(response.body(),customRecycleViewFeirinha, getContext(), fAdapter);
             }
-
             @Override
             public void onFailure(Call<List<Feirinha>> call, Throwable t) {
                 Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
-
         // Inflate the layout for this fragment
         return view;
     }

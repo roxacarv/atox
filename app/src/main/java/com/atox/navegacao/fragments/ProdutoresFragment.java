@@ -36,27 +36,27 @@ public class ProdutoresFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_produtores, container, false);
         customRecyclerViewProdutor = (RecyclerView) view.findViewById(R.id.customRecyclerViewProdutor);
         produtorNegocio = new ProdutorNegocio(this.getActivity());
-
         /*Create handle for the RetrofitInstance interface*/
-        ObtemServicoDados service = RetrofitInstanciaCliente.getRetrofitInstance().create(ObtemServicoDados.class);
+        List<Produtor> listaDeProdutores = produtorNegocio.buscarTodosProdutores();
+        if(listaDeProdutores == null) {
+            ObtemServicoDados service = RetrofitInstanciaCliente.getRetrofitInstance().create(ObtemServicoDados.class);
+            Call<List<Produtor>> call = service.getAllProdutores();
+            call.enqueue(new Callback<List<Produtor>>() {
+                @Override
+                public void onResponse(Call<List<Produtor>> call, Response<List<Produtor>> response) {
+                    generateDataList(response.body(), customRecyclerViewProdutor, getContext(), pAdapter);
+                }
 
-        Call<List<Produtor>> call = service.getAllProdutores();
-        call.enqueue(new Callback<List<Produtor>>() {
-
-            @Override
-            public void onResponse(Call<List<Produtor>> call, Response<List<Produtor>> response) {
-                generateDataList(response.body(),customRecyclerViewProdutor, getContext(), pAdapter);
-            }
-
-            @Override
-            public void onFailure(Call<List<Produtor>> call, Throwable t) {
-                Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-            }
-        });
-
+                @Override
+                public void onFailure(Call<List<Produtor>> call, Throwable t) {
+                    Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            generateDataList(listaDeProdutores, customRecyclerViewProdutor, getContext(), pAdapter);
+        }
         return view;
     }
-
     /*Method to generate List of data using RecyclerView with custom adapter*/
     private void generateDataList(List<Produtor> photoList, RecyclerView recycleViewProdutor, Context context, ProdutorCustomAdapter pAdapter) {
         List<Long> idDeProdutores = produtorNegocio.inserirProdutores(photoList);
@@ -66,7 +66,4 @@ public class ProdutoresFragment extends Fragment {
         customRecyclerViewProdutor.setLayoutManager(layoutManager);
         customRecyclerViewProdutor.setAdapter(pAdapter);
     }
-
-
-
 }

@@ -57,7 +57,6 @@ public class RegistroActivity extends AppCompatActivity {
         mSenhaConfirm.setError(null);
         mNome.setError(null);
         mData.setError(null);
-
         String telefone         = mTelefone.getText().toString();
         String senha            = mSenha.getText().toString();
         String confirmSenha     = mSenhaConfirm.getText().toString();
@@ -65,15 +64,12 @@ public class RegistroActivity extends AppCompatActivity {
         String dataNascimento         = mData.getText().toString();
         String email            = mEmail.getText().toString();
         View focusView = null;
-
         ValidaCadastro validaCadastro = new ValidaCadastro();
-
         if(validaCadastro.isCampoVazio(nome)) {
             mNome.requestFocus();
             mNome.setError(getString(R.string.error_invalid_name));
             valido = false;
         }
-
         if(validaCadastro.isCampoVazio(telefone)) {
             mTelefone.requestFocus();
             mTelefone.setError(getString(R.string.error_invalid_tel));
@@ -124,10 +120,8 @@ public class RegistroActivity extends AppCompatActivity {
     }
 
     public void backToLoginScreen(View view){
-
         Intent loginScreen = new Intent(RegistroActivity.this, LoginActivity.class);
         startActivity(loginScreen);
-
     }
 
     public void goToEnderecoScreen(View view) {

@@ -30,7 +30,6 @@ public class ValidaCadastro {
     }
 
     public boolean isDataNascimento (String data){
-
         return (FormataData.dataExiste(data) && FormataData.dataMenorOuIgualQueAtual(data)
                 && data.length() == TAMANHO_DATA);
     }

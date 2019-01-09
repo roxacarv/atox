@@ -10,8 +10,6 @@ import java.util.List;
 
 @Dao
 public interface ProdutorDaoRoom extends DaoBase<Produtor> {
-
     @Query("SELECT * FROM produtor")
     List<Produtor> getProdutores();
-
 }

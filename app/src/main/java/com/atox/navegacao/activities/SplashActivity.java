@@ -28,9 +28,7 @@ public class SplashActivity extends AppCompatActivity {
         sessaoNegocio = new SessaoNegocio(this);
         //TODO verifica se já existe usuário logado.
         Pessoa pessoaJaLogada = null;
-
         pessoaJaLogada = sessaoNegocio.restaurarSessao();
-
         if (pessoaJaLogada != null){
             alert("Seja bem vindo de volta");
             goToHomeScreen();
@@ -38,19 +36,6 @@ public class SplashActivity extends AppCompatActivity {
             alert("Seja bem vindo");
             goToLoginScreen();
         }
-
-        /*setContentView(R.layout.activity_splash);
-
-        handler=new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent=new Intent(SplashActivity.this,OnboardingActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        },2000);*/
-
     }
 
     protected void goToHomeScreen() {

@@ -6,7 +6,6 @@ public enum MetodoPagamento {
     CREDITO("Crédito"),
     DEBITO("Débito");
 
-
     private String descricao;
 
     private MetodoPagamento(String descricao){

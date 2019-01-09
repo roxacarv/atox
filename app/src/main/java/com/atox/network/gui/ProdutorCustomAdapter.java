@@ -22,23 +22,18 @@ public class ProdutorCustomAdapter extends RecyclerView.Adapter<ProdutorCustomAd
     }
 
     static class ProdutorViewHolder extends RecyclerView.ViewHolder {
-
         public final View mView;
-
         TextView txtName;
         TextView txtCidade;
         TextView txtCooperativa;
         TextView txtEmail;
-
         ProdutorViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
-
             txtName = mView.findViewById(R.id.textViewNomeProdutor);
             txtCidade = mView.findViewById(R.id.textViewCidadeProdutor);
             txtCooperativa = mView.findViewById(R.id.textViewCooperativa);
             txtEmail = mView.findViewById(R.id.textViewEmailProdutor);
-
         }
     }
 
@@ -51,12 +46,10 @@ public class ProdutorCustomAdapter extends RecyclerView.Adapter<ProdutorCustomAd
 
     @Override
     public void onBindViewHolder(ProdutorViewHolder holder, int position) {
-
         holder.txtName.setText(dataList.get(position).getNome().toUpperCase());
         holder.txtCidade.setText(dataList.get(position).getCidade());
         holder.txtCooperativa.setText(dataList.get(position).getCooperativa().toLowerCase());
         holder.txtEmail.setText(dataList.get(position).getEmail());
-
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.atox.lugar.dominio;
 
 public enum Horario {
-
     ZERO_HORA("00:00"),
     UMA_HORA("01:00"),
     DUAS_HORAS("02:00"),
@@ -26,7 +25,6 @@ public enum Horario {
     VINTE_UMA_HORAS("21:00"),
     VINTE_DUAS_HORAS("22:00"),
     VINTE_TRES_HORAS("23:00");
-
 
     private Horario(String descricao) {
         this.descricao = descricao;

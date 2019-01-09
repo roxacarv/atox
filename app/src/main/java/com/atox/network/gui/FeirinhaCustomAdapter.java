@@ -25,21 +25,15 @@ public class FeirinhaCustomAdapter extends RecyclerView.Adapter<FeirinhaCustomAd
     static class FeirinhaViewHolder extends RecyclerView.ViewHolder {
 
         public final View mView;
-
         TextView txtNomeFeirinha;
         TextView txtEndereco;
         TextView txtDia;
-
         FeirinhaViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
-
             txtNomeFeirinha = mView.findViewById(R.id.textViewNomeFeirinha);
             txtEndereco = mView.findViewById(R.id.textViewLocalFeirinha);
             txtDia = mView.findViewById(R.id.textViewHorarioFuncionamento);
-
-
-
         }
     }
 
@@ -48,16 +42,11 @@ public class FeirinhaCustomAdapter extends RecyclerView.Adapter<FeirinhaCustomAd
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.card_feirinha, parent, false);
         return  new FeirinhaViewHolder(view);
-
     }
 
     @Override
     public void onBindViewHolder(FeirinhaViewHolder holder, int position){
-
-
         Feirinha objetoFeirinha = listaFeirinhas.get(position);
-
-
         holder.txtNomeFeirinha.setText(objetoFeirinha.getNome());
         holder.txtEndereco.setText(objetoFeirinha.getEndereco());
         holder.txtDia.setText(objetoFeirinha.getDia()+

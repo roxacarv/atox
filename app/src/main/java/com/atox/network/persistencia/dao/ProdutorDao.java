@@ -21,7 +21,6 @@ public class ProdutorDao extends AndroidViewModel {
     {
         super(application);
         bancoDeDados = BDHelper.getBancoDeDados(this.getApplication());
-
     }
 
     public List<Long> inserirProdutores(final Produtor... produtores) throws ExecutionException, InterruptedException {
@@ -35,7 +34,6 @@ public class ProdutorDao extends AndroidViewModel {
                 return idDosProdutores;
             }
         };
-
         ExecutorService executor = new ScheduledThreadPoolExecutor(1);
         Future<List<Long>> future = executor.submit(call);
         return future.get();
@@ -52,7 +50,6 @@ public class ProdutorDao extends AndroidViewModel {
                 return produtores;
             }
         };
-
         ExecutorService executor = new ScheduledThreadPoolExecutor(1);
         Future<List<Produtor>> future = executor.submit(call);
         return future.get();

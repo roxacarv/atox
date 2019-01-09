@@ -39,29 +39,21 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void goToRegisterScreen(View view) {
-
         Intent registerScreen = new Intent(LoginActivity.this, RegistroActivity.class);
         startActivity(registerScreen);
-
     }
 
     public void goToHomeScreen(View view) {
-
         Intent homeScrenn = new Intent(LoginActivity.this, MenuActivity.class);
         startActivity(homeScrenn);
-
     }
 
     public void logar(View view) throws ExecutionException, InterruptedException, AtoxException {
-
         Usuario usuario = null;
         Pessoa pessoa = null;
-
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
-
         boolean camposValidos = validarCamposLoginNaGui(email, password);
-
         if (camposValidos) {
             usuario = pessoaNegocio.efetuarLogin(email, password);
             if (usuario == null) {
@@ -76,7 +68,6 @@ public class LoginActivity extends AppCompatActivity {
                 alert(getString(R.string.act_successful_login));
             }
         }
-
         if(pessoa != null) {
             sessaoNegocio.iniciarNovaSessao(pessoa);
             goToHomeScreen(view);
@@ -85,7 +76,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private boolean validarCamposLoginNaGui(String email, String password)  {
-
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
@@ -93,7 +83,6 @@ public class LoginActivity extends AppCompatActivity {
         // Store values at the time of the login attempt
         boolean cancel = false;
         View focusView = null;
-
         // Check for a valid password, if the user entered one.
         if (validaCadastro.isCampoVazio(password)) {
             mPasswordView.setError(getString(R.string.error_field_required));
@@ -105,7 +94,6 @@ public class LoginActivity extends AppCompatActivity {
             focusView = mPasswordView;
             cancel = true;
         }
-
         // Check for a valid email address.
         if (validaCadastro.isCampoVazio(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
@@ -116,7 +104,6 @@ public class LoginActivity extends AppCompatActivity {
             focusView = mEmailView;
             cancel = true;
         }
-
         if (cancel) {
             focusView.requestFocus();
             alert("Email ou senha inválido");

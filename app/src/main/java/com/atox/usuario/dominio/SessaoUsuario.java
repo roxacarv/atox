@@ -27,7 +27,6 @@ public class SessaoUsuario {
         return INSTANCE;
     }
 
-
     public long getSid() {
         return sid;
     }

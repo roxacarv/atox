@@ -39,7 +39,6 @@ public class FormataData {
         novaData.append(data.substring(NUMDATA1));
         novaData.append(data.substring(NUMDATA2, NUMDATA3));
         novaData.append(data.substring(NUMDATA4, NUMDATA5));
-
         return novaData.toString();
     }
 
@@ -53,7 +52,6 @@ public class FormataData {
         SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat(DATA_NASC_BANCO);
         SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat(DATA_COMUM_GUI);
         simpleDateFormat1.setLenient(false);
-
         try{
             Date date = simpleDateFormat1.parse(stringData);
             return simpleDateFormat2.format(date);
@@ -93,7 +91,6 @@ public class FormataData {
     public static boolean dataExiste(String data){
         SimpleDateFormat dataFormatada = new SimpleDateFormat (DATA_COMUM_GUI);
         dataFormatada.setLenient (false);
-
         //Testa no formato dd/MM/yyyy
         try {
             dataFormatada.parse(data);
@@ -101,10 +98,8 @@ public class FormataData {
         } catch (Exception e) {
             Log.i("FormataData", e.getMessage());
         }
-
         dataFormatada = new SimpleDateFormat (DATA_COMUM_BANCO);
         dataFormatada.setLenient (false);
-
         //Testa no formato yyyyMMdd
         try {
             dataFormatada.parse(data);
@@ -112,7 +107,6 @@ public class FormataData {
         } catch (Exception e) {
             Log.i("FormataData", e.getMessage());
         }
-
         return false;
     }
 
@@ -136,7 +130,6 @@ public class FormataData {
         } catch (Exception e) {
             Log.i("FormataData", e.getMessage());
         }
-
         dataFormatada = new SimpleDateFormat (DATA_COMUM_BANCO);
         dataFormatada.setLenient (false);
         //Testa no formato yyyyMMdd
@@ -150,7 +143,6 @@ public class FormataData {
         } catch (Exception e) {
             Log.i("FormataData", e.getMessage());
         }
-
         return false;
     }
 
@@ -161,7 +153,6 @@ public class FormataData {
      */
 
     public static String tempoParaMostrarEmPost(String data){
-
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat (DATA_POST_BANCO);
         Date datainicio = new Date();
         Date datafim = new Date();
@@ -170,10 +161,8 @@ public class FormataData {
         } catch (ParseException e) {
             Log.d("tempoParaMostrarEmPost", e.getMessage());
         }
-
         long diferenca = datafim.getTime() - datainicio.getTime();
         String tempo;
-
         if(diferenca < MINUTO){
             tempo = Long.toString(diferenca/ SEGUNDO);
             tempo = "Há " + tempo + (tempo.equals("1") ? " segundo":" segundos");

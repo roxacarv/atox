@@ -45,9 +45,7 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
         editTextAddress =  (AutoCompleteTextView) findViewById(R.id.editTextAddress);
         dadosPessoais = getIntent().getExtras();
         pessoaNegocio = new PessoaNegocio(this);
-
         pessoa = pessoaNegocio.recuperarPessoaPorId(dadosPessoais.getLong("ID_USUARIO"));
-
     }
 
     public void backToRegistroScreen(View view){
@@ -83,7 +81,6 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
         Geocoder geocoder;
         List addresses;
         geocoder = new Geocoder(this, Locale.getDefault());
-
         try {
             addresses = geocoder.getFromLocationName(completeAddress, 1);
             return (Address) addresses.get(0);
@@ -94,7 +91,6 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
                     "Um erro ocorreu na requisição da API da Google: " + e.getMessage());
             log.empurraRegistrosPraFila();
         }
-
         return null;
     }
 

@@ -29,7 +29,6 @@ public class Usuario {
     @Ignore
     private List<Lugar> lugares;
 
-
     public String getEmail() {
         return email;
     }
