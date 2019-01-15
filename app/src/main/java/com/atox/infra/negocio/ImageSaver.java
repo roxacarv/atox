@@ -7,6 +7,9 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.atox.atoxlogs.AtoxException;
+import com.atox.atoxlogs.AtoxLog;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -21,6 +24,7 @@ public class ImageSaver {
     private String fileName = "image.png";
     private Context context;
     private boolean external;
+    private AtoxLog atoxLog;
 
     public ImageSaver(Context context) {
         this.context = context;
@@ -55,14 +59,14 @@ public class ImageSaver {
             fileOutputStream = new FileOutputStream(createFile());
             bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
         } catch (Exception e) {
-            e.printStackTrace();
+            atoxLog = new AtoxLog();
         } finally {
             try {
                 if (fileOutputStream != null) {
                     fileOutputStream.close();
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                atoxLog = new AtoxLog();
             }
         }
     }
@@ -105,14 +109,14 @@ public class ImageSaver {
             inputStream = new FileInputStream(createFile());
             return BitmapFactory.decodeStream(inputStream);
         } catch (Exception e) {
-            e.printStackTrace();
+            atoxLog = new AtoxLog();
         } finally {
             try {
                 if (inputStream != null) {
                     inputStream.close();
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                atoxLog = new AtoxLog();
             }
         }
         return null;

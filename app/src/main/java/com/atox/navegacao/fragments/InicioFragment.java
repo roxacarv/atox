@@ -1,10 +1,20 @@
 package com.atox.navegacao.fragments;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.atox.R;
+import com.atox.navegacao.adapters.PlacesRecyclerViewAdapter;
 import com.atox.network.dominio.Feirinha;
 import com.atox.network.dominio.Produtor;
 import com.atox.network.gui.FeirinhaCustomAdapter;
@@ -20,7 +31,16 @@ import com.atox.network.infra.ObtemServicoDados;
 import com.atox.network.infra.RetrofitInstanciaCliente;
 import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.SessaoUsuario;
+import com.google.android.gms.location.places.GeoDataClient;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceDetectionClient;
+import com.google.android.gms.location.places.PlaceLikelihood;
+import com.google.android.gms.location.places.PlaceLikelihoodBufferResponse;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -37,6 +57,15 @@ public class InicioFragment extends Fragment {
     private RecyclerView customRecycleViewFeirinha;
 
 
+    // variaveis para configurar o lugares proximos
+    private static final int LOC_REQ_CODE = 1;
+    private List<Integer> placeTypes;
+    protected GeoDataClient geoDataClient;
+    protected PlaceDetectionClient placeDetectionClient;
+    protected RecyclerView customRecyclerViewOrganicNearbyPlaces;
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,6 +73,9 @@ public class InicioFragment extends Fragment {
         sessaoUsuario = SessaoUsuario.getInstance();
         textViewNomeUsuario = (TextView) view.findViewById(R.id.textViewMsgBoasVindas);
         customRecycleViewFeirinha = (RecyclerView) view.findViewById(R.id.customRecyclerViewFeirinha);
+        // criando a recycler view que ira mostrar as coisas
+        customRecyclerViewOrganicNearbyPlaces = (RecyclerView) view.findViewById(R.id.customRecyclerViewOrganicNearbyPlaces);
+
         Pessoa pessoaLogada = sessaoUsuario.getPessoaLogada();
         if (pessoaLogada != null){
             textViewNomeUsuario.setText(view.getContext().getResources().getString(R.string.texto_bemvindo) +
@@ -63,6 +95,20 @@ public class InicioFragment extends Fragment {
                 Toast.makeText(getContext(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
             }
         });
+
+        // configurações do nearby places
+        LinearLayoutManager recyclerLayoutManager =
+                new LinearLayoutManager(view.getContext());
+        customRecyclerViewOrganicNearbyPlaces.setLayoutManager(recyclerLayoutManager);
+
+        DividerItemDecoration dividerItemDecoration =
+                new DividerItemDecoration(customRecyclerViewOrganicNearbyPlaces.getContext(),
+                        recyclerLayoutManager.getOrientation());
+        customRecyclerViewOrganicNearbyPlaces.addItemDecoration(dividerItemDecoration);
+
+        placeDetectionClient = Places.getPlaceDetectionClient(view.getContext(), null);
+
+        getCurrentPlaceItems();
         // Inflate the layout for this fragment
         return view;
     }
@@ -71,9 +117,74 @@ public class InicioFragment extends Fragment {
     private void generateDataList(List<Feirinha> listaFeirinhas, RecyclerView recycleViewProdutor, Context context, FeirinhaCustomAdapter fAdapter) {
         customRecycleViewFeirinha = recycleViewProdutor;
         fAdapter = new FeirinhaCustomAdapter(context, listaFeirinhas);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         customRecycleViewFeirinha.setLayoutManager(layoutManager);
         customRecycleViewFeirinha.setAdapter(fAdapter);
+    }
+
+
+    // metodos de acesso aos places
+    private void getCurrentPlaceItems() {
+        if (isLocationAccessPermitted()) {
+            getCurrentPlaceData();
+        } else {
+            requestLocationAccessPermission();
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private void getCurrentPlaceData() {
+        Task<PlaceLikelihoodBufferResponse> placeResult = placeDetectionClient.
+                getCurrentPlace(null);
+        placeResult.addOnCompleteListener(new OnCompleteListener<PlaceLikelihoodBufferResponse>() {
+            @Override
+            public void onComplete(@NonNull Task<PlaceLikelihoodBufferResponse> task) {
+                Log.d(TAG, "current location places info");
+                List<Place> placesList = new ArrayList<Place>();
+                PlaceLikelihoodBufferResponse likelyPlaces = task.getResult();
+                for (PlaceLikelihood placeLikelihood : likelyPlaces) {
+                    placesList.add(placeLikelihood.getPlace().freeze());
+                }
+                likelyPlaces.release();
+
+                List<Place> finalPlaces = new ArrayList<>();
+
+                for(Place location : placesList) {
+                    placeTypes = location.getPlaceTypes();
+                    if(placeTypes.contains(Place.TYPE_RESTAURANT) || placeTypes.contains(Place.TYPE_GROCERY_OR_SUPERMARKET)) {
+                        finalPlaces.add(location);
+                    }
+                }
+
+                PlacesRecyclerViewAdapter recyclerViewAdapter = new
+                        PlacesRecyclerViewAdapter(finalPlaces, getContext());
+                customRecyclerViewOrganicNearbyPlaces.setAdapter(recyclerViewAdapter);
+            }
+        });
+    }
+
+    public boolean isLocationAccessPermitted() {
+        if (ContextCompat.checkSelfPermission(getContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public void requestLocationAccessPermission() {
+        ActivityCompat.requestPermissions((Activity) getContext(),
+                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                LOC_REQ_CODE);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == LOC_REQ_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                getCurrentPlaceData();
+            }
+        }
     }
 
 
