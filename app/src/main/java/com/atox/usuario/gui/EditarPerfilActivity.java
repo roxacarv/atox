@@ -1,20 +1,15 @@
 package com.atox.usuario.gui;
 
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -25,8 +20,8 @@ import android.widget.Toast;
 import com.atox.R;
 import com.atox.atoxlogs.AtoxLog;
 import com.atox.atoxlogs.AtoxMensagem;
+import com.atox.infra.negocio.ArmazenarImagem;
 import com.atox.infra.negocio.Criptografia;
-import com.atox.infra.negocio.ImageSaver;
 import com.atox.infra.negocio.ValidaCadastro;
 import com.atox.navegacao.activities.MenuActivity;
 import com.atox.usuario.dominio.Endereco;
@@ -37,10 +32,6 @@ import com.atox.usuario.negocio.PessoaNegocio;
 import com.google.android.gms.location.places.Place;
 import com.shishank.autocompletelocationview.interfaces.OnQueryCompleteListener;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -133,10 +124,10 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
                 RoundedBitmapDrawable roundDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
                 roundDrawable.setCircular(true);
                 image.setImageDrawable(roundDrawable);
-                new ImageSaver(getApplicationContext()).
-                        setFileName("profile.png").
-                        setDirectoryName("images").
-                        save(bitmap);
+                new ArmazenarImagem(getApplicationContext()).
+                        setNomeArquivo("profile.png").
+                        setNomeDiretorio("images").
+                        salvar(bitmap);
             } catch (IOException e) {
                 log.novoRegistro(usuarioLogado.getUid(),
                         AtoxMensagem.ACAO_BUSCAR_IMAGEM_NA_MEMORIA_INTERNA,

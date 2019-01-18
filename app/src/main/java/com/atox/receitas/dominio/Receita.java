@@ -3,38 +3,27 @@ package com.atox.receitas.dominio;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 import com.atox.usuario.dominio.Usuario;
 
+import java.util.List;
+
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
-@Entity(tableName = "receita", indices = {@Index("usuario_id")},
-        foreignKeys = @ForeignKey(entity = Usuario.class,
-                                  parentColumns = "uid",
-                                  childColumns = "usuario_id",
-                                  onDelete = CASCADE))
-
+@Entity(tableName = "receita")
 public class Receita {
 
     @PrimaryKey(autoGenerate = true)
     private Long rid;
 
-    @ColumnInfo(name = "usuario_id")
-    private Long usuarioId;
-
     @ColumnInfo(name = "nome_receita")
     private String nome;
 
-    @ColumnInfo(name = "ingredientes")
-    private String ingredientes;
-
-    @ColumnInfo(name = "modo_de_preparo")
-    private String modoDePreparo;
-
-    @ColumnInfo(name = "outras_informacoes")
-    private String outrasInformacoes;
+    @Ignore
+    private List<SecaoReceita> secoes;
 
     public Long getRid() {
         return rid;
@@ -52,35 +41,11 @@ public class Receita {
         this.nome = nome;
     }
 
-    public String getIngredientes() {
-        return ingredientes;
+    public List<SecaoReceita> getSecoes() {
+        return secoes;
     }
 
-    public void setIngredientes(String ingredientes) {
-        this.ingredientes = ingredientes;
-    }
-
-    public String getModoDePreparo() {
-        return modoDePreparo;
-    }
-
-    public void setModoDePreparo(String modoDePreparo) {
-        this.modoDePreparo = modoDePreparo;
-    }
-
-    public String getOutrasInformacoes() {
-        return outrasInformacoes;
-    }
-
-    public void setOutrasInformacoes(String outrasInformacoes) {
-        this.outrasInformacoes = outrasInformacoes;
-    }
-
-    public Long getUsuarioId() {
-        return usuarioId;
-    }
-
-    public void setUsuarioId(Long usuarioId) {
-        this.usuarioId = usuarioId;
+    public void setSecoes(List<SecaoReceita> secoes) {
+        this.secoes = secoes;
     }
 }

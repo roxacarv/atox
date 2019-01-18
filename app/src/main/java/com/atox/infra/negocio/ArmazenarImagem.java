@@ -7,7 +7,6 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.atox.atoxlogs.AtoxException;
 import com.atox.atoxlogs.AtoxLog;
 
 import java.io.File;
@@ -18,45 +17,45 @@ import java.io.IOException;
 /**
  * Created by Ilya Gazman on 3/6/2016.
  */
-public class ImageSaver {
+public class ArmazenarImagem {
 
-    private String directoryName = "images";
-    private String fileName = "image.png";
+    private String nomeDiretorio = "images";
+    private String nomeArquivo = "image.png";
     private Context context;
-    private boolean external;
+    private boolean externo;
     private AtoxLog atoxLog;
 
-    public ImageSaver(Context context) {
+    public ArmazenarImagem(Context context) {
         this.context = context;
     }
 
-    public ImageSaver setFileName(String fileName) {
-        this.fileName = fileName;
+    public ArmazenarImagem setNomeArquivo(String nomeArquivo) {
+        this.nomeArquivo = nomeArquivo;
         return this;
     }
 
-    public ImageSaver setExternal(boolean external) {
-        this.external = external;
+    public ArmazenarImagem setExterno(boolean externo) {
+        this.externo = externo;
         return this;
     }
 
-    public ImageSaver setDirectoryName(String directoryName) {
-        this.directoryName = directoryName;
+    public ArmazenarImagem setNomeDiretorio(String nomeDiretorio) {
+        this.nomeDiretorio = nomeDiretorio;
         return this;
     }
 
-    public String getDirectoryName() {
-        return directoryName;
+    public String getNomeDiretorio() {
+        return nomeDiretorio;
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getNomeArquivo() {
+        return nomeArquivo;
     }
 
-    public void save(Bitmap bitmapImage) {
+    public void salvar(Bitmap bitmapImage) {
         FileOutputStream fileOutputStream = null;
         try {
-            fileOutputStream = new FileOutputStream(createFile());
+            fileOutputStream = new FileOutputStream(criarArquivo());
             bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
         } catch (Exception e) {
             atoxLog = new AtoxLog();
@@ -72,19 +71,19 @@ public class ImageSaver {
     }
 
     @NonNull
-    private File createFile() {
-        File directory;
-        if(external){
-            directory = getAlbumStorageDir(directoryName);
+    private File criarArquivo() {
+        File diretorio;
+        if(externo){
+            diretorio = getAlbumStorageDir(nomeDiretorio);
         }
         else {
-            directory = context.getDir(directoryName, Context.MODE_PRIVATE);
+            diretorio = context.getDir(nomeDiretorio, Context.MODE_PRIVATE);
         }
-        if(!directory.exists() && !directory.mkdirs()){
-            Log.e("ImageSaver","Error creating directory " + directory);
+        if(!diretorio.exists() && !diretorio.mkdirs()){
+            Log.e("ArmazenarImagem","Erro ao criar diretório " + diretorio);
         }
 
-        return new File(directory, fileName);
+        return new File(diretorio, nomeArquivo);
     }
 
     private File getAlbumStorageDir(String albumName) {
@@ -92,21 +91,21 @@ public class ImageSaver {
                 Environment.DIRECTORY_PICTURES), albumName);
     }
 
-    public static boolean isExternalStorageWritable() {
+    public static boolean armazenamentoExternoPodeSerEscrito() {
         String state = Environment.getExternalStorageState();
         return Environment.MEDIA_MOUNTED.equals(state);
     }
 
-    public static boolean isExternalStorageReadable() {
+    public static boolean armazenamentoExternoPodeSerLido() {
         String state = Environment.getExternalStorageState();
         return Environment.MEDIA_MOUNTED.equals(state) ||
                 Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
     }
 
-    public Bitmap load() {
+    public Bitmap carregar() {
         FileInputStream inputStream = null;
         try {
-            inputStream = new FileInputStream(createFile());
+            inputStream = new FileInputStream(criarArquivo());
             return BitmapFactory.decodeStream(inputStream);
         } catch (Exception e) {
             atoxLog = new AtoxLog();

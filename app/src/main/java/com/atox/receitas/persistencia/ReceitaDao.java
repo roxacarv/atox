@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 
 import com.atox.infra.persistencia.BDHelper;
 import com.atox.receitas.dominio.Receita;
+import com.atox.receitas.dominio.SecaoReceita;
+import com.atox.receitas.dominio.UsuarioReceita;
 
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -39,7 +41,33 @@ public class ReceitaDao extends AndroidViewModel {
         return future.get();
     }
 
-    public Long atualizar(final Receita receita) throws ExecutionException, InterruptedException {
+    public List<Long> inserirSecaoReceita(final SecaoReceita... secoesReceita) throws ExecutionException, InterruptedException {
+        Callable<List<Long>> call = new Callable<List<Long>>() {
+            @Override
+            public List<Long> call() throws Exception {
+                List<Long> idDeSecaoReceita = bancoDeDados.secaoReceitaDaoRoom().inserirTudo(secoesReceita);
+                return idDeSecaoReceita;
+            }
+        };
+        ExecutorService executor = new ScheduledThreadPoolExecutor(1);
+        Future<List<Long>> future = executor.submit(call);
+        return future.get();
+    }
+
+    public Long inserirUsuarioReceita(final UsuarioReceita usuarioReceita) throws ExecutionException, InterruptedException {
+        Callable<Long> call = new Callable<Long>() {
+            @Override
+            public Long call() throws Exception {
+                Long idDeUsuarioReceita = bancoDeDados.usuarioReceitaDaoRoom().inserir(usuarioReceita);
+                return idDeUsuarioReceita;
+            }
+        };
+        ExecutorService executor = new ScheduledThreadPoolExecutor(1);
+        Future<Long> future = executor.submit(call);
+        return future.get();
+    }
+
+    public Long atualizarReceita(final Receita receita) throws ExecutionException, InterruptedException {
         Callable<Long> call = new Callable<Long>() {
             @Override
             public Long call() throws Exception {
@@ -57,8 +85,12 @@ public class ReceitaDao extends AndroidViewModel {
         Callable<List<Receita>> call = new Callable<List<Receita>>() {
             @Override
             public List<Receita> call() throws Exception {
-                List<Receita> receitasDoUsuario = bancoDeDados.receitaDaoRoom().getReceitasDoUsuario(usuarioId);
-                return receitasDoUsuario;
+                List<UsuarioReceita> receitasDoUsuario = bancoDeDados.usuarioReceitaDaoRoom().getPorIdDeUsuario(usuarioId);
+                List<Receita> receitas = null;
+                if(receitasDoUsuario != null) {
+                    receitas = montarReceitas(receitasDoUsuario);
+                }
+                return receitas;
             }
         };
         ExecutorService executor = new ScheduledThreadPoolExecutor(1);
@@ -66,17 +98,21 @@ public class ReceitaDao extends AndroidViewModel {
         return future.get();
     }
 
-    public Receita buscarReceitaPorIdDeUsuario(final long usuarioId, final String nome) throws ExecutionException, InterruptedException {
-        Callable<Receita> call = new Callable<Receita>() {
-            @Override
-            public Receita call() throws Exception {
-                Receita receitaDoUsuario = bancoDeDados.receitaDaoRoom().getReceitaPorIdDeUsuario(usuarioId, nome);
-                return receitaDoUsuario;
+    public List<Receita> montarReceitas(List<UsuarioReceita> usuarioReceitas) {
+        List<Receita> receitas = null;
+        for(UsuarioReceita usuarioReceita : usuarioReceitas) {
+            Receita receita = null;
+            List<SecaoReceita> secoesReceita = null;
+            receita = bancoDeDados.receitaDaoRoom().buscarPorId(usuarioReceita.getReceitaId());
+            if(receita != null) {
+                secoesReceita = bancoDeDados.secaoReceitaDaoRoom().getSecaoPorIdDeReceita(receita.getRid());
             }
-        };
-        ExecutorService executor = new ScheduledThreadPoolExecutor(1);
-        Future<Receita> future = executor.submit(call);
-        return future.get();
+            if(secoesReceita != null) {
+                receita.setSecoes(secoesReceita);
+            }
+            receitas.add(receita);
+        }
+        return receitas;
     }
 
     public void deletarItem(Receita receita) {

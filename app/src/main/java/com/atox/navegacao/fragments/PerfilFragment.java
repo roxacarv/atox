@@ -2,7 +2,6 @@ package com.atox.navegacao.fragments;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
@@ -16,8 +15,7 @@ import android.widget.TextView;
 
 import com.atox.R;
 import com.atox.atoxlogs.AtoxLog;
-import com.atox.atoxlogs.AtoxMensagem;
-import com.atox.infra.negocio.ImageSaver;
+import com.atox.infra.negocio.ArmazenarImagem;
 import com.atox.receitas.gui.ReceitasActivity;
 import com.atox.usuario.dominio.Endereco;
 import com.atox.usuario.dominio.Pessoa;
@@ -25,12 +23,8 @@ import com.atox.usuario.dominio.SessaoUsuario;
 import com.atox.usuario.dominio.Usuario;
 import com.atox.usuario.gui.EditarPerfilActivity;
 import com.atox.usuario.gui.LoginActivity;
-import com.atox.usuario.gui.RegistroActivity;
 import com.atox.usuario.negocio.SessaoNegocio;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 
 public class PerfilFragment extends Fragment {
@@ -124,10 +118,10 @@ public class PerfilFragment extends Fragment {
     }
 
     private void carregarImagem() {
-        Bitmap imagemPerfil = new ImageSaver(getContext()).
-                setFileName("profile.png").
-                setDirectoryName("images").
-                load();
+        Bitmap imagemPerfil = new ArmazenarImagem(getContext()).
+                setNomeArquivo("profile.png").
+                setNomeDiretorio("images").
+                carregar();
         if(imagemPerfil != null) {
             RoundedBitmapDrawable roundDrawable = RoundedBitmapDrawableFactory.create(getResources(), imagemPerfil);
             roundDrawable.setCircular(true);
