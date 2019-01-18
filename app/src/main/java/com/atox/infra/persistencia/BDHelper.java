@@ -8,6 +8,8 @@ import android.content.Context;
 
 import com.atox.atoxlogs.AtoxLog;
 import com.atox.atoxlogs.persistencia.daoroom.AtoxLogDaoRoom;
+import com.atox.lugar.dominio.Receita;
+import com.atox.lugar.persistencia.ReceitaDaoRoom;
 import com.atox.network.dominio.Produtor;
 import com.atox.network.persistencia.daoroom.ProdutorDaoRoom;
 import com.atox.usuario.dominio.SessaoUsuario;
@@ -24,7 +26,8 @@ import com.atox.usuario.dominio.Usuario;
                        Endereco.class,
                        Pessoa.class,
                        Produtor.class,
-                       AtoxLog.class
+                       AtoxLog.class,
+                       Receita.class
                      },
           version = 1)
 @TypeConverters({ConversorDeDate.class})
@@ -52,5 +55,6 @@ public abstract class BDHelper extends RoomDatabase {
     public abstract PessoaDaoRoom pessoaDaoRoom();
     public abstract ProdutorDaoRoom produtorDaoRoom();
     public abstract AtoxLogDaoRoom atoxLogDaoRoom();
+    public abstract ReceitaDaoRoom receitaDaoRoom();
 
 }

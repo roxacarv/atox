@@ -1,6 +1,5 @@
 package com.atox.network.infra;
 
-import com.atox.lugar.dominio.Lugar;
 import com.atox.network.dominio.Feirinha;
 import com.atox.network.dominio.Produtor;
 
