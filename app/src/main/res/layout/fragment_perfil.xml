@@ -193,30 +193,49 @@
 
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="match_parent"
-                android:layout_height="104dp"
-                android:src="@drawable/bg_messagem_perfil" />
 
-            <TextView
-                android:id="@+id/textView14"
+
+            <Button
+                android:id="@+id/buttonIrPraReceitas"
+                android:layout_width="match_parent"
+                android:layout_height="105dp"
+                android:background="@drawable/bg_messagem_perfil"/>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:fontFamily="@font/google_sans_bold"
-                android:text="SUAS RECEITAS"
-                android:textColor="@color/lightBlack"
-                android:textSize="20sp" />
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:fontFamily="@font/google_sans_bold"
+                    android:text="SUAS RECEITAS"
+                    android:textColor="@color/lightBlack"
+                    android:textSize="20sp" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/textView16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:fontFamily="@font/google_sans_regular"
-                android:text="Quanto mais você favoritas locais, mais você receberá receitas que combinam com você!"
+                android:text="Quanto mais você favorita receitas, mais você receberá as que combinam com você!"
                 android:textSize="16sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:id="@+id/recycleViewReceitasResultado"/>
 
             <Button
                 android:id="@+id/btnSairDoApp"

@@ -1,14 +1,14 @@
-package com.atox.lugar.persistencia;
+package com.atox.receitas.persistencia;
 
-import android.arch.lifecycle.LiveData;
+import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Query;
 
 import com.atox.infra.persistencia.DaoBase;
-import com.atox.lugar.dominio.Receita;
-import com.atox.usuario.dominio.Usuario;
+import com.atox.receitas.dominio.Receita;
 
 import java.util.List;
 
+@Dao
 public interface ReceitaDaoRoom extends DaoBase<Receita> {
 
     @Query("SELECT * FROM receita")

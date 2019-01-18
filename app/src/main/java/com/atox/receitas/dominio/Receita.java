@@ -1,4 +1,4 @@
-package com.atox.lugar.dominio;
+package com.atox.receitas.dominio;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
@@ -74,5 +74,13 @@ public class Receita {
 
     public void setOutrasInformacoes(String outrasInformacoes) {
         this.outrasInformacoes = outrasInformacoes;
+    }
+
+    public Long getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(Long usuarioId) {
+        this.usuarioId = usuarioId;
     }
 }

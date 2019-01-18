@@ -1,13 +1,11 @@
-package com.atox.lugar.persistencia;
+package com.atox.receitas.persistencia;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.os.AsyncTask;
 
 import com.atox.infra.persistencia.BDHelper;
-import com.atox.lugar.dominio.Receita;
-import com.atox.usuario.dominio.Pessoa;
-import com.atox.usuario.persistencia.dao.PessoaDao;
+import com.atox.receitas.dominio.Receita;
 
 import java.util.List;
 import java.util.concurrent.Callable;

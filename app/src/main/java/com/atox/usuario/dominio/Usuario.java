@@ -24,8 +24,7 @@ public class Usuario {
     @ColumnInfo(name = "senha")
     private String senha;
 
-    @Ignore
-    private List<Lugar> lugares;
+
 
     public String getEmail() {
         return email;
@@ -42,15 +41,6 @@ public class Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
-    public List<Lugar> getLugares() {
-        return lugares;
-    }
-
-    public void setLugares(List<Lugar> lugares) {
-        this.lugares = lugares;
-    }
-
     public long getUid() {
         return uid;
     }

@@ -1,14 +1,12 @@
-package com.atox.lugar.negocio;
+package com.atox.receitas.negocio;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.v4.app.FragmentActivity;
 
 import com.atox.atoxlogs.AtoxLog;
 import com.atox.atoxlogs.AtoxMensagem;
-import com.atox.lugar.dominio.Receita;
-import com.atox.lugar.persistencia.ReceitaDao;
-import com.atox.usuario.dominio.Pessoa;
-import com.atox.usuario.persistencia.dao.PessoaDao;
+import com.atox.receitas.dominio.Receita;
+import com.atox.receitas.persistencia.ReceitaDao;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;

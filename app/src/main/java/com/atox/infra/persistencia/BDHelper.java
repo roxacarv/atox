@@ -8,8 +8,8 @@ import android.content.Context;
 
 import com.atox.atoxlogs.AtoxLog;
 import com.atox.atoxlogs.persistencia.daoroom.AtoxLogDaoRoom;
-import com.atox.lugar.dominio.Receita;
-import com.atox.lugar.persistencia.ReceitaDaoRoom;
+import com.atox.receitas.dominio.Receita;
+import com.atox.receitas.persistencia.ReceitaDaoRoom;
 import com.atox.network.dominio.Produtor;
 import com.atox.network.persistencia.daoroom.ProdutorDaoRoom;
 import com.atox.usuario.dominio.SessaoUsuario;

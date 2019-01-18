@@ -18,12 +18,14 @@ import com.atox.R;
 import com.atox.atoxlogs.AtoxLog;
 import com.atox.atoxlogs.AtoxMensagem;
 import com.atox.infra.negocio.ImageSaver;
+import com.atox.receitas.gui.ReceitasActivity;
 import com.atox.usuario.dominio.Endereco;
 import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.SessaoUsuario;
 import com.atox.usuario.dominio.Usuario;
 import com.atox.usuario.gui.EditarPerfilActivity;
 import com.atox.usuario.gui.LoginActivity;
+import com.atox.usuario.gui.RegistroActivity;
 import com.atox.usuario.negocio.SessaoNegocio;
 
 import java.io.File;
@@ -51,6 +53,7 @@ public class PerfilFragment extends Fragment {
     private Intent editActivity;
     private AtoxLog log;
     private ImageView image;
+    private Button btnIrPraReceitas;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -66,6 +69,7 @@ public class PerfilFragment extends Fragment {
         textViewPerfilEmail = (TextView) view.findViewById(R.id.textViewPerfilEmail);
         textViewPerfilTelefone = (TextView) view.findViewById(R.id.textViewPerfilTelefone);
         image = (ImageView)view.findViewById(R.id.imageView2);
+        btnIrPraReceitas = (Button)view.findViewById(R.id.buttonIrPraReceitas);
         log = new AtoxLog();
         editActivity = new Intent(this.getActivity(), EditarPerfilActivity.class);
         btnEditar = (Button)view.findViewById(R.id.btnEditarDados);
@@ -82,6 +86,14 @@ public class PerfilFragment extends Fragment {
             public void onClick(View v) {
                 sessaoNegocio.encerrarSessao();
                 startActivity(homeScreen);
+            }
+        });
+        btnIrPraReceitas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent receitasTela = new Intent(getActivity(), ReceitasActivity.class);
+                startActivity(receitasTela);
+
             }
         });
         carregarInformacoes();
@@ -126,6 +138,8 @@ public class PerfilFragment extends Fragment {
     public void voltarParaTelaDeLogin(View view) {
         //mudar de tela
     }
+
+
 
 
 }

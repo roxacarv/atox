@@ -9,8 +9,8 @@
     <!-- Media Permission -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <!-- Camera Permission-->
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <!-- Camera Permission -->
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -19,10 +19,9 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-
     <!-- To the nearby locations -->
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -35,10 +34,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCsUKjHUXgVBpHCqRnBQ8F2i8IeEoBdFHg" />
-
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
+            android:value="@integer/google_play_services_version" />
 
         <!-- SPLASH SCREEN -->
         <activity
@@ -82,6 +80,7 @@
             android:name=".navegacao.activities.MenuActivity"
             android:label="@string/title_activity_menu"
             android:theme="@style/FullScreenWithStatusBar" />
+        <activity android:name=".receitas.gui.ReceitasActivity"></activity>
     </application>
 
 </manifest>
