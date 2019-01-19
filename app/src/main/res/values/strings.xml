@@ -42,4 +42,5 @@
     <string name="error_email_or_pass_invalid">Email ou senha inválida</string>
     <string name="title_activity_lugar_detalhe">LugarDetalheActivity</string>
     <string name="action_settings">Settings</string>
+    <string name="pesquise_receitas">Pesquise receitas</string>
 </resources>

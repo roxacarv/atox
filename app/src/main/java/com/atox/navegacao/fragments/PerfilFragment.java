@@ -51,8 +51,17 @@ public class PerfilFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        sessaoNegocio = new SessaoNegocio(this.getActivity());
         View view = inflater.inflate(R.layout.fragment_perfil, container, false);
+        inicializaVariaveis(view);
+        defineOnClickListenerBotoes();
+        carregarInformacoes();
+        carregarEndereco();
+        carregarImagem();
+        return view;
+    }
+
+    private void inicializaVariaveis(View view){
+        sessaoNegocio = new SessaoNegocio(this.getActivity());
         sessaoUsuario = SessaoUsuario.getInstance();
         pessoaPerfil = sessaoUsuario.getPessoaLogada();
         usuarioPerfil = pessoaPerfil.getUsuario();
@@ -63,18 +72,21 @@ public class PerfilFragment extends Fragment {
         textViewPerfilEmail = (TextView) view.findViewById(R.id.textViewPerfilEmail);
         textViewPerfilTelefone = (TextView) view.findViewById(R.id.textViewPerfilTelefone);
         image = (ImageView)view.findViewById(R.id.imageView2);
-        btnIrPraReceitas = (Button)view.findViewById(R.id.buttonIrPraReceitas);
-        log = new AtoxLog();
         editActivity = new Intent(this.getActivity(), EditarPerfilActivity.class);
+        homeScreen = new Intent(this.getActivity(), LoginActivity.class);
+        log = new AtoxLog();
+        btnIrPraReceitas = (Button)view.findViewById(R.id.buttonIrPraReceitas);
         btnEditar = (Button)view.findViewById(R.id.btnEditarDados);
+        btnSair = (Button)view.findViewById(R.id.btnSairDoApp);
+    }
+
+    private void defineOnClickListenerBotoes(){
         btnEditar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(editActivity);
             }
         });
-        homeScreen = new Intent(this.getActivity(), LoginActivity.class);
-        btnSair = (Button)view.findViewById(R.id.btnSairDoApp);
         btnSair.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,10 +102,6 @@ public class PerfilFragment extends Fragment {
 
             }
         });
-        carregarInformacoes();
-        carregarEndereco();
-        carregarImagem();
-        return view;
     }
 
     private void carregarInformacoes() {

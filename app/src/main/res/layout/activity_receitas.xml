@@ -16,7 +16,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
         android:inputType="textPersonName"
-        android:text="Pesquise receitas"
+        android:hint="@string/pesquise_receitas"
         tools:layout_editor_absoluteX="98dp"
         tools:layout_editor_absoluteY="33dp" />
 
