@@ -29,7 +29,7 @@ import java.text.SimpleDateFormat;
 
 public class PerfilFragment extends Fragment {
 
-    private static final String TAG = InicioFragment.class.getName();
+    private static final String TAG = PerfilFragment.class.getName();
     private SessaoUsuario sessaoUsuario;
     private TextView textViewPerfilNomeUsuario;
     private TextView textViewPerfilDataNascimento;

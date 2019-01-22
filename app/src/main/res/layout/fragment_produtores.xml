@@ -54,6 +54,21 @@
                     android:textSize="12sp" />
             </LinearLayout>
 
+            <Button
+                android:id="@+id/btnAtualizarProdutores"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_rounded"
+                android:fontFamily="@font/google_sans_regular"
+                android:text="@string/atualizar"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/customRecyclerViewProdutor"
                 android:layout_width="match_parent"
