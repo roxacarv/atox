@@ -33,7 +33,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCsUKjHUXgVBpHCqRnBQ8F2i8IeEoBdFHg" />
+            android:value="AIzaSyDNpmXtMaX02yJ-V_Zf8gSsxMaDWKt1C4o" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
