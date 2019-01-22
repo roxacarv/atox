@@ -36,6 +36,7 @@ public class SplashActivity extends AppCompatActivity {
             alert("Seja bem vindo");
             goToLoginScreen();
         }
+
     }
 
     protected void goToHomeScreen() {

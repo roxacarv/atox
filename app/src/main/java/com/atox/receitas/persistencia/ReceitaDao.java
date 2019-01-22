@@ -3,12 +3,14 @@ package com.atox.receitas.persistencia;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.atox.infra.persistencia.BDHelper;
 import com.atox.receitas.dominio.Receita;
 import com.atox.receitas.dominio.SecaoReceita;
 import com.atox.receitas.dominio.UsuarioReceita;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -99,17 +101,15 @@ public class ReceitaDao extends AndroidViewModel {
     }
 
     public List<Receita> montarReceitas(List<UsuarioReceita> usuarioReceitas) {
-        List<Receita> receitas = null;
+        List<Receita> receitas = new ArrayList<>();
         for(UsuarioReceita usuarioReceita : usuarioReceitas) {
             Receita receita = null;
             List<SecaoReceita> secoesReceita = null;
             receita = bancoDeDados.receitaDaoRoom().buscarPorId(usuarioReceita.getReceitaId());
             if(receita != null) {
-                secoesReceita = bancoDeDados.secaoReceitaDaoRoom().getSecaoPorIdDeReceita(receita.getRid());
+                secoesReceita = bancoDeDados.secaoReceitaDaoRoom().getSecaoPorIdDeReceita(usuarioReceita.getReceitaId());
             }
-            if(secoesReceita != null) {
-                receita.setSecoes(secoesReceita);
-            }
+            receita.setSecoes(secoesReceita);
             receitas.add(receita);
         }
         return receitas;

@@ -34,13 +34,10 @@ public class ReceitaNegocio {
         try {
             resultadoInsercaoReceita = receitaDao.inserirReceita(receita);
             if(resultadoInsercaoReceita != null) {
-                resultadoInsercaoSecao = receitaDao.inserirSecaoReceita(arrayDeSecoesReceita);
+                inserirSecoes(resultadoInsercaoReceita, receitaDao, arrayDeSecoesReceita);
             }
             if(resultadoInsercaoReceita != null) {
-                UsuarioReceita usuarioReceita = new UsuarioReceita();
-                usuarioReceita.setUsuarioId(usuarioId);
-                usuarioReceita.setReceitaId(resultadoInsercaoReceita);
-                resultadoInsercaoUsuarioReceita = receitaDao.inserirUsuarioReceita(usuarioReceita);
+                resultadoInsercaoUsuarioReceita = inserirUsuarioReceita(usuarioId, receitaDao, resultadoInsercaoReceita);
             }
             resultadoIdsDeInsercao.add(resultadoInsercaoReceita);
             resultadoIdsDeInsercao.add(resultadoInsercaoUsuarioReceita);
@@ -79,6 +76,25 @@ public class ReceitaNegocio {
             log.empurraRegistrosPraFila();
         }
         return receitas;
+    }
+
+    public SecaoReceita[] inserirSecoes(Long receitaId, ReceitaDao receitaDao, SecaoReceita... secaoReceitas) throws ExecutionException, InterruptedException {
+        SecaoReceita[] novoArrayDeSecoes = new SecaoReceita[secaoReceitas.length];
+        for(int i = 0; i < secaoReceitas.length; i++) {
+            secaoReceitas[i].setReceitaId(receitaId);
+            novoArrayDeSecoes[i] = secaoReceitas[i];
+        }
+        receitaDao.inserirSecaoReceita(novoArrayDeSecoes);
+        return novoArrayDeSecoes;
+    }
+
+    public Long inserirUsuarioReceita(Long usuarioId, ReceitaDao receitaDao, Long receitaId) throws ExecutionException, InterruptedException {
+        Long resultadoInsercaoUsuarioReceita = null;
+        UsuarioReceita usuarioReceita = new UsuarioReceita();
+        usuarioReceita.setUsuarioId(usuarioId);
+        usuarioReceita.setReceitaId(receitaId);
+        resultadoInsercaoUsuarioReceita = receitaDao.inserirUsuarioReceita(usuarioReceita);
+        return resultadoInsercaoUsuarioReceita;
     }
 
     public void removerReceita(Receita receita) {

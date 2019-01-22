@@ -29,6 +29,9 @@ import com.atox.network.gui.FeirinhaCustomAdapter;
 import com.atox.network.gui.ProdutorCustomAdapter;
 import com.atox.network.infra.ObtemServicoDados;
 import com.atox.network.infra.RetrofitInstanciaCliente;
+import com.atox.receitas.dominio.Receita;
+import com.atox.receitas.dominio.SecaoReceita;
+import com.atox.receitas.negocio.ReceitaNegocio;
 import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.SessaoUsuario;
 import com.google.android.gms.location.places.GeoDataClient;
@@ -63,6 +66,7 @@ public class InicioFragment extends Fragment {
     protected GeoDataClient geoDataClient;
     protected PlaceDetectionClient placeDetectionClient;
     protected RecyclerView customRecyclerViewOrganicNearbyPlaces;
+    private ReceitaNegocio receitaNegocio;
 
 
 
@@ -75,13 +79,40 @@ public class InicioFragment extends Fragment {
         customRecycleViewFeirinha = (RecyclerView) view.findViewById(R.id.customRecyclerViewFeirinha);
         // criando a recycler view que ira mostrar as coisas
         customRecyclerViewOrganicNearbyPlaces = (RecyclerView) view.findViewById(R.id.customRecyclerViewOrganicNearbyPlaces);
-
+        receitaNegocio = new ReceitaNegocio(this.getActivity());
         Pessoa pessoaLogada = sessaoUsuario.getPessoaLogada();
         if (pessoaLogada != null){
             textViewNomeUsuario.setText(view.getContext().getResources().getString(R.string.texto_bemvindo) +
                     " " +
                     pessoaLogada.getNome());
         }
+
+        //exemplo de como construir uma receita
+        Receita novaReceita = new Receita();
+        SecaoReceita secaoReceita = new SecaoReceita();
+        secaoReceita.setNome("Como Fazer");
+        secaoReceita.setConteudo("Faça dessa maneira");
+        //secao é sempre uma lista, mesmo que haja apenas uma
+        List<SecaoReceita> secoes = new ArrayList<>();
+        secoes.add(secaoReceita);
+        novaReceita.setNome("Frango Empanado");
+        novaReceita.setSecoes(secoes);
+        //exemplo de como construir uma receita
+        //colocando a receita no banco
+        //passar o id de usuário pra fazer o relacionamento das tabelas
+        List<Long> longs = null;
+        longs = receitaNegocio.cadastrar(sessaoUsuario.getUsuarioLogado().getUid(), novaReceita);
+        //colocando a receita no banco
+        //buscando a receita no banco (sempre retorna uma lista, mesmo que haja apenas uma)
+        List<Receita> receitas = null;
+        receitas = receitaNegocio.buscarReceitasDoUsuario(sessaoUsuario.getUsuarioLogado().getUid());
+        if(receitas != null) {
+            for (Receita receita : receitas) {
+                Log.i("PERFILFRAGMENT", "Nome da receita: " + receita.getNome());
+                Log.i("PERFILFRAGMENT", "nome da secao" + receita.getSecoes().get(0).getNome());
+            }
+        }
+        //buscando a receita no banco
         /*Create handle for the RetrofitInstance interface*/
         ObtemServicoDados service = RetrofitInstanciaCliente.getRetrofitInstance().create(ObtemServicoDados.class);
         Call<List<Feirinha>> call = service.getAllFeirinhas();
