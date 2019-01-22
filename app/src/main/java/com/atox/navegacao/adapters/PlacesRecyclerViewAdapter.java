@@ -1,9 +1,12 @@
 package com.atox.navegacao.adapters;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +25,7 @@ public class PlacesRecyclerViewAdapter extends
 
     private List<Place> placesList;
     private Context context;
+
 
 
     public PlacesRecyclerViewAdapter(List<Place> list, Context ctx) {
@@ -63,8 +67,39 @@ public class PlacesRecyclerViewAdapter extends
         }else{
             holder.ratingBar.setVisibility(View.GONE);
         }
+        holder.name.setOnClickListener(onClickListener(position));
 
     }
+
+    private View.OnClickListener onClickListener(final int position) {
+        return new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.activity_popup_estabelecimento);
+                dialog.setTitle("Position" + position);
+                dialog.setCancelable(true);
+                TextView name =(TextView)dialog.findViewById(R.id.name);
+                TextView address=(TextView)dialog.findViewById(R.id.address);
+                TextView resumo=(TextView)dialog.findViewById(R.id.resumo);
+                setDataToView(name,address,resumo,position);
+                dialog.show();
+            }
+        };
+    }
+
+    private void setDataToView(TextView name,TextView address, TextView resumo,int position){
+        final Place place = placesList.get(position);
+        name.setText(place.getName());
+        address.setText(place.getAddress());
+        CharSequence conversorHtml = place.getAttributions();
+        if (conversorHtml == null) {
+            conversorHtml = "";
+        }
+        String saidaHtml = (String) conversorHtml;
+        resumo.setText(Html.fromHtml(saidaHtml));
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
