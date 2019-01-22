@@ -45,6 +45,7 @@ import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -87,32 +88,15 @@ public class InicioFragment extends Fragment {
                     pessoaLogada.getNome());
         }
 
-        //exemplo de como construir uma receita
-        Receita novaReceita = new Receita();
-        SecaoReceita secaoReceita = new SecaoReceita();
-        secaoReceita.setNome("Como Fazer");
-        secaoReceita.setConteudo("Faça dessa maneira");
-        //secao é sempre uma lista, mesmo que haja apenas uma
-        List<SecaoReceita> secoes = new ArrayList<>();
-        secoes.add(secaoReceita);
-        novaReceita.setNome("Frango Empanado");
-        novaReceita.setSecoes(secoes);
-        //exemplo de como construir uma receita
-        //colocando a receita no banco
-        //passar o id de usuário pra fazer o relacionamento das tabelas
-        List<Long> longs = null;
-        longs = receitaNegocio.cadastrar(sessaoUsuario.getUsuarioLogado().getUid(), novaReceita);
-        //colocando a receita no banco
-        //buscando a receita no banco (sempre retorna uma lista, mesmo que haja apenas uma)
-        List<Receita> receitas = null;
-        receitas = receitaNegocio.buscarReceitasDoUsuario(sessaoUsuario.getUsuarioLogado().getUid());
-        if(receitas != null) {
-            for (Receita receita : receitas) {
-                Log.i("PERFILFRAGMENT", "Nome da receita: " + receita.getNome());
-                Log.i("PERFILFRAGMENT", "nome da secao" + receita.getSecoes().get(0).getNome());
-            }
-        }
-        //buscando a receita no banco
+        //codigo Rodrigo
+        //testeInsercaoReceita();
+
+        //codigo Andre
+        testeInsercaoReceitaSemUsuario();
+
+
+
+
         /*Create handle for the RetrofitInstance interface*/
         ObtemServicoDados service = RetrofitInstanciaCliente.getRetrofitInstance().create(ObtemServicoDados.class);
         Call<List<Feirinha>> call = service.getAllFeirinhas();
@@ -143,6 +127,74 @@ public class InicioFragment extends Fragment {
         // Inflate the layout for this fragment
         return view;
     }
+
+
+    public void testeInsercaoReceitaSemUsuario(){
+        SecaoReceita secaoIngredientes = new SecaoReceita();
+        secaoIngredientes.setNome("Ingredientes");
+        secaoIngredientes.setConteudo("Maionese\nMostarda\nKetchup.");
+
+        SecaoReceita secaoModoPreparo = new SecaoReceita();
+        secaoModoPreparo.setNome("Modo de preparo");
+        secaoModoPreparo.setConteudo("1.Faca isso\n2.Faça aquilo\n3.Coloque no fogo");
+
+        SecaoReceita secaoOutrasInfo = new SecaoReceita();
+        secaoOutrasInfo.setNome("Outras informações");
+        secaoOutrasInfo.setConteudo("Disponivel no site www.receitasloucas.com.br");
+
+        List<SecaoReceita> secoesDaReceita = new ArrayList<>();
+        secoesDaReceita.add(secaoIngredientes);
+        secoesDaReceita.add(secaoModoPreparo);
+        secoesDaReceita.add(secaoOutrasInfo);
+
+        Receita novaReceita = new Receita();
+        novaReceita.setNome("Empanado de nada");
+        novaReceita.setSecoes(secoesDaReceita);
+
+        Long idNovaReceita = receitaNegocio.cadastrarSemUsuario(novaReceita);
+        Log.i(TAG, "id da receita " + novaReceita.getNome() + " : " + idNovaReceita);
+
+        try {
+            Receita receitaDoBanco = receitaNegocio.buscarReceitaPorId(idNovaReceita);
+            Log.i(TAG, "Secao é null? " + (receitaDoBanco.getSecoes()== null));
+        } catch (ExecutionException e) {
+            Log.i(TAG, "DEU MERDA. " + e.getMessage());
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            Log.i(TAG, "DEU MERDA 2. " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void testeInsercaoReceita(){
+        //exemplo de como construir uma receita
+        Receita novaReceita = new Receita();
+        SecaoReceita secaoReceita = new SecaoReceita();
+        secaoReceita.setNome("Como Fazer");
+        secaoReceita.setConteudo("Faça dessa maneira");
+        //secao é sempre uma lista, mesmo que haja apenas uma
+        List<SecaoReceita> secoes = new ArrayList<>();
+        secoes.add(secaoReceita);
+        novaReceita.setNome("Frango Empanado");
+        novaReceita.setSecoes(secoes);
+        //exemplo de como construir uma receita
+        //colocando a receita no banco
+        //passar o id de usuário pra fazer o relacionamento das tabelas
+        List<Long> longs = null;
+        longs = receitaNegocio.cadastrar(sessaoUsuario.getUsuarioLogado().getUid(), novaReceita);
+        //colocando a receita no banco
+        //buscando a receita no banco (sempre retorna uma lista, mesmo que haja apenas uma)
+        List<Receita> receitas = null;
+        receitas = receitaNegocio.buscarReceitasDoUsuario(sessaoUsuario.getUsuarioLogado().getUid());
+        if(receitas != null) {
+            for (Receita receita : receitas) {
+                Log.i("PERFILFRAGMENT", "Nome da receita: " + receita.getNome());
+                Log.i("PERFILFRAGMENT", "nome da secao" + receita.getSecoes().get(0).getNome());
+            }
+        }
+        //buscando a receita no banco
+    }
+
 
     /*Method to generate List of data using RecyclerView with custom adapter*/
     private void generateDataList(List<Feirinha> listaFeirinhas, RecyclerView recycleViewProdutor, Context context, FeirinhaCustomAdapter fAdapter) {

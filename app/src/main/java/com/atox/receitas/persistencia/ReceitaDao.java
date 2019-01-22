@@ -100,6 +100,31 @@ public class ReceitaDao extends AndroidViewModel {
         return future.get();
     }
 
+    public Receita buscarReceitaPorId(final long idReceita) throws ExecutionException, InterruptedException {
+        Callable<Receita> call = new Callable<Receita>() {
+            @Override
+            public Receita call() throws Exception {
+                Receita receitaNoBanco = bancoDeDados.receitaDaoRoom().buscarPorId(idReceita);
+                if (receitaNoBanco != null){
+                    //buscar as secoes
+                    List<SecaoReceita> secoesDaReceita = buscarSecoesReceita(receitaNoBanco);
+                    receitaNoBanco.setSecoes(secoesDaReceita);
+                }
+                return receitaNoBanco;
+            }
+        };
+        ExecutorService executor = new ScheduledThreadPoolExecutor(1);
+        Future<Receita> future = executor.submit(call);
+        return future.get();
+    }
+
+
+    public List<SecaoReceita> buscarSecoesReceita(Receita receita){
+        List<SecaoReceita> secoes = new ArrayList<>();
+        secoes = bancoDeDados.secaoReceitaDaoRoom().getSecaoPorIdDeReceita(receita.getRid());
+        return secoes;
+    }
+
     public List<Receita> montarReceitas(List<UsuarioReceita> usuarioReceitas) {
         List<Receita> receitas = new ArrayList<>();
         for(UsuarioReceita usuarioReceita : usuarioReceitas) {

@@ -57,6 +57,44 @@ public class ReceitaNegocio {
         return resultadoIdsDeInsercao;
     }
 
+    //retorna o id em que foi inserida a receita no bd
+    public Long cadastrarSemUsuario(Receita receita) {
+        AtoxLog log = new AtoxLog();
+        Long idReceitaInsercao = null;
+        List<Long> resultadoInsercaoSecao = null;
+        SecaoReceita arrayDeSecoesReceita[] = new SecaoReceita[receita.getSecoes().size()];//define um array com tam, mas vazio
+        arrayDeSecoesReceita = receita.getSecoes().toArray(arrayDeSecoesReceita);//preenche o array com a lista secoes
+        try {
+            //insere receita no banco e retorna o id de receita
+            idReceitaInsercao = receitaDao.inserirReceita(receita);
+            if(idReceitaInsercao != null) {
+                //metodo retorna uma lista de objetos Secao (com estas secoes já inseridas no banco)
+                inserirSecoes(idReceitaInsercao, receitaDao, arrayDeSecoesReceita);
+            }
+
+        } catch (ExecutionException e) {
+            log = new AtoxLog();
+            log.novoRegistro(AtoxMensagem.ACAO_EFETUAR_LOGIN,
+                    AtoxMensagem.ERRO_BUSCAR_REGISTRO_NO_BANCO,
+                    "Um erro de execução ocorreu ao tentar inserir uma receita no banco: " + e.getMessage());
+            log.empurraRegistrosPraFila();
+        } catch (InterruptedException e) {
+            log = new AtoxLog();
+            log.novoRegistro(AtoxMensagem.ACAO_EFETUAR_LOGIN,
+                    AtoxMensagem.ERRO_BUSCAR_REGISTRO_NO_BANCO,
+                    "Um erro de execução ocorreu ao tentar inserir uma receita no banco: " + e.getMessage());
+            log.empurraRegistrosPraFila();
+        }
+        return idReceitaInsercao;
+    }
+
+    public Receita buscarReceitaPorId(Long idReceita) throws ExecutionException, InterruptedException {
+        //busca o objeto Receita
+        Receita receitaObj = receitaDao.buscarReceitaPorId(idReceita);
+
+        return receitaObj;
+    }
+
     public List<Receita> buscarReceitasDoUsuario(Long idDeUsuario) {
         AtoxLog log = new AtoxLog();
         List<Receita> receitas = null;
@@ -81,9 +119,12 @@ public class ReceitaNegocio {
     public SecaoReceita[] inserirSecoes(Long receitaId, ReceitaDao receitaDao, SecaoReceita... secaoReceitas) throws ExecutionException, InterruptedException {
         SecaoReceita[] novoArrayDeSecoes = new SecaoReceita[secaoReceitas.length];
         for(int i = 0; i < secaoReceitas.length; i++) {
+            //seta o id da receita em cada secao passada
             secaoReceitas[i].setReceitaId(receitaId);
+            //add essa secao com id de receita setado a lista nova (q sera retornada)
             novoArrayDeSecoes[i] = secaoReceitas[i];
         }
+        //passa a lista de secao atualizada para add no banco
         receitaDao.inserirSecaoReceita(novoArrayDeSecoes);
         return novoArrayDeSecoes;
     }
