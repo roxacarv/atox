@@ -5,28 +5,33 @@ public class AtoxMensagem {
     private static AtoxMensagem INSTANCE;
 
     //possíveis erros relacionados ao banco de dados
-    public static final String ERRO_INSERIR_REGISTRO_NO_BANCO = "e0";
-    public static final String ERRO_ATUALIZAR_REGISTRO_NO_BANCO = "e1";
-    public static final String ERRO_BUSCAR_REGISTRO_NO_BANCO = "e2";
-    public static final String ERRO_NO_USO_DE_API = "e3";
-    public static final String ERRO_AO_ACESSAR_A_MEMORIA_INTERNA = "e4";
+    public static final int ERRO_INSERIR_REGISTRO_NO_BANCO = 0;
+    public static final int ERRO_ATUALIZAR_REGISTRO_NO_BANCO = 1;
+    public static final int ERRO_BUSCAR_REGISTRO_NO_BANCO = 2;
+    public static final int ERRO_NO_USO_DE_API = 3;
+    public static final int ERRO_AO_ACESSAR_A_MEMORIA_INTERNA = 4;
 
     //possíveis ações que estejam sendo feitas
-    public static final String ACAO_INSERIR_REGISTRO_NO_BANCO = "a0";
-    public static final String ACAO_ATUALIZAR_REGISTRO_NO_BANCO = "a1";
-    public static final String ACAO_SALVAR_LOGS_NO_BANCO = "a2";
-    public static final String ACAO_RETORNAR_LOGS_DO_BANCO = "a3";
-    public static final String ACAO_REGISTRAR_USUARIO = "a4";
-    public static final String ACAO_REGISTRAR_ENDERECO = "a5";
-    public static final String ACAO_EFETUAR_LOGIN = "a6";
-    public static final String ACAO_ATUALIZAR_PERFIL = "a7";
-    public static final String ACAO_BUSCAR_LOGS_NO_BANCO = "a8";
-    public static final String ACAO_RECUPERAR_PESSOA_NO_BANCO = "a9";
-    public static final String ACAO_RESTAURAR_SESSAO = "a10";
-    public static final String ACAO_INICIAR_NOVA_SESSAO = "a11";
-    public static final String ACAO_REQUISITAR_ENDERECO_API_GOOGLE = "a12";
-    public static final String ACAO_BUSCAR_IMAGEM_NA_MEMORIA_INTERNA = "a13";
-    public static final String ACAO_SALVAR_IMAGEM_NA_MEMORIA_INTERNA = "a14";
+    public static final int ACAO_INSERIR_REGISTRO_NO_BANCO = 0;
+    public static final int ACAO_ATUALIZAR_REGISTRO_NO_BANCO = 1;
+    public static final int ACAO_SALVAR_LOGS_NO_BANCO = 2;
+    public static final int ACAO_RETORNAR_LOGS_DO_BANCO = 3;
+    public static final int ACAO_REGISTRAR_USUARIO = 4;
+    public static final int ACAO_REGISTRAR_ENDERECO = 5;
+    public static final int ACAO_EFETUAR_LOGIN = 6;
+    public static final int ACAO_ATUALIZAR_PERFIL = 7;
+    public static final int ACAO_BUSCAR_LOGS_NO_BANCO = 8;
+    public static final int ACAO_RECUPERAR_PESSOA_NO_BANCO = 9;
+    public static final int ACAO_RESTAURAR_SESSAO = 10;
+    public static final int ACAO_INICIAR_NOVA_SESSAO = 11;
+    public static final int ACAO_REQUISITAR_ENDERECO_API_GOOGLE = 12;
+    public static final int ACAO_BUSCAR_IMAGEM_NA_MEMORIA_INTERNA = 13;
+    public static final int ACAO_SALVAR_IMAGEM_NA_MEMORIA_INTERNA = 14;
+    public static final int ACAO_RECUPERAR_RECEITAS_POR_TIPO = 15;
+    public static final int ACAO_RECUPERAR_RECEITAS_DO_USUARIO = 16;
+    public static final int ACAO_CADASTRAR_NOVA_RECEITA = 17;
+    public static final int ACAO_CADASTRAR_RECEITA_FAVORITA = 18;
+    public static final int ACAO_RECUPERAR_RECEITAS = 19;
 
     public static AtoxMensagem getInstance() {
         if(INSTANCE == null) {

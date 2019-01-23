@@ -43,13 +43,13 @@ public class ReceitaNegocio {
             resultadoIdsDeInsercao.add(resultadoInsercaoUsuarioReceita);
         } catch (ExecutionException e) {
             log = new AtoxLog();
-            log.novoRegistro(AtoxMensagem.ACAO_EFETUAR_LOGIN,
+            log.novoRegistro(AtoxMensagem.ACAO_CADASTRAR_RECEITA_FAVORITA,
                     AtoxMensagem.ERRO_BUSCAR_REGISTRO_NO_BANCO,
                     "Um erro de execução ocorreu ao tentar inserir uma receita no banco: " + e.getMessage());
             log.empurraRegistrosPraFila();
         } catch (InterruptedException e) {
             log = new AtoxLog();
-            log.novoRegistro(AtoxMensagem.ACAO_EFETUAR_LOGIN,
+            log.novoRegistro(AtoxMensagem.ACAO_CADASTRAR_RECEITA_FAVORITA,
                     AtoxMensagem.ERRO_BUSCAR_REGISTRO_NO_BANCO,
                     "Um erro de execução ocorreu ao tentar inserir uma receita no banco: " + e.getMessage());
             log.empurraRegistrosPraFila();
@@ -74,13 +74,13 @@ public class ReceitaNegocio {
 
         } catch (ExecutionException e) {
             log = new AtoxLog();
-            log.novoRegistro(AtoxMensagem.ACAO_EFETUAR_LOGIN,
+            log.novoRegistro(AtoxMensagem.ACAO_CADASTRAR_NOVA_RECEITA,
                     AtoxMensagem.ERRO_BUSCAR_REGISTRO_NO_BANCO,
                     "Um erro de execução ocorreu ao tentar inserir uma receita no banco: " + e.getMessage());
             log.empurraRegistrosPraFila();
         } catch (InterruptedException e) {
             log = new AtoxLog();
-            log.novoRegistro(AtoxMensagem.ACAO_EFETUAR_LOGIN,
+            log.novoRegistro(AtoxMensagem.ACAO_CADASTRAR_NOVA_RECEITA,
                     AtoxMensagem.ERRO_BUSCAR_REGISTRO_NO_BANCO,
                     "Um erro de execução ocorreu ao tentar inserir uma receita no banco: " + e.getMessage());
             log.empurraRegistrosPraFila();
@@ -102,13 +102,55 @@ public class ReceitaNegocio {
             receitas = receitaDao.buscarPorIdDeUsuario(idDeUsuario);
         } catch (ExecutionException e) {
             log = new AtoxLog();
-            log.novoRegistro(AtoxMensagem.ACAO_EFETUAR_LOGIN,
+            log.novoRegistro(AtoxMensagem.ACAO_RECUPERAR_RECEITAS_DO_USUARIO,
                     AtoxMensagem.ERRO_BUSCAR_REGISTRO_NO_BANCO,
                     "Um erro de execução ocorreu ao tentar buscar um usuário no banco: " + e.getMessage());
             log.empurraRegistrosPraFila();
         } catch (InterruptedException e) {
             log = new AtoxLog();
-            log.novoRegistro(AtoxMensagem.ACAO_EFETUAR_LOGIN,
+            log.novoRegistro(AtoxMensagem.ACAO_RECUPERAR_RECEITAS_DO_USUARIO,
+                    AtoxMensagem.ERRO_BUSCAR_REGISTRO_NO_BANCO,
+                    "Um erro de execução ocorreu ao tentar buscar um usuário no banco: " + e.getMessage());
+            log.empurraRegistrosPraFila();
+        }
+        return receitas;
+    }
+
+    public List<Receita> buscarReceitasPorTipo(Long tipo) {
+        AtoxLog log = new AtoxLog();
+        List<Receita> receitas = null;
+        try {
+            receitas = receitaDao.buscarReceitasPorTipo(tipo);
+        } catch (ExecutionException e) {
+            log = new AtoxLog();
+            log.novoRegistro(AtoxMensagem.ACAO_RECUPERAR_RECEITAS_POR_TIPO,
+                    AtoxMensagem.ERRO_BUSCAR_REGISTRO_NO_BANCO,
+                    "Um erro de execução ocorreu ao tentar buscar um usuário no banco: " + e.getMessage());
+            log.empurraRegistrosPraFila();
+        } catch (InterruptedException e) {
+            log = new AtoxLog();
+            log.novoRegistro(AtoxMensagem.ACAO_RECUPERAR_RECEITAS_POR_TIPO,
+                    AtoxMensagem.ERRO_BUSCAR_REGISTRO_NO_BANCO,
+                    "Um erro de execução ocorreu ao tentar buscar um usuário no banco: " + e.getMessage());
+            log.empurraRegistrosPraFila();
+        }
+        return receitas;
+    }
+
+    public List<Receita> buscarTodasReceitas() {
+        AtoxLog log = new AtoxLog();
+        List<Receita> receitas = null;
+        try {
+            receitas = receitaDao.buscarTodasReceitas();
+        } catch (ExecutionException e) {
+            log = new AtoxLog();
+            log.novoRegistro(AtoxMensagem.ACAO_RECUPERAR_RECEITAS,
+                    AtoxMensagem.ERRO_BUSCAR_REGISTRO_NO_BANCO,
+                    "Um erro de execução ocorreu ao tentar buscar um usuário no banco: " + e.getMessage());
+            log.empurraRegistrosPraFila();
+        } catch (InterruptedException e) {
+            log = new AtoxLog();
+            log.novoRegistro(AtoxMensagem.ACAO_RECUPERAR_RECEITAS,
                     AtoxMensagem.ERRO_BUSCAR_REGISTRO_NO_BANCO,
                     "Um erro de execução ocorreu ao tentar buscar um usuário no banco: " + e.getMessage());
             log.empurraRegistrosPraFila();

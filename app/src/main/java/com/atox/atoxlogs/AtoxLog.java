@@ -26,10 +26,10 @@ public class AtoxLog {
     private Long usuarioId;
 
     @ColumnInfo(name = "acao")
-    private String acao;
+    private int acao;
 
     @ColumnInfo(name = "erro")
-    private String erro;
+    private int erro;
 
     @ColumnInfo(name = "mensagem")
     private String mensagem;
@@ -70,19 +70,19 @@ public class AtoxLog {
         this.usuarioId = usuarioId;
     }
 
-    public String getAcao() {
+    public int getAcao() {
         return acao;
     }
 
-    public void setAcao(String acao) {
+    public void setAcao(int acao) {
         this.acao = acao;
     }
 
-    public String getErro() {
+    public int getErro() {
         return erro;
     }
 
-    public void setErro(String erro) {
+    public void setErro(int erro) {
         this.erro = erro;
     }
 
@@ -117,7 +117,7 @@ public class AtoxLog {
         this.timeStamp = dateTimeString;
     }
 
-    public void novoRegistro(String acao, String erro, String mensagem) {
+    public void novoRegistro(int acao, int erro, String mensagem) {
         AtoxLog novoLog = new AtoxLog();
         novoLog.setAcao(acao);
         novoLog.setErro(erro);
@@ -126,7 +126,7 @@ public class AtoxLog {
         this.logs.add(novoLog);
     }
 
-    public void novoRegistro(Long uid, String acao, String erro, String mensagem) {
+    public void novoRegistro(Long uid, int acao, int erro, String mensagem) {
         AtoxLog novoLog = new AtoxLog();
         novoLog.setUsuarioId(uid);
         novoLog.setAcao(acao);
@@ -136,7 +136,7 @@ public class AtoxLog {
         this.logs.add(novoLog);
     }
 
-    public void novoRegistro(Long uid, String acao, String mensagem) {
+    public void novoRegistro(Long uid, int acao, String mensagem) {
         AtoxLog novoLog = new AtoxLog();
         novoLog.setUsuarioId(uid);
         novoLog.setAcao(acao);

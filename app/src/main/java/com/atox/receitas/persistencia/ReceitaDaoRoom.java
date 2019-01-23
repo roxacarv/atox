@@ -20,4 +20,7 @@ public interface ReceitaDaoRoom extends DaoBase<Receita> {
     @Query("SELECT * FROM receita where nome_receita LIKE :nomeReceita")
     Receita getReceitaPorNome(String nomeReceita);
 
+    @Query("SELECT * FROM receita where tipo_receita LIKE :tipoReceita")
+    List<Receita> getReceitasPorTipo(Long tipoReceita);
+
 }

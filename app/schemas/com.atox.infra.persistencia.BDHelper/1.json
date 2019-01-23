@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "92dff15855228f34c56902cb55f4bc37",
+    "identityHash": "9481cb3517cb04371a2ddc783be1121e",
     "entities": [
       {
         "tableName": "usuario",
@@ -286,7 +286,7 @@
       },
       {
         "tableName": "atox_log",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `usuario_log_id` INTEGER, `acao` TEXT, `erro` TEXT, `mensagem` TEXT, `time_stamp` TEXT, `tipo` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `usuario_log_id` INTEGER, `acao` INTEGER NOT NULL, `erro` INTEGER NOT NULL, `mensagem` TEXT, `time_stamp` TEXT, `tipo` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -303,14 +303,14 @@
           {
             "fieldPath": "acao",
             "columnName": "acao",
-            "affinity": "TEXT",
-            "notNull": false
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "erro",
             "columnName": "erro",
-            "affinity": "TEXT",
-            "notNull": false
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "mensagem",
@@ -342,7 +342,7 @@
       },
       {
         "tableName": "receita",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`rid` INTEGER PRIMARY KEY AUTOINCREMENT, `tipo` INTEGER NOT NULL, `nome_receita` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`rid` INTEGER PRIMARY KEY AUTOINCREMENT, `tipo` INTEGER NOT NULL, `nome_receita` TEXT, `tipo_receita` INTEGER)",
         "fields": [
           {
             "fieldPath": "rid",
@@ -360,6 +360,12 @@
             "fieldPath": "nome",
             "columnName": "nome_receita",
             "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "tipoReceita",
+            "columnName": "tipo_receita",
+            "affinity": "INTEGER",
             "notNull": false
           }
         ],
@@ -506,7 +512,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"92dff15855228f34c56902cb55f4bc37\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"9481cb3517cb04371a2ddc783be1121e\")"
     ]
   }
 }

@@ -25,6 +25,9 @@ public class Receita {
     @ColumnInfo(name = "nome_receita")
     private String nome;
 
+    @ColumnInfo(name = "tipo_receita")
+    private Long tipoReceita;
+
     @Ignore
     private List<SecaoReceita> secoes;
 
@@ -58,5 +61,13 @@ public class Receita {
 
     public void setSecoes(List<SecaoReceita> secoes) {
         this.secoes = secoes;
+    }
+
+    public Long getTipoReceita() {
+        return tipoReceita;
+    }
+
+    public void setTipoReceita(Long tipoReceita) {
+        this.tipoReceita = tipoReceita;
     }
 }

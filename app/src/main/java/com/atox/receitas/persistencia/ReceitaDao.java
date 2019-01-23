@@ -118,6 +118,34 @@ public class ReceitaDao extends AndroidViewModel {
         return future.get();
     }
 
+    public List<Receita> buscarReceitasPorTipo(final Long tipo) throws ExecutionException, InterruptedException {
+        Callable<List<Receita>> call = new Callable<List<Receita>>() {
+            @Override
+            public List<Receita> call() throws Exception {
+                List<Receita> receitasDoTipo = bancoDeDados.receitaDaoRoom().getReceitasPorTipo(tipo);
+                List<Receita> receitasResultado = montarReceitasPorTipo(receitasDoTipo);
+                return receitasResultado;
+            }
+        };
+        ExecutorService executor = new ScheduledThreadPoolExecutor(1);
+        Future<List<Receita>> future = executor.submit(call);
+        return future.get();
+    }
+
+    public List<Receita> buscarTodasReceitas() throws ExecutionException, InterruptedException {
+        Callable<List<Receita>> call = new Callable<List<Receita>>() {
+            @Override
+            public List<Receita> call() throws Exception {
+                List<Receita> todasReceitas = bancoDeDados.receitaDaoRoom().getTodos();
+                List<Receita> receitasResultado = montarReceitasPorTipo(todasReceitas);
+                return receitasResultado;
+            }
+        };
+        ExecutorService executor = new ScheduledThreadPoolExecutor(1);
+        Future<List<Receita>> future = executor.submit(call);
+        return future.get();
+    }
+
 
     public List<SecaoReceita> buscarSecoesReceita(Receita receita){
         List<SecaoReceita> secoes = new ArrayList<>();
@@ -138,6 +166,17 @@ public class ReceitaDao extends AndroidViewModel {
             receitas.add(receita);
         }
         return receitas;
+    }
+
+    public List<Receita> montarReceitasPorTipo(List<Receita> receitas) {
+        List<Receita> receitasDoTipo = new ArrayList<>();
+        for(Receita receita : receitas) {
+            List<SecaoReceita> secoesReceitas = null;
+            secoesReceitas = bancoDeDados.secaoReceitaDaoRoom().getSecaoPorIdDeReceita(receita.getRid());
+            receita.setSecoes(secoesReceitas);
+            receitasDoTipo.add(receita);
+        }
+        return receitasDoTipo;
     }
 
     public void deletarItem(Receita receita) {
