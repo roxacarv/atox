@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "bcbe593d88391993225534048c35b266",
+    "identityHash": "92dff15855228f34c56902cb55f4bc37",
     "entities": [
       {
         "tableName": "usuario",
@@ -342,13 +342,19 @@
       },
       {
         "tableName": "receita",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`rid` INTEGER PRIMARY KEY AUTOINCREMENT, `nome_receita` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`rid` INTEGER PRIMARY KEY AUTOINCREMENT, `tipo` INTEGER NOT NULL, `nome_receita` TEXT)",
         "fields": [
           {
             "fieldPath": "rid",
             "columnName": "rid",
             "affinity": "INTEGER",
             "notNull": false
+          },
+          {
+            "fieldPath": "tipo",
+            "columnName": "tipo",
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "nome",
@@ -500,7 +506,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"bcbe593d88391993225534048c35b266\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"92dff15855228f34c56902cb55f4bc37\")"
     ]
   }
 }

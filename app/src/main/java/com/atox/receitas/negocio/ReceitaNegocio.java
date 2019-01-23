@@ -138,6 +138,7 @@ public class ReceitaNegocio {
         return resultadoInsercaoUsuarioReceita;
     }
 
+
     public void removerReceita(Receita receita) {
         AtoxLog log = new AtoxLog();
         Long resultado = null;

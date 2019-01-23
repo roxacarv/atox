@@ -19,6 +19,9 @@ public class Receita {
     @PrimaryKey(autoGenerate = true)
     private Long rid;
 
+    //cluster (0 - frango; 1 - Carne; 2 - Tortas; 3 - chocolate; 4 - Mousses; 5 - bolos)
+    private int tipo;
+
     @ColumnInfo(name = "nome_receita")
     private String nome;
 
@@ -31,6 +34,14 @@ public class Receita {
 
     public void setRid(Long rid) {
         this.rid = rid;
+    }
+
+    public int getTipo(){
+        return this.tipo;
+    }
+
+    public void setTipo(int tipo){
+        this.tipo = tipo;
     }
 
     public String getNome() {

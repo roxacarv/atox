@@ -33,8 +33,8 @@ public class ReceitaDao extends AndroidViewModel {
         Callable<Long> call = new Callable<Long>() {
             @Override
             public Long call() throws Exception {
-                Long idDePessoa = bancoDeDados.receitaDaoRoom().inserir(receita);
-                return idDePessoa;
+                Long idReceita = bancoDeDados.receitaDaoRoom().inserir(receita);
+                return idReceita;
             }
         };
 
