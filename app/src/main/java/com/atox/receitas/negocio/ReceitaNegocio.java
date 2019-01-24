@@ -23,6 +23,7 @@ public class ReceitaNegocio {
         receitaDao = ViewModelProviders.of(activity).get(ReceitaDao.class);
     }
 
+
     public List<Long> cadastrar(Long usuarioId, Receita receita) {
         AtoxLog log = new AtoxLog();
         Long resultadoInsercaoReceita = null;

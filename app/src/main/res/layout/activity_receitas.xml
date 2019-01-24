@@ -4,24 +4,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_receitas_screen"
     tools:context=".receitas.gui.ReceitasActivity"
     android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/editText"
+    <Button
+        android:id="@+id/buttonVoltarParaPerfil"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/btn_voltar_receitas" />
+
+    <TextView
+        android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
-        android:inputType="textPersonName"
+        android:layout_marginTop="10dp"
+        android:text="Busque receitas pra usar seu orgânicos!"
+        android:textColor="@color/white"
+        android:fontFamily="@font/google_sans_regular"
+        android:textSize="16dp"/>
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="395dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/bg_card"
+        android:drawableRight="@mipmap/ic_search"
+        android:drawableTint="@color/lightBlack"
+        android:ems="10"
+        android:fontFamily="@font/google_sans_regular"
         android:hint="@string/pesquise_receitas"
+        android:inputType="textPersonName"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:textColorHint="@color/lightGray"
         tools:layout_editor_absoluteX="98dp"
         tools:layout_editor_absoluteY="33dp" />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recycleViewReceitas"/>
+        android:id="@+id/customRecycleViewReceitas"
+        android:background="@drawable/bg_rcv_receitas"
+        android:padding="30dp"/>
 </LinearLayout>

@@ -80,7 +80,11 @@
             android:name=".navegacao.activities.MenuActivity"
             android:label="@string/title_activity_menu"
             android:theme="@style/FullScreenWithStatusBar" />
-        <activity android:name=".receitas.gui.ReceitasActivity"></activity>
+
+        <!-- RECEITAS -->
+        <activity
+            android:name=".receitas.gui.ReceitasActivity"
+            android:theme="@style/FullScreenTheme" ></activity>
     </application>
 
 </manifest>
