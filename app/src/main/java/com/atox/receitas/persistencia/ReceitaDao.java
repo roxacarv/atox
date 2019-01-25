@@ -118,6 +118,27 @@ public class ReceitaDao extends AndroidViewModel {
         return future.get();
     }
 
+    public List<Receita> buscarReceitaPorNome(final String nome) throws ExecutionException, InterruptedException {
+        Callable<List<Receita>> call = new Callable<List<Receita>>() {
+            @Override
+            public List<Receita> call() throws Exception {
+                Receita receitaPorNome = bancoDeDados.receitaDaoRoom().getReceitaPorNome(nome);
+                List<Receita> receitasResultado = null;
+                if (receitaPorNome != null){
+                    //add receita encontrada a uma lista para montar as secoes dela
+                    List<Receita> listaReceita = new ArrayList<>();
+                    listaReceita.add(receitaPorNome);
+                    receitasResultado = montarReceitasPorTipo(listaReceita);
+                }
+
+                return receitasResultado;
+            }
+        };
+        ExecutorService executor = new ScheduledThreadPoolExecutor(1);
+        Future<List<Receita>> future = executor.submit(call);
+        return future.get();
+    }
+
     public List<Receita> buscarReceitasPorTipo(final Long tipo) throws ExecutionException, InterruptedException {
         Callable<List<Receita>> call = new Callable<List<Receita>>() {
             @Override

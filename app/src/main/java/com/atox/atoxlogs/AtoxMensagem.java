@@ -32,6 +32,7 @@ public class AtoxMensagem {
     public static final int ACAO_CADASTRAR_NOVA_RECEITA = 17;
     public static final int ACAO_CADASTRAR_RECEITA_FAVORITA = 18;
     public static final int ACAO_RECUPERAR_RECEITAS = 19;
+    public static final int ACAO_RECUPERAR_RECEITA_POR_NOME = 20;
 
     public static AtoxMensagem getInstance() {
         if(INSTANCE == null) {

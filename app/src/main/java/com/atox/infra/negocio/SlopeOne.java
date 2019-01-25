@@ -1,5 +1,7 @@
 package com.atox.infra.negocio;
 
+import android.util.Log;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -49,7 +51,8 @@ public class SlopeOne {
 
     public void printData() {
         for (String user : mData.keySet()) {
-            System.out.println(user);
+            Log.i(SlopeOne.class.getName(), user);
+//            System.out.println(user);
             print(mData.get(user));
         }
         for (int i = 0; i < mAllItems.length; i++) {
@@ -69,8 +72,19 @@ public class SlopeOne {
 
     public static void print(Map<String, Double> user) {
         for (String j : user.keySet()) {
-            System.out.println(" " + j + " --> " + user.get(j).floatValue());
+            Log.i(SlopeOne.class.getName(), " " + j + " --> " + user.get(j).floatValue());
+//            System.out.println(" " + j + " --> " + user.get(j).floatValue());
+
         }
+    }
+
+    public static String print2(Map<String, Double> user){
+        StringBuilder sb = new StringBuilder();
+        for (String j : user.keySet()){
+            sb.append(" " + j + " -> " + user.get(j).floatValue() + "\n");
+        }
+        //Log.i(SlopeOne.class.getName(), sb.toString());
+        return sb.toString();
     }
 
     public void buildDiffMatrix() {

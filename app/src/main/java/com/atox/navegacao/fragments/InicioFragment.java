@@ -81,13 +81,13 @@ public class InicioFragment extends Fragment {
 
         carregaLocaisProximos(view);
 
-        try {
-            inserirReceitasNoBD();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            inserirReceitasNoBD();
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         return view;
     }
 
@@ -163,35 +163,6 @@ public class InicioFragment extends Fragment {
             Log.i(TAG, "DEU MERDA 2. " + e.getMessage());
             e.printStackTrace();
         }
-    }
-
-    public void testeInsercaoReceita(){
-        //exemplo de como construir uma receita
-        Receita novaReceita = new Receita();
-        SecaoReceita secaoReceita = new SecaoReceita();
-        secaoReceita.setNome("Como Fazer");
-        secaoReceita.setConteudo("Faça dessa maneira");
-        //secao é sempre uma lista, mesmo que haja apenas uma
-        List<SecaoReceita> secoes = new ArrayList<>();
-        secoes.add(secaoReceita);
-        novaReceita.setNome("Frango Empanado");
-        novaReceita.setSecoes(secoes);
-        //exemplo de como construir uma receita
-        //colocando a receita no banco
-        //passar o id de usuário pra fazer o relacionamento das tabelas
-        List<Long> longs = null;
-        longs = receitaNegocio.cadastrar(sessaoUsuario.getUsuarioLogado().getUid(), novaReceita);
-        //colocando a receita no banco
-        //buscando a receita no banco (sempre retorna uma lista, mesmo que haja apenas uma)
-        List<Receita> receitas = null;
-        receitas = receitaNegocio.buscarReceitasDoUsuario(sessaoUsuario.getUsuarioLogado().getUid());
-        if(receitas != null) {
-            for (Receita receita : receitas) {
-                Log.i(TAG, "Nome da receita: " + receita.getNome());
-                Log.i(TAG, "nome da secao" + receita.getSecoes().get(0).getNome());
-            }
-        }
-        //buscando a receita no banco
     }
 
     public void inicializarVariaveis(View view){

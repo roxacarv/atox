@@ -2,6 +2,7 @@ package com.atox.receitas.negocio;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
 import com.atox.atoxlogs.AtoxLog;
 import com.atox.atoxlogs.AtoxMensagem;
@@ -117,13 +118,39 @@ public class ReceitaNegocio {
         return receitas;
     }
 
+    public Receita buscarReceitaPorNome(String nomeReceita){
+        AtoxLog log = new AtoxLog();
+        Receita resultado = null;
+        try{
+            List<Receita> receitaEncontrada = receitaDao.buscarReceitaPorNome(nomeReceita);
+            if (receitaEncontrada != null){
+                resultado = receitaEncontrada.get(0);
+            }
+        }
+        catch(ExecutionException e){
+            log.novoRegistro(AtoxMensagem.ACAO_RECUPERAR_RECEITA_POR_NOME,
+                    AtoxMensagem.ERRO_BUSCAR_REGISTRO_NO_BANCO,
+                    ("Ocorreu um erro ao buscar a receita \"" + nomeReceita +
+            "\" no banco.\n" +
+            "Mensagem: " + e.getMessage()));
+            log.empurraRegistrosPraFila();
+        } catch(InterruptedException e){
+            log.novoRegistro(AtoxMensagem.ACAO_RECUPERAR_RECEITA_POR_NOME,
+                    AtoxMensagem.ERRO_BUSCAR_REGISTRO_NO_BANCO,
+                    ("Ocorreu um erro ao buscar a receita \"" + nomeReceita +
+                            "\" no banco.\n" +
+                            "Mensagem: " + e.getMessage()));
+        }
+
+        return resultado;
+    }
+
     public List<Receita> buscarReceitasPorTipo(Long tipo) {
         AtoxLog log = new AtoxLog();
         List<Receita> receitas = null;
         try {
             receitas = receitaDao.buscarReceitasPorTipo(tipo);
         } catch (ExecutionException e) {
-            log = new AtoxLog();
             log.novoRegistro(AtoxMensagem.ACAO_RECUPERAR_RECEITAS_POR_TIPO,
                     AtoxMensagem.ERRO_BUSCAR_REGISTRO_NO_BANCO,
                     "Um erro de execução ocorreu ao tentar buscar um usuário no banco: " + e.getMessage());
