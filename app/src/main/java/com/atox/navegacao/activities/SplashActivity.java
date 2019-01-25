@@ -11,8 +11,6 @@ import com.atox.usuario.dominio.Usuario;
 import com.atox.usuario.gui.LoginActivity;
 import com.atox.usuario.negocio.SessaoNegocio;
 
-import java.util.concurrent.ExecutionException;
-
 public class SplashActivity extends AppCompatActivity {
 
     private SessaoUsuario sessaoUsuario;

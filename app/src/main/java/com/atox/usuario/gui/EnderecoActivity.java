@@ -24,7 +24,6 @@ import com.shishank.autocompletelocationview.interfaces.OnQueryCompleteListener;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.ExecutionException;
 
 public class EnderecoActivity extends AppCompatActivity implements OnQueryCompleteListener {
 

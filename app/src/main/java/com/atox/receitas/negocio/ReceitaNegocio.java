@@ -2,7 +2,6 @@ package com.atox.receitas.negocio;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 
 import com.atox.atoxlogs.AtoxLog;
 import com.atox.atoxlogs.AtoxMensagem;

@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.atox.R;
-import com.atox.network.dominio.Feirinha;
-import com.atox.network.gui.FeirinhaCustomAdapter;
 import com.atox.receitas.dominio.Receita;
 
 import java.util.List;

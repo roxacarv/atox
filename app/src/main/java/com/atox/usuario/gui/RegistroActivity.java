@@ -16,12 +16,10 @@ import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.Usuario;
 import com.atox.usuario.negocio.PessoaNegocio;
 
-import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.ExecutionException;
 
 public class RegistroActivity extends AppCompatActivity {
     private EditText mNome;

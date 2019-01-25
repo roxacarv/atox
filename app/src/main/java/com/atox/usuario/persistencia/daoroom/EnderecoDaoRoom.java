@@ -35,6 +35,6 @@ public interface EnderecoDaoRoom extends DaoBase<Endereco> {
     LiveData<List<Endereco>> buscarPorEstado(String estado);
 
     @Query("SELECT * FROM endereco WHERE pais LIKE :pais")
-    LiveData<List<Endereco>> buscarPorPaís(String pais);
+    LiveData<List<Endereco>> buscarPorPais(String pais);
 }
 

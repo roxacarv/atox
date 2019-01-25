@@ -52,7 +52,7 @@ public class SlopeOne {
     public void printData() {
         for (String user : mData.keySet()) {
             Log.i(SlopeOne.class.getName(), user);
-//            System.out.println(user);
+
             print(mData.get(user));
         }
         for (int i = 0; i < mAllItems.length; i++) {
@@ -73,7 +73,6 @@ public class SlopeOne {
     public static void print(Map<String, Double> user) {
         for (String j : user.keySet()) {
             Log.i(SlopeOne.class.getName(), " " + j + " --> " + user.get(j).floatValue());
-//            System.out.println(" " + j + " --> " + user.get(j).floatValue());
 
         }
     }
@@ -83,7 +82,6 @@ public class SlopeOne {
         for (String j : user.keySet()){
             sb.append(" " + j + " -> " + user.get(j).floatValue() + "\n");
         }
-        //Log.i(SlopeOne.class.getName(), sb.toString());
         return sb.toString();
     }
 

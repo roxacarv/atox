@@ -5,8 +5,6 @@ import android.util.Patterns;
 
 import com.atox.infra.persistencia.FormataData;
 
-import java.util.Date;
-
 public class ValidaCadastro {
 
     private final int TAMANHO_CPF = 14;

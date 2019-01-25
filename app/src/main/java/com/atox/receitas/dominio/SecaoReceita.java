@@ -7,8 +7,6 @@ import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
-import com.atox.usuario.dominio.Usuario;
-
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "secao_receita", indices = {@Index("receita_id")},

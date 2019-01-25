@@ -4,7 +4,6 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Query;
 
 import com.atox.infra.persistencia.DaoBase;
-import com.atox.receitas.dominio.Receita;
 import com.atox.receitas.dominio.UsuarioReceita;
 
 import java.util.List;

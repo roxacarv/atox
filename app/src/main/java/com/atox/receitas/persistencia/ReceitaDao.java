@@ -3,7 +3,6 @@ package com.atox.receitas.persistencia;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.atox.infra.persistencia.BDHelper;
 import com.atox.receitas.dominio.Receita;

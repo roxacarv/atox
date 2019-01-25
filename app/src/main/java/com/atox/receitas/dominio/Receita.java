@@ -2,16 +2,10 @@ package com.atox.receitas.dominio;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
-import com.atox.usuario.dominio.Usuario;
-
 import java.util.List;
-
-import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "receita")
 public class Receita {

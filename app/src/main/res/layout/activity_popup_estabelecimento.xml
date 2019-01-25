@@ -14,7 +14,7 @@
             android:layout_weight="0.5"
             android:gravity="center"
             android:text="Nome" />
-        <EditText
+        <TextView
             android:id="@+id/name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
             android:layout_weight="0.5"
             android:gravity="center"
             android:text="Endereco" />
-        <EditText
+        <TextView
             android:id="@+id/address"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
             android:layout_weight="0.5"
             android:gravity="center"
             android:text="Resumo" />
-        <EditText
+        <TextView
             android:id="@+id/resumo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

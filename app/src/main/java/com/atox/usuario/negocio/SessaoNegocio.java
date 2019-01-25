@@ -3,7 +3,6 @@ package com.atox.usuario.negocio;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.v4.app.FragmentActivity;
 
-import com.atox.atoxlogs.AtoxException;
 import com.atox.atoxlogs.AtoxLog;
 import com.atox.atoxlogs.AtoxMensagem;
 import com.atox.usuario.dominio.Pessoa;
