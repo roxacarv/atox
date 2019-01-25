@@ -201,6 +201,20 @@
                 android:layout_height="105dp"
                 android:background="@drawable/bg_messagem_perfil"/>
 
+            <Button
+                android:id="@+id/btnIrParaRecomendacaoActivity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/bg_rounded"
+                android:fontFamily="@font/google_sans_regular"
+                android:text="@string/recomendacao"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

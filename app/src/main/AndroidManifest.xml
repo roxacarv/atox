@@ -84,7 +84,13 @@
         <!-- RECEITAS -->
         <activity
             android:name=".receitas.gui.ReceitasActivity"
-            android:theme="@style/FullScreenTheme" ></activity>
+            android:theme="@style/FullScreenTheme" />
+
+        <!-- RECOMENDAÇÃO-->
+        <activity
+            android:name=".receitas.gui.RecomendacaoActivity"
+            android:theme="@style/FullScreenTheme" />
+
     </application>
 
 </manifest>

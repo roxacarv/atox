@@ -17,6 +17,7 @@ import com.atox.R;
 import com.atox.atoxlogs.AtoxLog;
 import com.atox.infra.negocio.ArmazenarImagem;
 import com.atox.receitas.gui.ReceitasActivity;
+import com.atox.receitas.gui.RecomendacaoActivity;
 import com.atox.usuario.dominio.Endereco;
 import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.SessaoUsuario;
@@ -48,6 +49,7 @@ public class PerfilFragment extends Fragment {
     private AtoxLog log;
     private ImageView image;
     private Button btnIrPraReceitas;
+    private Button btnIrPraRecomendacao;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -78,6 +80,7 @@ public class PerfilFragment extends Fragment {
         btnIrPraReceitas = (Button)view.findViewById(R.id.buttonIrPraReceitas);
         btnEditar = (Button)view.findViewById(R.id.btnEditarDados);
         btnSair = (Button)view.findViewById(R.id.btnSairDoApp);
+        btnIrPraRecomendacao = (Button)view.findViewById(R.id.btnIrParaRecomendacaoActivity);
     }
 
     private void defineOnClickListenerBotoes(){
@@ -100,6 +103,14 @@ public class PerfilFragment extends Fragment {
                 Intent receitasTela = new Intent(getActivity(), ReceitasActivity.class);
                 startActivity(receitasTela);
 
+            }
+        });
+        btnIrPraRecomendacao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //chamar activity que vai mostrar as recomendacoes...
+                Intent irRecomendacao = new Intent(getActivity(), RecomendacaoActivity.class);
+                startActivity(irRecomendacao);
             }
         });
     }
@@ -135,10 +146,6 @@ public class PerfilFragment extends Fragment {
             roundDrawable.setCircular(true);
             image.setImageDrawable(roundDrawable);
         }
-    }
-
-    public void voltarParaTelaDeLogin(View view) {
-        //mudar de tela
     }
 
 

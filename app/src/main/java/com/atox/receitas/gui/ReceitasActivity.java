@@ -1,24 +1,14 @@
 package com.atox.receitas.gui;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.Button;
-
 import com.atox.R;
-import com.atox.navegacao.fragments.PerfilFragment;
-import com.atox.network.dominio.Produtor;
-import com.atox.network.gui.ProdutorCustomAdapter;
-import com.atox.network.negocio.ProdutorNegocio;
 import com.atox.receitas.dominio.Receita;
 import com.atox.receitas.negocio.ReceitaNegocio;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class ReceitasActivity extends AppCompatActivity {
@@ -34,32 +24,9 @@ public class ReceitasActivity extends AppCompatActivity {
 
         receitaNegocio = new ReceitaNegocio(this);
 
-        Receita boloChocolate = new Receita();
-        boloChocolate.setNome("Bolo de Chocolate");
-
-        Receita frangoAssado = new Receita();
-        frangoAssado.setNome("Frango Assado");
-
-        Receita tortaLimao = new Receita();
-        tortaLimao.setNome("Torta de Limão");
-
-        Receita feijaoTropeiro = new Receita();
-        feijaoTropeiro.setNome("Feijão Tropeiro");
-
-        ArrayList<Receita> arrayListTesteReceitas = new ArrayList<Receita>();
-        arrayListTesteReceitas.add(boloChocolate);
-        arrayListTesteReceitas.add(frangoAssado);
-        arrayListTesteReceitas.add(tortaLimao);
-        arrayListTesteReceitas.add(feijaoTropeiro);
-
-
         customRecyclerViewReceita = (RecyclerView) findViewById(R.id.customRecycleViewReceitas);
 
-        // generateDataList(listaDeProdutores, customRecyclerViewProdutor, getContext(), pAdapter);
         gerandoListaDeReceitas(receitaNegocio.buscarTodasReceitas(),customRecyclerViewReceita, this,receitaCustomAdapter);
-
-
-
 
     }
 
