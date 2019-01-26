@@ -14,7 +14,6 @@ public class RetrofitInstanciaCliente {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
-
         return retrofit;
     }
 }

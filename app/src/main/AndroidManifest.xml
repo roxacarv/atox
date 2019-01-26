@@ -3,8 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.atox">
 
-    <!--Internet Permission-->
+    <!-- Internet Permission -->
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Media Permission -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <!-- Camera Permission -->
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -12,6 +18,10 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- To the nearby locations -->
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -23,7 +33,10 @@
         tools:ignore="GoogleAppIndexingWarning">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCsUKjHUXgVBpHCqRnBQ8F2i8IeEoBdFHg" />
+            android:value="AIzaSyDNpmXtMaX02yJ-V_Zf8gSsxMaDWKt1C4o" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
         <!-- SPLASH SCREEN -->
         <activity
@@ -57,11 +70,27 @@
             android:name=".usuario.gui.EnderecoActivity"
             android:theme="@style/FullScreenTheme" />
 
+        <!-- EDIT PROFILE SCREEN -->
+        <activity
+            android:name=".usuario.gui.EditarPerfilActivity"
+            android:theme="@style/FullScreenTheme" />
+
         <!-- BOTTOM MENU SCREEN -->
         <activity
             android:name=".navegacao.activities.MenuActivity"
-            android:theme="@style/FullScreenWithStatusBar"
-            android:label="@string/title_activity_menu"></activity>
+            android:label="@string/title_activity_menu"
+            android:theme="@style/FullScreenWithStatusBar" />
+
+        <!-- RECEITAS -->
+        <activity
+            android:name=".receitas.gui.ReceitasActivity"
+            android:theme="@style/FullScreenTheme" />
+
+        <!-- RECOMENDAÇÃO-->
+        <activity
+            android:name=".receitas.gui.RecomendacaoActivity"
+            android:theme="@style/FullScreenTheme" />
+
     </application>
 
 </manifest>

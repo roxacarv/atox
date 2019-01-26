@@ -3,6 +3,7 @@ package com.atox.usuario.persistencia.dao;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.atox.infra.persistencia.BDHelper;
 import com.atox.usuario.dominio.Endereco;
@@ -18,7 +19,8 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 public class SessaoUsuarioDao extends AndroidViewModel {
 
-    private final BDHelper bancoDeDados;
+    private BDHelper bancoDeDados;
+    private SessaoUsuario sessaoUsuario;
 
     public SessaoUsuarioDao(Application application)
     {
@@ -38,8 +40,9 @@ public class SessaoUsuarioDao extends AndroidViewModel {
     public Long salvarSessao(final SessaoUsuario sessaoUsuario) throws ExecutionException, InterruptedException {
         Callable<Long> call = new Callable<Long>() {
             @Override
-            public Long call() {
-                return bancoDeDados.sessaoDaoRoom().inserir(sessaoUsuario);
+            public Long call() throws Exception {
+                Long idDeRetorno = bancoDeDados.sessaoDaoRoom().inserir(sessaoUsuario);
+                return idDeRetorno;
             }
         };
         ExecutorService executor = new ScheduledThreadPoolExecutor(1);
@@ -50,12 +53,14 @@ public class SessaoUsuarioDao extends AndroidViewModel {
     public Pessoa restaurarSessao() throws ExecutionException, InterruptedException {
         Callable<Pessoa> call = new Callable<Pessoa>() {
             @Override
-            public Pessoa call() {
-                Long idDeRetorno = bancoDeDados.sessaoDaoRoom().ultimoIdLogado();
+            public Pessoa call() throws Exception {
+                Long idDeRetorno = null;
+                idDeRetorno = bancoDeDados.sessaoDaoRoom().ultimoIdLogado();
                 if (idDeRetorno == null) {
                     return null;
                 }
-                return iniciarSessao(idDeRetorno);
+                Pessoa pessoa = iniciarSessao(idDeRetorno);
+                return pessoa;
             }
         };
         ExecutorService executor = new ScheduledThreadPoolExecutor(1);
@@ -63,7 +68,7 @@ public class SessaoUsuarioDao extends AndroidViewModel {
         return future.get();
     }
 
-    private Pessoa iniciarSessao(Long id) {
+    public Pessoa iniciarSessao(Long id) {
         Pessoa pessoa = bancoDeDados.pessoaDaoRoom().buscarPorIdDeusuario(id);
         if(pessoa == null) {
             return null;
@@ -76,7 +81,7 @@ public class SessaoUsuarioDao extends AndroidViewModel {
         pessoa.setUsuarioId(usuario.getUid());
         pessoa.setUsuario(usuario);
         pessoa.setEndereco(endereco);
-        SessaoUsuario sessaoUsuario = SessaoUsuario.getSessao();
+        sessaoUsuario = SessaoUsuario.getInstance();
         sessaoUsuario.setPessoaLogada(pessoa);
         sessaoUsuario.setUsuarioLogado(pessoa.getUsuario());
         return pessoa;
@@ -84,17 +89,20 @@ public class SessaoUsuarioDao extends AndroidViewModel {
 
 
 
-    private Usuario buscarUsuarioPorId(Long id) {
-        return bancoDeDados.usuarioDaoRoom().buscarPorId(id);
+    public Usuario buscarUsuarioPorId(Long id) {
+        Usuario usuario = bancoDeDados.usuarioDaoRoom().buscarPorId(id);
+        return usuario;
     }
 
-    private Endereco buscarEnderecoPorIdDePessoa(Long id) {
-        return bancoDeDados.enderecoDaoRoom().buscarPorIdDePessoa(id);
+    public Endereco buscarEnderecoPorIdDePessoa(Long id) {
+        Endereco endereco = bancoDeDados.enderecoDaoRoom().buscarPorIdDePessoa(id);
+        return endereco;
     }
 
 
     public void deletarItem(SessaoUsuario sessao)
     {
+        Log.i("SESSAO DAO", "Iniciou a deleção do sessão");
         new SessaoUsuarioDao.deleteAsyncTaskSessao(bancoDeDados).execute(sessao);
     }
 
@@ -107,7 +115,7 @@ public class SessaoUsuarioDao extends AndroidViewModel {
         @Override
         protected Void doInBackground(final SessaoUsuario... params)
         {
-            bd.sessaoDaoRoom().deletar(params[0]);
+            int idDeletado = bd.sessaoDaoRoom().deletar(params[0]);
             return null;
         }
     }

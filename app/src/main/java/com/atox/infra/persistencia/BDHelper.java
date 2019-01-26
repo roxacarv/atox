@@ -6,8 +6,16 @@ import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
+import com.atox.atoxlogs.AtoxLog;
+import com.atox.atoxlogs.persistencia.daoroom.AtoxLogDaoRoom;
+import com.atox.receitas.dominio.Receita;
+import com.atox.receitas.dominio.SecaoReceita;
+import com.atox.receitas.dominio.UsuarioReceita;
+import com.atox.receitas.persistencia.ReceitaDaoRoom;
 import com.atox.network.dominio.Produtor;
 import com.atox.network.persistencia.daoroom.ProdutorDaoRoom;
+import com.atox.receitas.persistencia.SecaoReceitaDaoRoom;
+import com.atox.receitas.persistencia.UsuarioReceitaDaoRoom;
 import com.atox.usuario.dominio.SessaoUsuario;
 import com.atox.usuario.persistencia.daoroom.EnderecoDaoRoom;
 import com.atox.usuario.persistencia.daoroom.PessoaDaoRoom;
@@ -21,7 +29,11 @@ import com.atox.usuario.dominio.Usuario;
                        SessaoUsuario.class,
                        Endereco.class,
                        Pessoa.class,
-                       Produtor.class
+                       Produtor.class,
+                       AtoxLog.class,
+                       Receita.class,
+                       UsuarioReceita.class,
+                       SecaoReceita.class
                      },
           version = 1)
 @TypeConverters({ConversorDeDate.class})
@@ -48,5 +60,9 @@ public abstract class BDHelper extends RoomDatabase {
     public abstract EnderecoDaoRoom enderecoDaoRoom();
     public abstract PessoaDaoRoom pessoaDaoRoom();
     public abstract ProdutorDaoRoom produtorDaoRoom();
+    public abstract AtoxLogDaoRoom atoxLogDaoRoom();
+    public abstract ReceitaDaoRoom receitaDaoRoom();
+    public abstract UsuarioReceitaDaoRoom usuarioReceitaDaoRoom();
+    public abstract SecaoReceitaDaoRoom secaoReceitaDaoRoom();
 
 }

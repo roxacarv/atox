@@ -3,7 +3,7 @@ package com.atox.network.negocio;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.v4.app.FragmentActivity;
 
-import com.atox.infra.AtoxLog;
+import com.atox.atoxlogs.AtoxLog;
 import com.atox.network.dominio.Produtor;
 import com.atox.network.persistencia.dao.ProdutorDao;
 
@@ -12,7 +12,7 @@ import java.util.concurrent.ExecutionException;
 
 public class ProdutorNegocio {
 
-    private final ProdutorDao produtorDao;
+    private ProdutorDao produtorDao;
     private Produtor produtor;
 
     public ProdutorNegocio(FragmentActivity activity){
@@ -21,7 +21,7 @@ public class ProdutorNegocio {
 
     public List<Long> inserirProdutores(List<Produtor> produtoresParaInserir) {
         List<Long> idDeProdutores = null;
-        Produtor[] produtores = produtoresParaInserir.toArray(new Produtor[0]);
+        Produtor[] produtores = produtoresParaInserir.toArray(new Produtor[produtoresParaInserir.size()]);
         try {
             List<Long> idsDoBanco = produtorDao.inserirProdutores(produtores);
             if(idsDoBanco != null) {
@@ -31,6 +31,7 @@ public class ProdutorNegocio {
             AtoxLog novoLog = new AtoxLog();
         } catch (InterruptedException e) {
             AtoxLog novoLog = new AtoxLog();
+            Thread.currentThread().interrupt();
         }
         return idDeProdutores;
     }
@@ -46,6 +47,7 @@ public class ProdutorNegocio {
             AtoxLog novoLogo = new AtoxLog();
         } catch (InterruptedException e) {
             AtoxLog novoLogo = new AtoxLog();
+            Thread.currentThread().interrupt();
         }
         return produtores;
     }

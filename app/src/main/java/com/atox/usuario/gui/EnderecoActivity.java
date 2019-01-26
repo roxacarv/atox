@@ -1,11 +1,8 @@
 package com.atox.usuario.gui;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +11,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.atox.R;
+import com.atox.atoxlogs.AtoxLog;
+import com.atox.atoxlogs.AtoxMensagem;
 import com.atox.usuario.dominio.Endereco;
 import com.atox.usuario.dominio.Pessoa;
 import com.atox.usuario.dominio.SessaoUsuario;
@@ -25,8 +24,6 @@ import com.shishank.autocompletelocationview.interfaces.OnQueryCompleteListener;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
-import java.util.concurrent.ExecutionException;
 
 public class EnderecoActivity extends AppCompatActivity implements OnQueryCompleteListener {
 
@@ -34,38 +31,28 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
 
     private Pessoa pessoa;
     private Usuario usuario;
+    private PessoaNegocio pessoaNegocio;
     private SessaoUsuario sessaoUsuario;
+    private Bundle dadosPessoais;
+    private Button buttonRegistrar;
     private AutoCompleteTextView editTextAddress;
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_endereco);
-        Button buttonRegistrar = findViewById(R.id.buttonRegistrar);
-        editTextAddress = findViewById(R.id.editTextAddress);
-        Bundle dadosPessoais = getIntent().getExtras();
-        PessoaNegocio pessoaNegocio = new PessoaNegocio(this);
-
-        try {
-            dadosPessoais = Objects.requireNonNull(dadosPessoais);
-            pessoa = pessoaNegocio.recuperarPessoaPorId(dadosPessoais.getLong("ID_USUARIO"));
-        } catch (ExecutionException e) {
-            alert(getString(com.atox.R.string.erro_na_hora_de_realizar_cadastro));
-            irParaTelaDeLogin();
-        } catch (InterruptedException e) {
-            alert(getString(com.atox.R.string.parou_de_funcionar_inesperadamente));
-            irParaTelaDeLogin();
-        }
-
+        inicializarVariaveis();
     }
 
     public void backToRegistroScreen(View view){
-
         Intent registerScreen = new Intent(EnderecoActivity.this, RegistroActivity.class);
         startActivity(registerScreen);
-
-
+    }
+    public void inicializarVariaveis(){
+        buttonRegistrar = findViewById(R.id.buttonRegistrar);
+        editTextAddress = findViewById(R.id.editTextAddress);
+        dadosPessoais = getIntent().getExtras();
+        pessoaNegocio = new PessoaNegocio(this);
+        pessoa = pessoaNegocio.recuperarPessoaPorId(dadosPessoais.getLong("ID_USUARIO"));
     }
 
     private Pessoa registraNoBancoDeDados() {
@@ -78,13 +65,10 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private Endereco criarEndereco(Long idDePessoa) {
         Address testLocation = getAddress(editTextAddress.getText().toString());
-
         Endereco endereco = new Endereco();
         endereco.setPessoaId(idDePessoa);
-        testLocation = Objects.requireNonNull(testLocation);
         endereco.setCidade(testLocation.getSubAdminArea());
         endereco.setBairro(testLocation.getSubLocality());
         endereco.setCep(testLocation.getPostalCode());
@@ -94,19 +78,21 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
         return endereco;
     }
 
-    private Address getAddress(String completeAddress)
+    public Address getAddress(String completeAddress)
     {
         Geocoder geocoder;
         List addresses;
         geocoder = new Geocoder(this, Locale.getDefault());
-
         try {
             addresses = geocoder.getFromLocationName(completeAddress, 1);
             return (Address) addresses.get(0);
         } catch (IOException e) {
-            e.printStackTrace();
+            AtoxLog log = new AtoxLog();
+            log.novoRegistro(AtoxMensagem.ACAO_REQUISITAR_ENDERECO_API_GOOGLE,
+                    AtoxMensagem.ERRO_NO_USO_DE_API,
+                    "Um erro ocorreu na requisição da API da Google: " + e.getMessage());
+            log.empurraRegistrosPraFila();
         }
-
         return null;
     }
 
@@ -131,7 +117,7 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
         startActivity(loginScreen);
     }
 
-    private void irParaTelaDeLogin() {
+    public void irParaTelaDeLogin() {
         Intent loginScreen = new Intent(EnderecoActivity.this, LoginActivity.class);
         startActivity(loginScreen);
     }

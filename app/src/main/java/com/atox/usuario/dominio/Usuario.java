@@ -7,12 +7,7 @@ package com.atox.usuario.dominio;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
-
-import com.atox.lugar.dominio.Lugar;
-
-import java.util.List;
 
 @Entity(tableName = "usuario")
 public class Usuario {
@@ -26,8 +21,6 @@ public class Usuario {
     @ColumnInfo(name = "senha")
     private String senha;
 
-    @Ignore
-    private List<Lugar> lugares;
 
 
     public String getEmail() {
@@ -45,15 +38,6 @@ public class Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
-    public List<Lugar> getLugares() {
-        return lugares;
-    }
-
-    public void setLugares(List<Lugar> lugares) {
-        this.lugares = lugares;
-    }
-
     public long getUid() {
         return uid;
     }

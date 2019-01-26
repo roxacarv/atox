@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".usuario.gui.EditarPerfilActivity"
+    android:background="@drawable/bg_loginscreen">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/buttonBack"
+                android:layout_width="46dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:background="@mipmap/ic_back" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/google_sans_bold"
+                android:paddingLeft="20dp"
+                android:paddingTop="20dp"
+                android:text="EDITAR PERFIL"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/google_sans_regular"
+                android:paddingLeft="20dp"
+                android:paddingTop="0dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp"
+                android:text="Aqui você pode editar as informações do seu perfil"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/imageNew"
+                android:layout_width="match_parent"
+                android:layout_height="210dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:onClick="imagemClick"
+                android:paddingBottom="30dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_perfil_padrao" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/google_sans_bold"
+                android:paddingLeft="20dp"
+                android:paddingTop="30dp"
+                android:text="DADOS PESSOAIS"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/editTextEditarNome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="30dp"
+                android:drawableLeft="@mipmap/ic_gray_person"
+                android:ems="10"
+                android:fontFamily="@font/google_sans_regular"
+                android:hint="Seu nome"
+                android:inputType="textCapWords"
+                android:outlineAmbientShadowColor="@color/colorPrimary"
+                android:outlineSpotShadowColor="@color/colorPrimary"
+                android:paddingRight="160dp"
+                android:textColorHighlight="@color/colorPrimary"
+                android:textColorLink="@color/colorPrimary"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/editTextEditarTelefone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:drawableLeft="@mipmap/ic_gray_phone"
+                android:ems="10"
+                android:fontFamily="@font/google_sans_regular"
+                android:hint="Seu telefone"
+                android:inputType="phone"
+                android:textColorHighlight="@color/colorPrimary"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/editTextEditarDataNascimento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:drawableLeft="@mipmap/ic_gray_birthday"
+                android:ems="10"
+                android:fontFamily="@font/google_sans_regular"
+                android:hint="Sua Data Nascimento"
+                android:inputType="date"
+                android:textColorHighlight="@color/colorPrimary"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/google_sans_bold"
+                android:paddingLeft="20dp"
+                android:paddingTop="30dp"
+                android:text="DADOS DA CONTA"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/editTextEditarEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:drawableLeft="@mipmap/ic_email"
+                android:drawableTint="@color/lightGray"
+                android:ems="10"
+                android:fontFamily="@font/google_sans_regular"
+                android:hint="Seu email"
+                android:inputType="textEmailAddress"
+                android:textColorHighlight="@color/colorPrimary"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/editTextEditarSenha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:drawableLeft="@mipmap/ic_password"
+                android:drawableTint="@color/lightGray"
+                android:ems="10"
+                android:fontFamily="@font/google_sans_regular"
+                android:hint="Sua senha"
+                android:inputType="textPassword"
+                android:textColorHighlight="@color/colorPrimary"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/editTextEditarConfirmacaoSenha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:drawableLeft="@mipmap/ic_password"
+                android:drawableTint="@color/lightGray"
+                android:ems="10"
+                android:fontFamily="@font/google_sans_regular"
+                android:hint="Confirme sua senha"
+                android:inputType="textPassword"
+                android:textColorHighlight="@color/colorPrimary"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/textViewEditarEndereco"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/google_sans_bold"
+                android:paddingLeft="20dp"
+                android:paddingTop="30dp"
+                android:text="ENRDEREÇO"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
+
+            <com.shishank.autocompletelocationview.LocationAutoCompleteView
+                android:id="@+id/editTextEditarEndereco"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginRight="32dp"
+                android:background="@drawable/bg_lightgreen"
+                android:focusableInTouchMode="true"
+                android:hint="Onde você mora?"
+                android:paddingLeft="15dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@android:color/darker_gray"
+                android:textSize="17sp">
+
+            </com.shishank.autocompletelocationview.LocationAutoCompleteView>
+
+            <Button
+                android:id="@+id/salvarPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="60dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="60dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/bg_rounded"
+                android:fontFamily="@font/google_sans_bold"
+                android:text="SALVAR"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:onClick="salvarPerfil"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

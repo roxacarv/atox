@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "36b85ec2762c05da7a14e8d5ef800ae8",
+    "identityHash": "9481cb3517cb04371a2ddc783be1121e",
     "entities": [
       {
         "tableName": "usuario",
@@ -153,7 +153,7 @@
       },
       {
         "tableName": "pessoa",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `usuario_id` INTEGER NOT NULL, `nome` TEXT, `data_nascimento` INTEGER, `cpf` TEXT, `telefone` TEXT, FOREIGN KEY(`usuario_id`) REFERENCES `usuario`(`uid`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`pid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `usuario_id` INTEGER NOT NULL, `nome` TEXT, `data_nascimento` INTEGER, `cpf` TEXT, `telefone` TEXT, `pessoa_avatar` TEXT, FOREIGN KEY(`usuario_id`) REFERENCES `usuario`(`uid`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "pid",
@@ -188,6 +188,12 @@
           {
             "fieldPath": "telefone",
             "columnName": "telefone",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "caminhoDoAvatar",
+            "columnName": "pessoa_avatar",
             "affinity": "TEXT",
             "notNull": false
           }
@@ -277,11 +283,236 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "atox_log",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `usuario_log_id` INTEGER, `acao` INTEGER NOT NULL, `erro` INTEGER NOT NULL, `mensagem` TEXT, `time_stamp` TEXT, `tipo` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "usuarioId",
+            "columnName": "usuario_log_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "acao",
+            "columnName": "acao",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "erro",
+            "columnName": "erro",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mensagem",
+            "columnName": "mensagem",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "timeStamp",
+            "columnName": "time_stamp",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "tipo",
+            "columnName": "tipo",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "receita",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`rid` INTEGER PRIMARY KEY AUTOINCREMENT, `tipo` INTEGER NOT NULL, `nome_receita` TEXT, `tipo_receita` INTEGER)",
+        "fields": [
+          {
+            "fieldPath": "rid",
+            "columnName": "rid",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "tipo",
+            "columnName": "tipo",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nome",
+            "columnName": "nome_receita",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "tipoReceita",
+            "columnName": "tipo_receita",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "rid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "usuario_receita",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`urid` INTEGER PRIMARY KEY AUTOINCREMENT, `receita_id` INTEGER, `usuario_id` INTEGER, FOREIGN KEY(`usuario_id`) REFERENCES `usuario`(`uid`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`receita_id`) REFERENCES `receita`(`rid`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "urid",
+            "columnName": "urid",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "receitaId",
+            "columnName": "receita_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "usuarioId",
+            "columnName": "usuario_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "urid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_usuario_receita_usuario_id",
+            "unique": false,
+            "columnNames": [
+              "usuario_id"
+            ],
+            "createSql": "CREATE  INDEX `index_usuario_receita_usuario_id` ON `${TABLE_NAME}` (`usuario_id`)"
+          },
+          {
+            "name": "index_usuario_receita_receita_id",
+            "unique": false,
+            "columnNames": [
+              "receita_id"
+            ],
+            "createSql": "CREATE  INDEX `index_usuario_receita_receita_id` ON `${TABLE_NAME}` (`receita_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "usuario",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "usuario_id"
+            ],
+            "referencedColumns": [
+              "uid"
+            ]
+          },
+          {
+            "table": "receita",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "receita_id"
+            ],
+            "referencedColumns": [
+              "rid"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "secao_receita",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`srid` INTEGER PRIMARY KEY AUTOINCREMENT, `receita_id` INTEGER, `nome_secao` TEXT, `conteudo_secao` TEXT, FOREIGN KEY(`receita_id`) REFERENCES `receita`(`rid`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "srid",
+            "columnName": "srid",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "receitaId",
+            "columnName": "receita_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "nome",
+            "columnName": "nome_secao",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "conteudo",
+            "columnName": "conteudo_secao",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "srid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_secao_receita_receita_id",
+            "unique": false,
+            "columnNames": [
+              "receita_id"
+            ],
+            "createSql": "CREATE  INDEX `index_secao_receita_receita_id` ON `${TABLE_NAME}` (`receita_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "receita",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "receita_id"
+            ],
+            "referencedColumns": [
+              "rid"
+            ]
+          }
+        ]
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"36b85ec2762c05da7a14e8d5ef800ae8\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"9481cb3517cb04371a2ddc783be1121e\")"
     ]
   }
 }

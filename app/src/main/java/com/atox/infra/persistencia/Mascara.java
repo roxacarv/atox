@@ -59,9 +59,7 @@ public abstract class Mascara {
 
     public static String[] split(String text) {
         java.util.List<String> parts = new java.util.ArrayList<>();
-
         text += ",";
-
         for (int i = text.indexOf(","), j = 0; i != -1;) {
             String temp = text.substring(j,i);
             if(temp.trim().length() != 0) {
@@ -70,7 +68,6 @@ public abstract class Mascara {
             j = i + ",".length();
             i = text.indexOf(",",j);
         }
-
         return parts.toArray(new String[0]);
     }
 }

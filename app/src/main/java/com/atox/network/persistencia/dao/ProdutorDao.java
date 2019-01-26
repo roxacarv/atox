@@ -15,19 +15,18 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 public class ProdutorDao extends AndroidViewModel {
 
-    private final BDHelper bancoDeDados;
+    private BDHelper bancoDeDados;
 
     public ProdutorDao(Application application)
     {
         super(application);
         bancoDeDados = BDHelper.getBancoDeDados(this.getApplication());
-
     }
 
     public List<Long> inserirProdutores(final Produtor... produtores) throws ExecutionException, InterruptedException {
         Callable<List<Long>> call = new Callable<List<Long>>() {
             @Override
-            public List<Long> call() {
+            public List<Long> call() throws Exception {
                 List<Long> idDosProdutores = bancoDeDados.produtorDaoRoom().inserirTudo(produtores);
                 if(idDosProdutores.isEmpty()) {
                     return null;
@@ -35,7 +34,6 @@ public class ProdutorDao extends AndroidViewModel {
                 return idDosProdutores;
             }
         };
-
         ExecutorService executor = new ScheduledThreadPoolExecutor(1);
         Future<List<Long>> future = executor.submit(call);
         return future.get();
@@ -44,7 +42,7 @@ public class ProdutorDao extends AndroidViewModel {
     public List<Produtor> buscarTodosProdutores() throws ExecutionException, InterruptedException {
         Callable<List<Produtor>> call = new Callable<List<Produtor>>() {
             @Override
-            public List<Produtor> call() {
+            public List<Produtor> call() throws Exception {
                 List<Produtor> produtores = bancoDeDados.produtorDaoRoom().getProdutores();
                 if(produtores.isEmpty()) {
                     return null;
@@ -52,7 +50,6 @@ public class ProdutorDao extends AndroidViewModel {
                 return produtores;
             }
         };
-
         ExecutorService executor = new ScheduledThreadPoolExecutor(1);
         Future<List<Produtor>> future = executor.submit(call);
         return future.get();

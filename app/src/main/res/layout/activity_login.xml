@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/google_sans_regular"
-            android:text="@string/ajudando_voc_a_achar_comida_limpa"
+            android:text="ajudando você a achar comida limpa"
             android:textColor="@color/colorPrimary"
             android:textSize="14sp"
             android:textAlignment="center"/>

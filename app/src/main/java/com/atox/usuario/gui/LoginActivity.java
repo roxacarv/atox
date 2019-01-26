@@ -9,16 +9,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.atox.R;
-import com.atox.infra.AtoxException;
+import com.atox.atoxlogs.AtoxException;
 import com.atox.navegacao.activities.MenuActivity;
 import com.atox.usuario.dominio.Pessoa;
-import com.atox.usuario.dominio.SessaoUsuario;
 import com.atox.usuario.negocio.PessoaNegocio;
 import com.atox.usuario.dominio.Usuario;
 import com.atox.infra.negocio.ValidaCadastro;
 import com.atox.usuario.negocio.SessaoNegocio;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.ExecutionException;
 
 
@@ -27,7 +25,6 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getName();
     private EditText mEmailView;
     private EditText mPasswordView;
-    private SessaoUsuario sessaoUsuario;
     private PessoaNegocio pessoaNegocio;
     private SessaoNegocio sessaoNegocio;
 
@@ -35,66 +32,52 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        inicializarVariaveis();
+    }
+    public void inicializarVariaveis(){
         mEmailView = findViewById(R.id.editTextEmail);
         mPasswordView = findViewById(R.id.editTextSenha);
         pessoaNegocio = new PessoaNegocio(this);
         sessaoNegocio = new SessaoNegocio(this);
     }
-
     public void goToRegisterScreen(View view) {
-
         Intent registerScreen = new Intent(LoginActivity.this, RegistroActivity.class);
         startActivity(registerScreen);
-
     }
 
-    private void goToHomeScreen() {
-
+    public void goToHomeScreen(View view) {
         Intent homeScrenn = new Intent(LoginActivity.this, MenuActivity.class);
         startActivity(homeScrenn);
-
     }
 
     public void logar(View view) throws ExecutionException, InterruptedException, AtoxException {
-
-        Usuario usuario;
+        Usuario usuario = null;
         Pessoa pessoa = null;
-
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
-
-        try {
-            boolean camposValidos = validarCamposLoginNaGui(email, password);
-            if (camposValidos){
-                usuario = pessoaNegocio.efetuarLogin(email, password);
-                if(usuario == null) {
-                    //usuario não cadastrado ou senha incorreta
-                    alert(getString(R.string.error_no_such_user_or_pass_incorrect));
-                } else{
-                    pessoa = pessoaNegocio.recuperarPessoaPorId(usuario.getUid());
-                    if(pessoa == null) {
-                        alert("O usuário digitado não existe ou a senha está incorreta.");
-                    }
-                    Log.i(TAG, "Pessoa existe.");
-                    alert(getString(R.string.act_successful_login));
+        boolean camposValidos = validarCamposLoginNaGui(email, password);
+        if (camposValidos) {
+            usuario = pessoaNegocio.efetuarLogin(email, password);
+            if (usuario == null) {
+                //usuario não cadastrado ou senha incorreta
+                alert(getString(R.string.error_no_such_user_or_pass_incorrect));
+            } else {
+                pessoa = pessoaNegocio.recuperarPessoaPorId(usuario.getUid());
+                if (pessoa == null) {
+                    alert("O usuário digitado não existe ou a senha está incorreta.");
                 }
-
+                Log.i(TAG, "Pessoa existe.");
+                alert(getString(R.string.act_successful_login));
             }
-
-        } catch (NoSuchAlgorithmException e) {
-            alert("Ocorreu um erro");
         }
-
         if(pessoa != null) {
             sessaoNegocio.iniciarNovaSessao(pessoa);
-            goToHomeScreen();
+            goToHomeScreen(view);
         }
-
     }
 
 
     private boolean validarCamposLoginNaGui(String email, String password)  {
-
         // Reset errors.
         mEmailView.setError(null);
         mPasswordView.setError(null);
@@ -102,30 +85,27 @@ public class LoginActivity extends AppCompatActivity {
         // Store values at the time of the login attempt
         boolean cancel = false;
         View focusView = null;
-
         // Check for a valid password, if the user entered one.
         if (validaCadastro.isCampoVazio(password)) {
             mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
             cancel = true;
         }
-        else if(validaCadastro.isSenhaValida(password)){
+        else if(!validaCadastro.isSenhaValida(password)){
             mPasswordView.setError(getString(R.string.error_password_too_short));
             focusView = mPasswordView;
             cancel = true;
         }
-
         // Check for a valid email address.
         if (validaCadastro.isCampoVazio(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
-        } else if (validaCadastro.isEmail(email)) {
+        } else if (!validaCadastro.isEmail(email)) {
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;
         }
-
         if (cancel) {
             focusView.requestFocus();
             alert("Email ou senha inválido");
