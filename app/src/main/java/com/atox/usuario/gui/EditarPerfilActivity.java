@@ -51,7 +51,6 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
     private SessaoUsuario sessaoUsuario;
     private ImageView image;
     private PessoaNegocio pessoaNegocio;
-    private Button buttonSalvar;
     private Pessoa pessoaLogada;
     private Usuario usuarioLogado;
     private AtoxLog log;
@@ -62,17 +61,15 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_perfil);
         inicializarCampos();
-        image = (ImageView) findViewById(R.id.imageNew);
-        buttonSalvar = (Button) findViewById(R.id.salvarPerfil);
-        pessoaNegocio = new PessoaNegocio(this);
-        pessoaLogada = sessaoUsuario.getPessoaLogada();
+        preencherTextViews();
+    }
+
+    private void preencherTextViews() {
+        String dataNascimentoFormatada = sdf.format(pessoaLogada.getDataNascimento());
         mNome.setText(pessoaLogada.getNome());
         mTelefone.setText(pessoaLogada.getTelefone());
-        String dataNascimentoFormatada = sdf.format(pessoaLogada.getDataNascimento());
         mData.setText(dataNascimentoFormatada);
-        usuarioLogado = pessoaLogada.getUsuario();
         mEmail.setText(usuarioLogado.getEmail());
-        log = new AtoxLog();
     }
 
     private Endereco criarEndereco(Long idDePessoa) {
@@ -148,6 +145,12 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
         mSenhaConfirm = (EditText) findViewById(R.id.editTextEditarConfirmacaoSenha);
         editTextAddress = (AutoCompleteTextView) findViewById(R.id.editTextEditarEndereco);
         sessaoUsuario = SessaoUsuario.getInstance();
+        image = (ImageView) findViewById(R.id.imageNew);
+        Button buttonSalvar = (Button) findViewById(R.id.salvarPerfil);
+        pessoaNegocio = new PessoaNegocio(this);
+        pessoaLogada = sessaoUsuario.getPessoaLogada();
+        usuarioLogado = pessoaLogada.getUsuario();
+        log = new AtoxLog();
     }
 
 

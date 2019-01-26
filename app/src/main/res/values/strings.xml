@@ -47,4 +47,5 @@
     <string name="atualizar">Atualizar</string>
     <string name="recomendacao">Recomendação</string>
     <string name="teste_recomendacao">Teste Recomendação</string>
+    <string name="nome_da_receita_x">Nome da receita x</string>
 </resources>

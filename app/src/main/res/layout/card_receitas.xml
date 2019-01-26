@@ -20,9 +20,9 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/google_sans_medium"
-            android:text="Nome da receita x"
+            android:text="@string/nome_da_receita_x"
             android:textColor="@color/lightGray2"
-            android:textSize="14dp" />
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/button5"

@@ -25,7 +25,7 @@
         android:text="Busque receitas pra usar seu orgânicos!"
         android:textColor="@color/white"
         android:fontFamily="@font/google_sans_regular"
-        android:textSize="16dp"/>
+        android:textSize="16sp"/>
 
     <EditText
         android:id="@+id/editText"

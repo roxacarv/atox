@@ -26,8 +26,6 @@ public class RecomendacaoActivity extends AppCompatActivity {
     private TextView txtViewRecomendTeste;
     private RecyclerView recycleRecomendacoes;
     private ReceitaCustomAdapter receitaCustomAdapter;
-
-
     private  String roleFrango = "Rolê de Frango";
     private  String empanadoFrango = "Empanado de Frango";
     private  String sanduicheCarne = "Sanduíche de Carne";
@@ -36,26 +34,19 @@ public class RecomendacaoActivity extends AppCompatActivity {
     private  String boloTapioca = "Bolo de Tapioca";
     private  String boloTerremoto = "Bolo Terremoto";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recomendacao);
         iniciarVariaveis();
-
-
         preparaDadosParaAlgoritmo();
 
         HashMap<String, Double> usuarioPrincipal = new HashMap<>();
         usuarioPrincipal.put(empanadoFrango, 1.0);
         usuarioPrincipal.put(boloTerremoto, 1.0);
-
         List<String> nomesReceitasRecomendadas = obtemNomesReceitasRecomendadas(usuarioPrincipal);
-
         List<Receita> receitasRecomendadas = obtemListaObjetosReceita(nomesReceitasRecomendadas);
-
         gerandoListaDeReceitas(receitasRecomendadas, recycleRecomendacoes, this,receitaCustomAdapter);
-
     }
 
     public void gerandoListaDeReceitas(List<Receita> listaReceitas, RecyclerView recycleViewReceitas, Context context, ReceitaCustomAdapter receitaCustomAdapter){
@@ -80,14 +71,11 @@ public class RecomendacaoActivity extends AppCompatActivity {
 
     public List<String> obtemNomesReceitasRecomendadas(HashMap<String, Double> usuario){
         SlopeOne so = new SlopeOne(dados, receitas);
-
         Map<String, Double> recomendacao = so.predict(usuario);
         List receitasRecomendadas = new ArrayList<String>();
-
         for (String chave : recomendacao.keySet()){
             receitasRecomendadas.add(chave);
         }
-
         return receitasRecomendadas;
     }
 
@@ -100,43 +88,30 @@ public class RecomendacaoActivity extends AppCompatActivity {
         cookieChocolate = "Cookie crocante de chocolate";
         boloTapioca = "Bolo de Tapioca";
         boloTerremoto = "Bolo Terremoto";
-
         receitas = new String[]{roleFrango, empanadoFrango, sanduicheCarne, tortaPudim, cookieChocolate, boloTapioca, boloTerremoto};
-
         HashMap<String, Double> user1 = new HashMap<>();
         HashMap<String, Double> user2 = new HashMap<>();
         HashMap<String, Double> user3 = new HashMap<>();
         HashMap<String, Double> user4 = new HashMap<>();
         HashMap<String, Double> user5 = new HashMap<>();
-
-        //Avaliações usuario1
         user1.put(empanadoFrango, 1.0);
         user1.put(boloTapioca, 0.0);
         user1.put(sanduicheCarne, 1.0);
         dados.put("Jonas", user1);
-
-        //Avaliações usuario2
         user2.put(roleFrango, 1.0);
         user2.put(boloTapioca, 1.0);
         dados.put("Bob", user2);
-
-        //Avaliações usuario3
         user3.put(sanduicheCarne, 1.0);
         user3.put(cookieChocolate, 0.0);
         dados.put("Maria", user3);
-
-        //Avaliações usuario4
         user4.put(tortaPudim, 0.0);
         user4.put(sanduicheCarne, 1.0);
         user4.put(empanadoFrango, 0.0);
         dados.put("Julia", user4);
-
-        //Avaliações usuario5
         user5.put(tortaPudim, 1.0);
         user5.put(sanduicheCarne, 0.0);
         user5.put(roleFrango, 1.0);
         dados.put("Juvenal", user5);
-
     }
 
     private void iniciarVariaveis() {

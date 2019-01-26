@@ -1,7 +1,5 @@
 package com.atox.infra.negocio;
 
-import android.util.Log;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -47,42 +45,6 @@ public class SlopeOne {
             cleanpredictions.put(j, user.get(j));
         }
         return cleanpredictions;
-    }
-
-    public void printData() {
-        for (String user : mData.keySet()) {
-            Log.i(SlopeOne.class.getName(), user);
-
-            print(mData.get(user));
-        }
-        for (int i = 0; i < mAllItems.length; i++) {
-            System.out.print("\n" + mAllItems[i] + ":");
-            printMatrixes(diffMatrix.get(mAllItems[i]), freqMatrix.get(mAllItems[i]));
-        }
-    }
-
-    private void printMatrixes(Map<String, Double> ratings, Map<String, Integer> frequencies) {
-        for (int j = 0; j < mAllItems.length; j++) {
-            System.out.format("%10.3f", ratings.get(mAllItems[j]));
-            System.out.print(" ");
-            System.out.format("%10d", frequencies.get(mAllItems[j]));
-        }
-        System.out.println();
-    }
-
-    public static void print(Map<String, Double> user) {
-        for (String j : user.keySet()) {
-            Log.i(SlopeOne.class.getName(), " " + j + " --> " + user.get(j).floatValue());
-
-        }
-    }
-
-    public static String print2(Map<String, Double> user){
-        StringBuilder sb = new StringBuilder();
-        for (String j : user.keySet()){
-            sb.append(" " + j + " -> " + user.get(j).floatValue() + "\n");
-        }
-        return sb.toString();
     }
 
     public void buildDiffMatrix() {
