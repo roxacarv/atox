@@ -40,6 +40,10 @@ public class EnderecoActivity extends AppCompatActivity implements OnQueryComple
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_endereco);
+        inicializarVariaveis();
+    }
+
+    private void inicializarVariaveis() {
         buttonRegistrar = (Button) findViewById(R.id.buttonRegistrar);
         editTextAddress =  (AutoCompleteTextView) findViewById(R.id.editTextAddress);
         dadosPessoais = getIntent().getExtras();

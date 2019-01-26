@@ -35,6 +35,10 @@ public class RegistroActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
+        inicializarVariaveis();
+    }
+
+    private void inicializarVariaveis() {
         mNome = findViewById(R.id.editTextRegistroNome);
         mTelefone = findViewById(R.id.editTextRegistroTelefone);
         mTelefone.addTextChangedListener(Mascara.insert("(##)#####-####",mTelefone));

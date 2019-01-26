@@ -60,7 +60,7 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_perfil);
-        inicializarCampos();
+        inicializarVariaveis();
         preencherTextViews();
     }
 
@@ -135,7 +135,7 @@ public class EditarPerfilActivity extends AppCompatActivity implements OnQueryCo
         }
     }
 
-    public void inicializarCampos() {
+    public void inicializarVariaveis() {
         sdf = new SimpleDateFormat("dd/MM/yyyy");
         mNome = (EditText) findViewById(R.id.editTextEditarNome);
         mTelefone = (EditText) findViewById(R.id.editTextEditarTelefone);

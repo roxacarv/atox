@@ -21,16 +21,15 @@ public class ReceitasActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receitas);
-
-        receitaNegocio = new ReceitaNegocio(this);
-
-        customRecyclerViewReceita = (RecyclerView) findViewById(R.id.customRecycleViewReceitas);
-
+        inicializarVariaveis();
         gerandoListaDeReceitas(receitaNegocio.buscarTodasReceitas(),customRecyclerViewReceita, this,receitaCustomAdapter);
-
     }
 
-    /*Method to generate List of data using RecyclerView with custom adapter*/
+    public void inicializarVariaveis(){
+        receitaNegocio = new ReceitaNegocio(this);
+        customRecyclerViewReceita = (RecyclerView) findViewById(R.id.customRecycleViewReceitas);
+    }
+
     private void gerandoListaDeReceitas(List<Receita> listaReceitas, RecyclerView recycleViewReceitas, Context context, ReceitaCustomAdapter receitaCustomAdapter) {
         customRecyclerViewReceita = recycleViewReceitas;
         receitaCustomAdapter = new ReceitaCustomAdapter(context,listaReceitas);

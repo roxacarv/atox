@@ -32,6 +32,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        inicializarVariaveis();
+    }
+
+    private void inicializarVariaveis() {
         mEmailView = (EditText) findViewById(R.id.editTextEmail);
         mPasswordView = (EditText) findViewById(R.id.editTextSenha);
         pessoaNegocio = new PessoaNegocio(this);
